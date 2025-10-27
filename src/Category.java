@@ -1,4 +1,5 @@
 public class Category {
+    // Variables
     private int categoryId;
     private String categoryName;
 
