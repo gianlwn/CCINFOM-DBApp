@@ -1,13 +1,13 @@
 import java.sql.*;
 
-public class CategoryDAO {
-    public boolean insertCategory(Category category) {
-        String sql = "INSERT INTO categories (category_id, category_name) VALUES (?, ?)";
+public class CountryDAO {
+    public boolean insertCountry(Country country) {
+        String sql = "INSERT INTO countries (country_id, country_name) VALUES (?, ?)";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, category.getCategoryId());
-            stmt.setString(2, category.getCategoryName());
+            stmt.setInt(1, country.getCountryId());
+            stmt.setString(2, country.getCountryName());
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -17,8 +17,8 @@ public class CategoryDAO {
         return false;
     }
 
-    public Category getCategoryById(int id) {
-        String sql = "SELECT * FROM categories WHERE category_id = ?";
+    public Country getCountryById(int id) {
+        String sql = "SELECT * FROM countries WHERE country_id = ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -26,9 +26,9 @@ public class CategoryDAO {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Category c = new Category();
-                c.setCategoryId(rs.getInt("category_id"));
-                c.setCategoryName(rs.getString("category_name"));
+                Country c = new Country();
+                c.setCountryId(rs.getInt("country_id"));
+                c.setCountryName(rs.getString("country_name"));
 
                 return c;
             }
@@ -39,13 +39,13 @@ public class CategoryDAO {
         return null;
     }
 
-    public boolean updateCategory(Category category) {
-        String sql = "UPDATE categories SET category_name = ? WHERE category_id = ?";
+    public boolean updateCountry(Country country) {
+        String sql = "UPDATE countries SET country_name=? WHERE country_id=?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, category.getCategoryName());
-            stmt.setInt(2, category.getCategoryId());
+            stmt.setString(1, country.getCountryName());
+            stmt.setInt(2, country.getCountryId());
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -55,8 +55,8 @@ public class CategoryDAO {
         return false;
     }
 
-    public boolean deleteCategory(int id) {
-        String sql = "DELETE FROM categories WHERE category_id = ?";
+    public boolean deleteCountry(int id) {
+        String sql = "DELETE FROM countries WHERE country_id = ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

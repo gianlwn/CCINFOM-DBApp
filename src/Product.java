@@ -1,3 +1,72 @@
 public class Product {
     // Variables
+    private int product_id;
+    private String product_name;
+    private int category_id;
+    private String description;
+    private double price;
+    private int quantity_in_stock;
+    private int supplier_id;
+
+    // Constructors
+    public Product() {}
+
+    public Product(int product_id, String product_name, int category_id, String description, double price, int quantity_in_stock, int supplier_id) {
+        this.product_id = product_id;
+        this.product_name = product_name;
+        this.category_id = category_id;
+        this.description = description;
+        this.price = price;
+        this.quantity_in_stock = quantity_in_stock;
+        this.supplier_id = supplier_id;
+    }
+
+    public int getProductId() {
+        return product_id;
+    }
+    public void setProductId(int product_id) {
+        this.product_id = product_id;
+    }
+
+    public String getProductName() {
+        return product_name;
+    }
+    public void setProductName(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public int getCategoryId() {
+        return category_id;
+    }
+    public void setCategoryId(int category_id) {
+        this.category_id = category_id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantityInStock() {
+        return quantity_in_stock;
+    }
+    public void setQuantityInStock(int quantity_in_stock) {
+        this.quantity_in_stock = quantity_in_stock;
+    }
+
+    public int getSupplierId() {
+        return supplier_id;
+    }
+    public void setSupplierId(int supplierId) {
+        this.supplier_id = supplier_id;
+    }
 }
