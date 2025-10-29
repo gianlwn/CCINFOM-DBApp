@@ -66,7 +66,7 @@ public class Product {
     public int getSupplierId() {
         return supplier_id;
     }
-    public void setSupplierId(int supplierId) {
+    public void setSupplierId(int supplier_id) {
         this.supplier_id = supplier_id;
     }
 }
