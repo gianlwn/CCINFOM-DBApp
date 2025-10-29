@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.sql.Date;
 
-public class DBApp {
+public class SouvenirApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
