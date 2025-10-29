@@ -11,7 +11,7 @@ public class DBApp {
         System.out.println("3 -> Add Product");
         System.out.print("Enter choice: ");
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
 
         switch (choice) {
             case 1 -> {
