@@ -18,6 +18,7 @@ public class Customer {
         this.country_id = country_id;
     }
 
+    // Customer ID
     public int getCustomerId() {
         return customer_id;
     }
@@ -25,6 +26,7 @@ public class Customer {
         this.customer_id = customer_id;
     }
 
+    // First Name
     public String getFirstName() {
         return first_name;
     }
@@ -32,6 +34,7 @@ public class Customer {
         this.first_name = first_name;
     }
 
+    // Last Name
     public String getLastName() {
         return last_name;
     }
@@ -39,6 +42,7 @@ public class Customer {
         this.last_name = last_name;
     }
 
+    // Contact Number
     public String getContactNumber() {
         return contact_number;
     }
@@ -46,6 +50,7 @@ public class Customer {
         this.contact_number = contact_number;
     }
 
+    // Email
     public String getEmail() {
         return email;
     }
@@ -53,6 +58,7 @@ public class Customer {
         this.email = email;
     }
 
+    // Country ID
     public int getCountryId() {
         return country_id;
     }
