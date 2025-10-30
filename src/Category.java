@@ -11,6 +11,7 @@ public class Category {
         this.category_name = category_name;
     }
 
+    // Category ID
     public int getCategoryId() {
         return category_id;
     }
@@ -18,6 +19,7 @@ public class Category {
         this.category_id = category_id;
     }
 
+    // Category Name
     public String getCategoryName() {
         return category_name;
     }
