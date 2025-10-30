@@ -23,6 +23,7 @@ public class Supplier {
         this.last_delivery_date = last_delivery_date;
     }
 
+    // Supplier ID
     public int getSupplierId() {
         return supplier_id;
     }
@@ -30,6 +31,7 @@ public class Supplier {
         this.supplier_id = supplier_id;
     }
 
+    // Supplier Name
     public String getSupplierName() {
         return supplier_name;
     }
@@ -37,6 +39,7 @@ public class Supplier {
         this.supplier_name = supplier_name;
     }
 
+    // Contact Person
     public String getContactPerson() {
         return contact_person;
     }
@@ -44,6 +47,7 @@ public class Supplier {
         this.contact_person = contact_person;
     }
 
+    // Contact Number
     public String getContactNumber() {
         return contact_number;
     }
@@ -51,6 +55,7 @@ public class Supplier {
         this.contact_number = contact_number;
     }
 
+    // Email
     public String getEmail() {
         return email;
     }
@@ -58,6 +63,7 @@ public class Supplier {
         this.email = email;
     }
 
+    // Address
     public String getAddress() {
         return address;
     }
@@ -65,6 +71,7 @@ public class Supplier {
         this.address = address;
     }
 
+    // Last Delivery Date
     public Date getLastDeliveryDate() {
         return last_delivery_date;
     }
