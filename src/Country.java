@@ -11,6 +11,7 @@ public class Country {
         this.country_name = country_name;
     }
 
+    // Country ID
     public int getCountryId() {
         return country_id;
     }
@@ -18,6 +19,7 @@ public class Country {
         this.country_id = country_id;
     }
 
+    // Country Name
     public String getCountryName() {
         return country_name;
     }
