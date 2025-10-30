@@ -19,6 +19,7 @@ public class OrderDetails {
         this.order_date = order_date;
     }
 
+    // Order ID
     public int getOrderId() {
         return order_id;
     }
@@ -26,6 +27,7 @@ public class OrderDetails {
         this.order_id = order_id;
     }
 
+    // Customer ID
     public int getCustomerId() {
         return customer_id;
     }
@@ -33,6 +35,7 @@ public class OrderDetails {
         this.customer_id = customer_id;
     }
 
+    // Product ID
     public int getProductId() {
         return product_id;
     }
@@ -40,6 +43,7 @@ public class OrderDetails {
         this.product_id = product_id;
     }
 
+    // Quantity
     public int getQuantity() {
         return quantity;
     }
@@ -47,6 +51,7 @@ public class OrderDetails {
         this.quantity = quantity;
     }
 
+    // Unit Price
     public double getUnitPrice() {
         return unit_price;
     }
@@ -54,6 +59,7 @@ public class OrderDetails {
         this.unit_price = unit_price;
     }
 
+    // Order Date
     public Date getOrderDate() {
         return order_date;
     }
