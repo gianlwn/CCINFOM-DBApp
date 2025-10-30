@@ -21,6 +21,7 @@ public class Product {
         this.supplier_id = supplier_id;
     }
 
+    // Product ID
     public int getProductId() {
         return product_id;
     }
@@ -28,6 +29,7 @@ public class Product {
         this.product_id = product_id;
     }
 
+    // Product Name
     public String getProductName() {
         return product_name;
     }
@@ -35,6 +37,7 @@ public class Product {
         this.product_name = product_name;
     }
 
+    // Category ID
     public int getCategoryId() {
         return category_id;
     }
@@ -42,6 +45,7 @@ public class Product {
         this.category_id = category_id;
     }
 
+    // Description
     public String getDescription() {
         return description;
     }
@@ -49,6 +53,7 @@ public class Product {
         this.description = description;
     }
 
+    // Price
     public double getPrice() {
         return price;
     }
@@ -56,6 +61,7 @@ public class Product {
         this.price = price;
     }
 
+    // Quantity in Stock
     public int getQuantityInStock() {
         return quantity_in_stock;
     }
@@ -63,6 +69,7 @@ public class Product {
         this.quantity_in_stock = quantity_in_stock;
     }
 
+    // Supplier ID
     public int getSupplierId() {
         return supplier_id;
     }
