@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class CountryDAO {
     public boolean insertCountry(Country country) {
@@ -68,5 +69,26 @@ public class CountryDAO {
         }
         
         return false;
+    }
+
+    public ArrayList<Country> getAllCountries() {
+        ArrayList<Country> countries = new ArrayList<>();
+        String sql = "SELECT * FROM countries ORDER BY country_id";
+        
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                Country c = new Country();
+                c.setCountryId(rs.getInt("country_id"));
+                c.setCountryName(rs.getString("country_name"));
+                countries.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return countries;
     }
 }
