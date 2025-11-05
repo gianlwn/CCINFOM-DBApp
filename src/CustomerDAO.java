@@ -1,6 +1,5 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomerDAO {
     public boolean insertCustomer(Customer customer) {
@@ -84,8 +83,8 @@ public class CustomerDAO {
         return false;
     }
 
-    public List<Customer> getAllCustomersWithCountry() {
-        List<Customer> customers = new ArrayList<>();
+    public ArrayList<Customer> getAllCustomersWithCountry() {
+        ArrayList<Customer> customers = new ArrayList<>();
         String sql = "SELECT cust.*, c.country_name " +
                      "FROM customers cust " +
                      "LEFT JOIN countries c ON cust.country_id = c.country_id " +

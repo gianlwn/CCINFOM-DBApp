@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class OrderDetailsDAO {
     public boolean insertOrderDetails(OrderDetails order) {
@@ -82,5 +84,30 @@ public class OrderDetailsDAO {
         }
         
         return false;
+    }
+
+    public ArrayList<OrderDetails> getAllOrderDetails() {
+        ArrayList<OrderDetails> orders = new ArrayList<>();
+        String sql = "SELECT * FROM order_details ORDER BY order_id";
+        
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                OrderDetails o = new OrderDetails();
+                o.setOrderId(rs.getInt("order_id"));
+                o.setCustomerId(rs.getInt("customer_id"));
+                o.setProductId(rs.getInt("product_id"));
+                o.setQuantity(rs.getInt("quantity"));
+                o.setUnitPrice(rs.getDouble("unit_price"));
+                o.setOrderDate(rs.getDate("order_date"));
+                orders.add(o);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return orders;
     }
 }
