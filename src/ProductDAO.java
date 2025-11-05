@@ -1,6 +1,5 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductDAO {
     public boolean insertProduct(Product product) {
@@ -86,8 +85,8 @@ public class ProductDAO {
         return false;
     }
 
-    public List<Product> getAllProductsDetailed() {
-        List<Product> products = new ArrayList<>();
+    public ArrayList<Product> getAllProductsDetailed() {
+        ArrayList<Product> products = new ArrayList<>();
         String sql = "SELECT p.*, c.category_name, s.supplier_name " +
                      "FROM products p " +
                      "LEFT JOIN categories c ON p.category_id = c.category_id " +
