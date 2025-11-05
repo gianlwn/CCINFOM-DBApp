@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class SupplierDAO {
     public boolean insertSupplier(Supplier supplier) {
@@ -83,5 +84,31 @@ public class SupplierDAO {
         }
         
         return false;
+    }
+
+    public ArrayList<Supplier> getAllSuppliers() {
+        ArrayList<Supplier> suppliers = new ArrayList<>();
+        String sql = "SELECT * FROM suppliers ORDER BY supplier_id";
+        
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                Supplier s = new Supplier();
+                s.setSupplierId(rs.getInt("supplier_id"));
+                s.setSupplierName(rs.getString("supplier_name"));
+                s.setContactPerson(rs.getString("contact_person"));
+                s.setContactNumber(rs.getString("contact_number"));
+                s.setEmail(rs.getString("email"));
+                s.setAddress(rs.getString("address"));
+                s.setLastDeliveryDate(rs.getDate("last_delivery_date"));
+                suppliers.add(s);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return suppliers;
     }
 }
