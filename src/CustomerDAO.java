@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDAO {
     public boolean insertCustomer(Customer customer) {
@@ -80,5 +82,33 @@ public class CustomerDAO {
         }
         
         return false;
+    }
+
+    public List<Customer> getAllCustomersWithCountry() {
+        List<Customer> customers = new ArrayList<>();
+        String sql = "SELECT cust.*, c.country_name " +
+                     "FROM customers cust " +
+                     "LEFT JOIN countries c ON cust.country_id = c.country_id " +
+                     "ORDER BY cust.customer_id";
+        
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                Customer cust = new Customer();
+                cust.setCustomerId(rs.getInt("customer_id"));
+                cust.setFirstName(rs.getString("first_name"));
+                cust.setLastName(rs.getString("last_name"));
+                cust.setContactNumber(rs.getString("contact_number"));
+                cust.setEmail(rs.getString("email"));
+                cust.setCountryId(rs.getInt("country_id"));
+                customers.add(cust);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return customers;
     }
 }
