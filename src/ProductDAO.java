@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDAO {
     public boolean insertProduct(Product product) {
@@ -82,5 +84,35 @@ public class ProductDAO {
         }
         
         return false;
+    }
+
+    public List<Product> getAllProductsDetailed() {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT p.*, c.category_name, s.supplier_name " +
+                     "FROM products p " +
+                     "LEFT JOIN categories c ON p.category_id = c.category_id " +
+                     "LEFT JOIN suppliers s ON p.supplier_id = s.supplier_id " +
+                     "ORDER BY p.product_id";
+        
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductId(rs.getInt("product_id"));
+                p.setProductName(rs.getString("product_name"));
+                p.setCategoryId(rs.getInt("category_id"));
+                p.setDescription(rs.getString("description"));
+                p.setPrice(rs.getDouble("price"));
+                p.setQuantityInStock(rs.getInt("quantity_in_stock"));
+                p.setSupplierId(rs.getInt("supplier_id"));
+                products.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return products;
     }
 }
