@@ -119,9 +119,6 @@ public class SouvenirApp {
                 
                 case 4 -> { // Add Customer
                     System.out.println("\n--- Add Customer ---");
-                    System.out.print("Enter Customer ID: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
                     System.out.print("Enter First Name: ");
                     String firstName = scanner.nextLine();
                     System.out.print("Enter Last Name: ");
@@ -130,7 +127,7 @@ public class SouvenirApp {
                     String contact = scanner.nextLine();
                     System.out.print("Enter Email: ");
                     String email = scanner.nextLine();
-                    Customer customer = new Customer(id, firstName, lastName, contact, email);
+                    Customer customer = new Customer(firstName, lastName, contact, email);
                     if (customerDAO.insertCustomer(customer)) {
                         System.out.println("✓ Customer added successfully!");
                     } else {
@@ -200,7 +197,7 @@ public class SouvenirApp {
                     System.out.println("\n========================================");
                     System.out.println("            ALL CUSTOMERS               ");
                     System.out.println("========================================");
-                    ArrayList<Customer> customers = customerDAO.getAllCustomersWithCountry();
+                    ArrayList<Customer> customers = customerDAO.getAllCustomers();
                     if (customers.isEmpty()) {
                         System.out.println("No customers found.");
                     } else {
