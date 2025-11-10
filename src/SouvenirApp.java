@@ -9,7 +9,6 @@ public class SouvenirApp {
         SupplierDAO supplierDAO = new SupplierDAO();
         ProductDAO productDAO = new ProductDAO();
         CustomerDAO customerDAO = new CustomerDAO();
-        CountryDAO countryDAO = new CountryDAO();
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
 
         while (true) {
@@ -22,29 +21,27 @@ public class SouvenirApp {
             System.out.println("2 -> Add Supplier");
             System.out.println("3 -> Add Product");
             System.out.println("4 -> Add Customer");
-            System.out.println("5 -> Add Country");
             System.out.println("\n[VIEW RECORDS]");
-            System.out.println("6 -> View All Categories");
-            System.out.println("7 -> View All Suppliers");
-            System.out.println("8 -> View All Products");
-            System.out.println("9 -> View All Customers");
-            System.out.println("10 -> View All Countries");
-            System.out.println("11 -> View All Orders");
+            System.out.println("5 -> View All Categories");
+            System.out.println("6 -> View All Suppliers");
+            System.out.println("7 -> View All Products");
+            System.out.println("8 -> View All Customers");
+            System.out.println("9 -> View All Orders");
             System.out.println("\n[SEARCH RECORDS]");
-            System.out.println("12 -> Search Category by ID");
-            System.out.println("13 -> Search Supplier by ID");
-            System.out.println("14 -> Search Product by ID");
-            System.out.println("15 -> Search Customer by ID");
+            System.out.println("10 -> Search Category by ID");
+            System.out.println("11 -> Search Supplier by ID");
+            System.out.println("12 -> Search Product by ID");
+            System.out.println("13 -> Search Customer by ID");
             System.out.println("\n[UPDATE RECORDS]");
-            System.out.println("16 -> Update Category");
-            System.out.println("17 -> Update Supplier");
-            System.out.println("18 -> Update Product");
-            System.out.println("19 -> Update Customer");
+            System.out.println("14 -> Update Category");
+            System.out.println("15 -> Update Supplier");
+            System.out.println("16 -> Update Product");
+            System.out.println("17 -> Update Customer");
             System.out.println("\n[DELETE RECORDS]");
-            System.out.println("20 -> Delete Category");
-            System.out.println("21 -> Delete Supplier");
-            System.out.println("22 -> Delete Product");
-            System.out.println("23 -> Delete Customer");
+            System.out.println("18 -> Delete Category");
+            System.out.println("19 -> Delete Supplier");
+            System.out.println("20 -> Delete Product");
+            System.out.println("21 -> Delete Customer");
             System.out.println("\n0 -> Exit");
             System.out.println("========================================");
             System.out.print("Enter choice: ");
@@ -133,9 +130,7 @@ public class SouvenirApp {
                     String contact = scanner.nextLine();
                     System.out.print("Enter Email: ");
                     String email = scanner.nextLine();
-                    System.out.print("Enter Country ID: ");
-                    int countryId = scanner.nextInt();
-                    Customer customer = new Customer(id, firstName, lastName, contact, email, countryId);
+                    Customer customer = new Customer(id, firstName, lastName, contact, email);
                     if (customerDAO.insertCustomer(customer)) {
                         System.out.println("✓ Customer added successfully!");
                     } else {
@@ -143,22 +138,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 5 -> { // Add Country
-                    System.out.println("\n--- Add Country ---");
-                    System.out.print("Enter Country ID: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Enter Country Name: ");
-                    String name = scanner.nextLine();
-                    Country country = new Country(id, name);
-                    if (countryDAO.insertCountry(country)) {
-                        System.out.println("✓ Country added successfully!");
-                    } else {
-                        System.out.println("✗ Failed to add country.");
-                    }
-                }
-                
-                case 6 -> { // View All Categories
+                case 5 -> { // View All Categories
                     System.out.println("\n========================================");
                     System.out.println("           ALL CATEGORIES              ");
                     System.out.println("========================================");
@@ -176,7 +156,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 7 -> { // View All Suppliers
+                case 6 -> { // View All Suppliers
                     System.out.println("\n========================================");
                     System.out.println("             ALL SUPPLIERS              ");
                     System.out.println("========================================");
@@ -196,7 +176,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 8 -> { // View All Products
+                case 7 -> { // View All Products
                     System.out.println("\n========================================");
                     System.out.println("              ALL PRODUCTS              ");
                     System.out.println("========================================");
@@ -216,7 +196,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 9 -> { // View All Customers
+                case 8 -> { // View All Customers
                     System.out.println("\n========================================");
                     System.out.println("            ALL CUSTOMERS               ");
                     System.out.println("========================================");
@@ -236,25 +216,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 10 -> { // View All Countries
-                    System.out.println("\n========================================");
-                    System.out.println("            ALL COUNTRIES               ");
-                    System.out.println("========================================");
-                    ArrayList<Country> countries = countryDAO.getAllCountries();
-                    if (countries.isEmpty()) {
-                        System.out.println("No countries found.");
-                    } else {
-                        System.out.printf("%-10s %-30s%n", "ID", "Country Name");
-                        System.out.println("----------------------------------------");
-                        for (Country c : countries) {
-                            System.out.printf("%-10d %-30s%n", c.getCountryId(), c.getCountryName());
-                        }
-                        System.out.println("========================================");
-                        System.out.println("Total Countries: " + countries.size());
-                    }
-                }
-                
-                case 11 -> { // View All Orders
+                case 9 -> { // View All Orders
                     System.out.println("\n========================================");
                     System.out.println("             ALL ORDERS                 ");
                     System.out.println("========================================");
@@ -275,7 +237,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 12 -> { // Search Category by ID
+                case 10 -> { // Search Category by ID
                     System.out.println("\n--- Search Category ---");
                     System.out.print("Enter Category ID: ");
                     int id = scanner.nextInt();
@@ -289,7 +251,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 13 -> { // Search Supplier by ID
+                case 11 -> { // Search Supplier by ID
                     System.out.println("\n--- Search Supplier ---");
                     System.out.print("Enter Supplier ID: ");
                     int id = scanner.nextInt();
@@ -308,7 +270,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 14 -> { // Search Product by ID
+                case 12 -> { // Search Product by ID
                     System.out.println("\n--- Search Product ---");
                     System.out.print("Enter Product ID: ");
                     int id = scanner.nextInt();
@@ -325,7 +287,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 15 -> { // Search Customer by ID
+                case 13 -> { // Search Customer by ID
                     System.out.println("\n--- Search Customer ---");
                     System.out.print("Enter Customer ID: ");
                     int id = scanner.nextInt();
@@ -341,7 +303,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 16 -> { // Update Category
+                case 14 -> { // Update Category
                     System.out.println("\n--- Update Category ---");
                     System.out.print("Enter Category ID to update: ");
                     int id = scanner.nextInt();
@@ -362,7 +324,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 17 -> { // Update Supplier
+                case 15 -> { // Update Supplier
                     System.out.println("\n--- Update Supplier ---");
                     System.out.print("Enter Supplier ID to update: ");
                     int id = scanner.nextInt();
@@ -399,7 +361,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 18 -> { // Update Product
+                case 16 -> { // Update Product
                     System.out.println("\n--- Update Product ---");
                     System.out.print("Enter Product ID to update: ");
                     int id = scanner.nextInt();
@@ -436,7 +398,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 19 -> { // Update Customer
+                case 17 -> { // Update Customer
                     System.out.println("\n--- Update Customer ---");
                     System.out.print("Enter Customer ID to update: ");
                     int id = scanner.nextInt();
@@ -454,13 +416,10 @@ public class SouvenirApp {
                         String contact = scanner.nextLine();
                         System.out.print("Enter New Email: ");
                         String email = scanner.nextLine();
-                        System.out.print("Enter New Country ID: ");
-                        int countryId = scanner.nextInt();
                         existing.setFirstName(firstName);
                         existing.setLastName(lastName);
                         existing.setContactNumber(contact);
                         existing.setEmail(email);
-                        existing.setCountryId(countryId);
                         if (customerDAO.updateCustomer(existing)) {
                             System.out.println("✓ Customer updated successfully!");
                         } else {
@@ -469,7 +428,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 20 -> { // Delete Category
+                case 18 -> { // Delete Category
                     System.out.println("\n--- Delete Category ---");
                     System.out.print("Enter Category ID to delete: ");
                     int id = scanner.nextInt();
@@ -487,7 +446,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 21 -> { // Delete Supplier
+                case 19 -> { // Delete Supplier
                     System.out.println("\n--- Delete Supplier ---");
                     System.out.print("Enter Supplier ID to delete: ");
                     int id = scanner.nextInt();
@@ -505,7 +464,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 22 -> { // Delete Product
+                case 20 -> { // Delete Product
                     System.out.println("\n--- Delete Product ---");
                     System.out.print("Enter Product ID to delete: ");
                     int id = scanner.nextInt();
@@ -523,7 +482,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 23 -> { // Delete Customer
+                case 21 -> { // Delete Customer
                     System.out.println("\n--- Delete Customer ---");
                     System.out.print("Enter Customer ID to delete: ");
                     int id = scanner.nextInt();

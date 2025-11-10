@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class CustomerDAO {
     public boolean insertCustomer(Customer customer) {
-        String sql = "INSERT INTO customers (customer_id, first_name, last_name, contact_number, email, country_id) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO customers (customer_id, first_name, last_name, contact_number, email) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -12,7 +12,6 @@ public class CustomerDAO {
             stmt.setString(3, customer.getLastName());
             stmt.setString(4, customer.getContactNumber());
             stmt.setString(5, customer.getEmail());
-            stmt.setInt(6, customer.getCountryId());
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -37,7 +36,6 @@ public class CustomerDAO {
                 c.setLastName(rs.getString("last_name"));
                 c.setContactNumber(rs.getString("contact_number"));
                 c.setEmail(rs.getString("email"));
-                c.setCountryId(rs.getInt("country_id"));
 
                 return c;
             }
@@ -49,7 +47,7 @@ public class CustomerDAO {
     }
 
     public boolean updateCustomer(Customer customer) {
-        String sql = "UPDATE customers SET first_name=?, last_name=?, contact_number=?, email=?, country_id=? WHERE customer_id=?";
+        String sql = "UPDATE customers SET first_name=?, last_name=?, contact_number=?, email=? WHERE customer_id=?";
         
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -57,8 +55,7 @@ public class CustomerDAO {
             stmt.setString(2, customer.getLastName());
             stmt.setString(3, customer.getContactNumber());
             stmt.setString(4, customer.getEmail());
-            stmt.setInt(5, customer.getCountryId());
-            stmt.setInt(6, customer.getCustomerId());
+            stmt.setInt(5, customer.getCustomerId());
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -85,10 +82,7 @@ public class CustomerDAO {
 
     public ArrayList<Customer> getAllCustomersWithCountry() {
         ArrayList<Customer> customers = new ArrayList<>();
-        String sql = "SELECT cust.*, c.country_name " +
-                     "FROM customers cust " +
-                     "LEFT JOIN countries c ON cust.country_id = c.country_id " +
-                     "ORDER BY cust.customer_id";
+        String sql = "SELECT customer_id, first_name, last_name, contact_number, email FROM customers ORDER BY customer_id";
         
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -101,7 +95,6 @@ public class CustomerDAO {
                 cust.setLastName(rs.getString("last_name"));
                 cust.setContactNumber(rs.getString("contact_number"));
                 cust.setEmail(rs.getString("email"));
-                cust.setCountryId(rs.getInt("country_id"));
                 customers.add(cust);
             }
         } catch (SQLException e) {
