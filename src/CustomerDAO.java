@@ -2,7 +2,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CustomerDAO {
-    public boolean insertCustomer(Customer customer) {
+    public boolean addCustomer(Customer customer) {
         String sql = "INSERT INTO customers (first_name, last_name, contact_number, email) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = DBUtil.getConnection();

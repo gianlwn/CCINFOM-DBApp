@@ -101,16 +101,14 @@ public class SouvenirApp {
                     System.out.print("Enter Category ID: ");
                     int categoryId = scanner.nextInt();
                     scanner.nextLine();
-                    System.out.print("Enter Description: ");
-                    String description = scanner.nextLine();
                     System.out.print("Enter Price: ");
                     double price = scanner.nextDouble();
                     System.out.print("Enter Quantity In Stock: ");
                     int quantity = scanner.nextInt();
                     System.out.print("Enter Supplier ID: ");
                     int supplierId = scanner.nextInt();
-                    Product product = new Product(id, name, categoryId, description, price, quantity, supplierId);
-                    if (productDAO.insertProduct(product)) {
+                    Product product = new Product(id, name, categoryId, price, quantity, supplierId);
+                    if (productDAO.addProduct(product)) {
                         System.out.println("Product added successfully!");
                     } else {
                         System.out.println("Failed to add product.");
@@ -128,7 +126,7 @@ public class SouvenirApp {
                     System.out.print("Enter Email: ");
                     String email = scanner.nextLine();
                     Customer customer = new Customer(firstName, lastName, contact, email);
-                    if (customerDAO.insertCustomer(customer)) {
+                    if (customerDAO.addCustomer(customer)) {
                         System.out.println("Customer added successfully!");
                     } else {
                         System.out.println("Failed to add customer.");
@@ -177,16 +175,15 @@ public class SouvenirApp {
                     System.out.println("\n========================================");
                     System.out.println("              ALL PRODUCTS              ");
                     System.out.println("========================================");
-                    ArrayList<Product> products = productDAO.getAllProductsDetailed();
+                    ArrayList<Product> products = productDAO.getAllProducts();
                     if (products.isEmpty()) {
                         System.out.println("No products found.");
                     } else {
-                        System.out.printf("%-5s %-20s %-15s %-10s %-10s%n", "ID", "Name", "Description", "Price", "Stock");
+                        System.out.printf("%-5s %-20s %-15s %-10s %-10s%n", "ID", "Name", "Price", "Stock");
                         System.out.println("------------------------------------------------------------------------");
                         for (Product p : products) {
-                            System.out.printf("%-5d %-20s %-15s $%-9.2f %-10d%n",
-                                p.getProductId(), p.getProductName(), p.getDescription(),
-                                p.getPrice(), p.getQuantityInStock());
+                            System.out.printf("%-5d %-20s $%-9.2f %-10d%n",
+                                p.getProductId(), p.getProductName(), p.getPrice(), p.getQuantityInStock());
                         }
                         System.out.println("========================================================================");
                         System.out.println("Total Products: " + products.size());
@@ -217,7 +214,7 @@ public class SouvenirApp {
                     System.out.println("\n========================================");
                     System.out.println("             ALL ORDERS                 ");
                     System.out.println("========================================");
-                    ArrayList<OrderDetails> orders = orderDetailsDAO.getAllOrderDetails();
+                    ArrayList<OrderDetails> orders = orderDetailsDAO.getAllOrders();
                     if (orders.isEmpty()) {
                         System.out.println("No orders found.");
                     } else {
@@ -276,7 +273,6 @@ public class SouvenirApp {
                         System.out.println("\n--- Product Found ---");
                         System.out.println("ID: " + product.getProductId());
                         System.out.println("Name: " + product.getProductName());
-                        System.out.println("Description: " + product.getDescription());
                         System.out.println("Price: $" + product.getPrice());
                         System.out.println("Stock: " + product.getQuantityInStock());
                     } else {
@@ -373,8 +369,6 @@ public class SouvenirApp {
                         System.out.print("Enter New Category ID: ");
                         int categoryId = scanner.nextInt();
                         scanner.nextLine();
-                        System.out.print("Enter New Description: ");
-                        String description = scanner.nextLine();
                         System.out.print("Enter New Price: ");
                         double price = scanner.nextDouble();
                         System.out.print("Enter New Quantity In Stock: ");
@@ -383,7 +377,6 @@ public class SouvenirApp {
                         int supplierId = scanner.nextInt();
                         existing.setProductName(name);
                         existing.setCategoryId(categoryId);
-                        existing.setDescription(description);
                         existing.setPrice(price);
                         existing.setQuantityInStock(quantity);
                         existing.setSupplierId(supplierId);

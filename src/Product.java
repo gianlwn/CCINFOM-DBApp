@@ -3,7 +3,6 @@ public class Product {
     private int product_id;
     private String product_name;
     private int category_id;
-    private String description;
     private double price;
     private int quantity_in_stock;
     private int supplier_id;
@@ -11,11 +10,10 @@ public class Product {
     // Constructors
     public Product() {}
 
-    public Product(int product_id, String product_name, int category_id, String description, double price, int quantity_in_stock, int supplier_id) {
+    public Product(int product_id, String product_name, int category_id, double price, int quantity_in_stock, int supplier_id) {
         this.product_id = product_id;
         this.product_name = product_name;
         this.category_id = category_id;
-        this.description = description;
         this.price = price;
         this.quantity_in_stock = quantity_in_stock;
         this.supplier_id = supplier_id;
@@ -43,14 +41,6 @@ public class Product {
     }
     public void setCategoryId(int category_id) {
         this.category_id = category_id;
-    }
-
-    // Description
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     // Price

@@ -1,4 +1,4 @@
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class OrderDetails {
     private int order_id;
@@ -6,11 +6,11 @@ public class OrderDetails {
     private int product_id;
     private int quantity;
     private double unit_price;
-    private Date order_date;
+    private Timestamp order_date;
 
     public OrderDetails() {}
 
-    public OrderDetails(int order_id, int customer_id, int product_id, int quantity, double unit_price, Date order_date) {
+    public OrderDetails(int order_id, int customer_id, int product_id, int quantity, double unit_price, Timestamp order_date) {
         this.order_id = order_id;
         this.customer_id = customer_id;
         this.product_id = product_id;
@@ -60,10 +60,10 @@ public class OrderDetails {
     }
 
     // Order Date
-    public Date getOrderDate() {
+    public Timestamp getOrderDate() {
         return order_date;
     }
-    public void setOrderDate(Date order_date) {
+    public void setOrderDate(Timestamp order_date) {
         this.order_date = order_date;
     }
 }

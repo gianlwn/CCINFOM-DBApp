@@ -2,20 +2,26 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ProductDAO {
-    public boolean insertProduct(Product product) {
-        String sql = "INSERT INTO products (product_id, product_name, category_id, description, price, quantity_in_stock, supplier_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public boolean addProduct(Product product) {
+        String sql = "INSERT INTO products (product_name, category_id, price, quantity_in_stock, supplier_id) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, product.getProductId());
-            stmt.setString(2, product.getProductName());
-            stmt.setInt(3, product.getCategoryId());
-            stmt.setString(4, product.getDescription());
-            stmt.setDouble(5, product.getPrice());
-            stmt.setInt(6, product.getQuantityInStock());
-            stmt.setInt(7, product.getSupplierId());
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, product.getProductName());
+            stmt.setInt(2, product.getCategoryId());
+            stmt.setDouble(3, product.getPrice());
+            stmt.setInt(4, product.getQuantityInStock());
+            stmt.setInt(5, product.getSupplierId());
 
-            return stmt.executeUpdate() > 0;
+            int rows = stmt.executeUpdate();
+
+            if (rows > 0) 
+                try (ResultSet keys = stmt.getGeneratedKeys()) {
+                    if (keys.next())
+                        product.setProductId(keys.getInt(1));
+                }
+
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -24,24 +30,26 @@ public class ProductDAO {
     }
 
     public Product getProductById(int id) {
-        String sql = "SELECT * FROM products WHERE product_id = ?";
+        String sql = "SELECT product_id, product_name, category_id, price, quantity_in_stock, supplier_id FROM products WHERE product_id = ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
+            
+            try (ResultSet rs = stmt.executeQuery();) {
+                if (rs.next()) {
+                    Product p = new Product();
+                    p.setProductId(rs.getInt("product_id"));
+                    p.setProductName(rs.getString("product_name"));
+                    p.setCategoryId(rs.getInt("category_id"));
+                    p.setPrice(rs.getDouble("price"));
+                    p.setQuantityInStock(rs.getInt("quantity_in_stock"));
+                    p.setSupplierId(rs.getInt("supplier_id"));
 
-            if (rs.next()) {
-                Product p = new Product();
-                p.setProductId(rs.getInt("product_id"));
-                p.setProductName(rs.getString("product_name"));
-                p.setCategoryId(rs.getInt("category_id"));
-                p.setDescription(rs.getString("description"));
-                p.setPrice(rs.getDouble("price"));
-                p.setQuantityInStock(rs.getInt("quantity_in_stock"));
-                p.setSupplierId(rs.getInt("supplier_id"));
-                return p;
+                    return p;
+                }
             }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,17 +58,16 @@ public class ProductDAO {
     }
 
     public boolean updateProduct(Product product) {
-        String sql = "UPDATE products SET product_name=?, category_id=?, description=?, price=?, quantity_in_stock=?, supplier_id=? WHERE product_id=?";
+        String sql = "UPDATE products SET product_name=?, category_id=?, price=?, quantity_in_stock=?, supplier_id=? WHERE product_id=?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, product.getProductName());
             stmt.setInt(2, product.getCategoryId());
-            stmt.setString(3, product.getDescription());
-            stmt.setDouble(4, product.getPrice());
-            stmt.setInt(5, product.getQuantityInStock());
-            stmt.setInt(6, product.getSupplierId());
-            stmt.setInt(7, product.getProductId());
+            stmt.setDouble(3, product.getPrice());
+            stmt.setInt(4, product.getQuantityInStock());
+            stmt.setInt(5, product.getSupplierId());
+            stmt.setInt(6, product.getProductId());
 
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -85,13 +92,9 @@ public class ProductDAO {
         return false;
     }
 
-    public ArrayList<Product> getAllProductsDetailed() {
+    public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
-        String sql = "SELECT p.*, c.category_name, s.supplier_name " +
-                     "FROM products p " +
-                     "LEFT JOIN categories c ON p.category_id = c.category_id " +
-                     "LEFT JOIN suppliers s ON p.supplier_id = s.supplier_id " +
-                     "ORDER BY p.product_id";
+        String sql = "SELECT product_id, product_name, category_id, price, quantity_in_stock, supplier_id FROM products ORDER BY product_id";
         
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -102,7 +105,6 @@ public class ProductDAO {
                 p.setProductId(rs.getInt("product_id"));
                 p.setProductName(rs.getString("product_name"));
                 p.setCategoryId(rs.getInt("category_id"));
-                p.setDescription(rs.getString("description"));
                 p.setPrice(rs.getDouble("price"));
                 p.setQuantityInStock(rs.getInt("quantity_in_stock"));
                 p.setSupplierId(rs.getInt("supplier_id"));
@@ -113,5 +115,20 @@ public class ProductDAO {
         }
         
         return products;
+    }
+
+    public boolean updateProductStock(int productId, int newQty) {
+        String sql = "UPDATE products SET quantity_in_stock = ? WHERE product_id = ?";
+
+        try (Connection conn = DBUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, newQty);
+            ps.setInt(2, productId);
+            
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
