@@ -59,9 +59,9 @@ public class SouvenirApp {
                     String name = scanner.nextLine();
                     Category category = new Category(id, name);
                     if (categoryDAO.insertCategory(category)) {
-                        System.out.println("✓ Category added successfully!");
+                        System.out.println("Category added successfully!");
                     } else {
-                        System.out.println("✗ Failed to add category.");
+                        System.out.println("Failed to add category.");
                     }
                 }
                 
@@ -85,9 +85,9 @@ public class SouvenirApp {
                     Date lastDeliveryDate = Date.valueOf(dateStr);
                     Supplier supplier = new Supplier(id, name, contactPerson, contact, email, address, lastDeliveryDate);
                     if (supplierDAO.insertSupplier(supplier)) {
-                        System.out.println("✓ Supplier added successfully!");
+                        System.out.println("Supplier added successfully!");
                     } else {
-                        System.out.println("✗ Failed to add supplier.");
+                        System.out.println("Failed to add supplier.");
                     }
                 }
                 
@@ -111,9 +111,9 @@ public class SouvenirApp {
                     int supplierId = scanner.nextInt();
                     Product product = new Product(id, name, categoryId, description, price, quantity, supplierId);
                     if (productDAO.insertProduct(product)) {
-                        System.out.println("✓ Product added successfully!");
+                        System.out.println("Product added successfully!");
                     } else {
-                        System.out.println("✗ Failed to add product.");
+                        System.out.println("Failed to add product.");
                     }
                 }
                 
@@ -129,9 +129,9 @@ public class SouvenirApp {
                     String email = scanner.nextLine();
                     Customer customer = new Customer(firstName, lastName, contact, email);
                     if (customerDAO.insertCustomer(customer)) {
-                        System.out.println("✓ Customer added successfully!");
+                        System.out.println("Customer added successfully!");
                     } else {
-                        System.out.println("✗ Failed to add customer.");
+                        System.out.println("Failed to add customer.");
                     }
                 }
                 
@@ -244,7 +244,7 @@ public class SouvenirApp {
                         System.out.println("ID: " + category.getCategoryId());
                         System.out.println("Name: " + category.getCategoryName());
                     } else {
-                        System.out.println("✗ Category not found.");
+                        System.out.println("Category not found.");
                     }
                 }
                 
@@ -263,7 +263,7 @@ public class SouvenirApp {
                         System.out.println("Address: " + supplier.getAddress());
                         System.out.println("Last Delivery Date: " + supplier.getLastDeliveryDate());
                     } else {
-                        System.out.println("✗ Supplier not found.");
+                        System.out.println("Supplier not found.");
                     }
                 }
                 
@@ -280,7 +280,7 @@ public class SouvenirApp {
                         System.out.println("Price: $" + product.getPrice());
                         System.out.println("Stock: " + product.getQuantityInStock());
                     } else {
-                        System.out.println("✗ Product not found.");
+                        System.out.println("Product not found.");
                     }
                 }
                 
@@ -296,7 +296,7 @@ public class SouvenirApp {
                         System.out.println("Contact: " + customer.getContactNumber());
                         System.out.println("Email: " + customer.getEmail());
                     } else {
-                        System.out.println("✗ Customer not found.");
+                        System.out.println("Customer not found.");
                     }
                 }
                 
@@ -307,16 +307,16 @@ public class SouvenirApp {
                     scanner.nextLine();
                     Category existing = categoryDAO.getCategoryById(id);
                     if (existing == null) {
-                        System.out.println("✗ Category not found.");
+                        System.out.println("Category not found.");
                     } else {
                         System.out.println("Current Name: " + existing.getCategoryName());
                         System.out.print("Enter New Category Name: ");
                         String newName = scanner.nextLine();
                         existing.setCategoryName(newName);
                         if (categoryDAO.updateCategory(existing)) {
-                            System.out.println("✓ Category updated successfully!");
+                            System.out.println("Category updated successfully!");
                         } else {
-                            System.out.println("✗ Failed to update category.");
+                            System.out.println("Failed to update category.");
                         }
                     }
                 }
@@ -328,7 +328,7 @@ public class SouvenirApp {
                     scanner.nextLine();
                     Supplier existing = supplierDAO.getSupplierById(id);
                     if (existing == null) {
-                        System.out.println("✗ Supplier not found.");
+                        System.out.println("Supplier not found.");
                     } else {
                         System.out.println("Current Name: " + existing.getSupplierName());
                         System.out.print("Enter New Supplier Name: ");
@@ -351,9 +351,9 @@ public class SouvenirApp {
                         existing.setAddress(address);
                         existing.setLastDeliveryDate(lastDeliveryDate);
                         if (supplierDAO.updateSupplier(existing)) {
-                            System.out.println("✓ Supplier updated successfully!");
+                            System.out.println("Supplier updated successfully!");
                         } else {
-                            System.out.println("✗ Failed to update supplier.");
+                            System.out.println("Failed to update supplier.");
                         }
                     }
                 }
@@ -365,7 +365,7 @@ public class SouvenirApp {
                     scanner.nextLine();
                     Product existing = productDAO.getProductById(id);
                     if (existing == null) {
-                        System.out.println("✗ Product not found.");
+                        System.out.println("Product not found.");
                     } else {
                         System.out.println("Current Name: " + existing.getProductName());
                         System.out.print("Enter New Product Name: ");
@@ -388,9 +388,9 @@ public class SouvenirApp {
                         existing.setQuantityInStock(quantity);
                         existing.setSupplierId(supplierId);
                         if (productDAO.updateProduct(existing)) {
-                            System.out.println("✓ Product updated successfully!");
+                            System.out.println("Product updated successfully!");
                         } else {
-                            System.out.println("✗ Failed to update product.");
+                            System.out.println("Failed to update product.");
                         }
                     }
                 }
@@ -402,7 +402,7 @@ public class SouvenirApp {
                     scanner.nextLine();
                     Customer existing = customerDAO.getCustomerById(id);
                     if (existing == null) {
-                        System.out.println("✗ Customer not found.");
+                        System.out.println("Customer not found.");
                     } else {
                         System.out.println("Current Name: " + existing.getFirstName() + " " + existing.getLastName());
                         System.out.print("Enter New First Name: ");
@@ -418,9 +418,9 @@ public class SouvenirApp {
                         existing.setContactNumber(contact);
                         existing.setEmail(email);
                         if (customerDAO.updateCustomer(existing)) {
-                            System.out.println("✓ Customer updated successfully!");
+                            System.out.println("Customer updated successfully!");
                         } else {
-                            System.out.println("✗ Failed to update customer.");
+                            System.out.println("Failed to update customer.");
                         }
                     }
                 }
@@ -434,9 +434,9 @@ public class SouvenirApp {
                     String confirm = scanner.nextLine();
                     if (confirm.equalsIgnoreCase("yes")) {
                         if (categoryDAO.deleteCategory(id)) {
-                            System.out.println("✓ Category deleted successfully!");
+                            System.out.println("Category deleted successfully!");
                         } else {
-                            System.out.println("✗ Failed to delete category.");
+                            System.out.println("Failed to delete category.");
                         }
                     } else {
                         System.out.println("Deletion cancelled.");
@@ -452,9 +452,9 @@ public class SouvenirApp {
                     String confirm = scanner.nextLine();
                     if (confirm.equalsIgnoreCase("yes")) {
                         if (supplierDAO.deleteSupplier(id)) {
-                            System.out.println("✓ Supplier deleted successfully!");
+                            System.out.println("Supplier deleted successfully!");
                         } else {
-                            System.out.println("✗ Failed to delete supplier.");
+                            System.out.println("Failed to delete supplier.");
                         }
                     } else {
                         System.out.println("Deletion cancelled.");
@@ -470,9 +470,9 @@ public class SouvenirApp {
                     String confirm = scanner.nextLine();
                     if (confirm.equalsIgnoreCase("yes")) {
                         if (productDAO.deleteProduct(id)) {
-                            System.out.println("✓ Product deleted successfully!");
+                            System.out.println("Product deleted successfully!");
                         } else {
-                            System.out.println("✗ Failed to delete product.");
+                            System.out.println("Failed to delete product.");
                         }
                     } else {
                         System.out.println("Deletion cancelled.");
@@ -488,9 +488,9 @@ public class SouvenirApp {
                     String confirm = scanner.nextLine();
                     if (confirm.equalsIgnoreCase("yes")) {
                         if (customerDAO.deleteCustomer(id)) {
-                            System.out.println("✓ Customer deleted successfully!");
+                            System.out.println("Customer deleted successfully!");
                         } else {
-                            System.out.println("✗ Failed to delete customer.");
+                            System.out.println("Failed to delete customer.");
                         }
                     } else {
                         System.out.println("Deletion cancelled.");
