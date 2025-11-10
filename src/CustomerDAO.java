@@ -3,10 +3,10 @@ import java.util.ArrayList;
 
 public class CustomerDAO {
     public boolean insertCustomer(Customer customer) {
-        String sql = "INSERT INTO customers (first_name, last_name, contact_number, email) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO customers (first_name, last_name, contact_number, email) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, customer.getFirstName());
             stmt.setString(2, customer.getLastName());
 
@@ -24,7 +24,7 @@ public class CustomerDAO {
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    customer.setCustomerId(1);
+                    customer.setCustomerId(rs.getInt(1));
                 }
             }
 
