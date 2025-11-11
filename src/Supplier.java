@@ -13,8 +13,7 @@ public class Supplier {
     // Constructors
     public Supplier() {}
 
-    public Supplier(int supplier_id, String supplier_name, String contact_person, String contact_number, String email, String address, Date last_delivery_date) {
-        this.supplier_id = supplier_id;
+    public Supplier(String supplier_name, String contact_person, String contact_number, String email, String address, Date last_delivery_date) {
         this.supplier_name = supplier_name;
         this.contact_person = contact_person;
         this.contact_number = contact_number;

@@ -10,8 +10,7 @@ public class OrderDetails {
 
     public OrderDetails() {}
 
-    public OrderDetails(int order_id, int customer_id, int product_id, int quantity, double unit_price, Timestamp order_date) {
-        this.order_id = order_id;
+    public OrderDetails(int customer_id, int product_id, int quantity, double unit_price, Timestamp order_date) {
         this.customer_id = customer_id;
         this.product_id = product_id;
         this.quantity = quantity;

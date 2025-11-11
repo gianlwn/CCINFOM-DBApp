@@ -3,19 +3,26 @@ import java.util.ArrayList;
 
 public class SupplierDAO {
     public boolean insertSupplier(Supplier supplier) {
-        String sql = "INSERT INTO suppliers (supplier_id, supplier_name, contact_person, contact_number, email, address, last_delivery_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO suppliers (supplier_name, contact_person, contact_number, email, address, last_delivery_date) VALUES (?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, supplier.getSupplierId());
-            stmt.setString(2, supplier.getSupplierName());
-            stmt.setString(3, supplier.getContactPerson());
-            stmt.setString(4, supplier.getContactNumber());
-            stmt.setString(5, supplier.getEmail());
-            stmt.setString(6, supplier.getAddress());
-            stmt.setDate(7, supplier.getLastDeliveryDate());
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, supplier.getSupplierName());
+            stmt.setString(2, supplier.getContactPerson());
+            stmt.setString(3, supplier.getContactNumber());
+            stmt.setString(4, supplier.getEmail());
+            stmt.setString(5, supplier.getAddress());
+            stmt.setDate(6, supplier.getLastDeliveryDate());
 
-            return stmt.executeUpdate() > 0;
+            int rows = stmt.executeUpdate();
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    supplier.setSupplierId((rs.getInt(1)));
+                }
+            }
+
+            return rows > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }

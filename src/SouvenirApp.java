@@ -51,12 +51,9 @@ public class SouvenirApp {
             switch (choice) {
                 case 1 -> {
                     System.out.println("\n--- Add Category ---");
-                    System.out.print("Enter Category ID: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
                     System.out.print("Enter Category Name: ");
                     String name = scanner.nextLine();
-                    Category category = new Category(id, name);
+                    Category category = new Category(name);
                     if (categoryDAO.insertCategory(category)) {
                         System.out.println("Category added successfully!");
                     } else {
@@ -66,9 +63,6 @@ public class SouvenirApp {
                 
                 case 2 -> {
                     System.out.println("\n--- Add Supplier ---");
-                    System.out.print("Enter Supplier ID: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
                     System.out.print("Enter Supplier Name: ");
                     String name = scanner.nextLine();
                     System.out.print("Enter Contact Person: ");
@@ -82,7 +76,7 @@ public class SouvenirApp {
                     System.out.print("Enter Last Delivery Date (YYYY-MM-DD): ");
                     String dateStr = scanner.nextLine();
                     Date lastDeliveryDate = Date.valueOf(dateStr);
-                    Supplier supplier = new Supplier(id, name, contactPerson, contact, email, address, lastDeliveryDate);
+                    Supplier supplier = new Supplier(name, contactPerson, contact, email, address, lastDeliveryDate);
                     if (supplierDAO.insertSupplier(supplier)) {
                         System.out.println("Supplier added successfully!");
                     } else {
@@ -92,9 +86,6 @@ public class SouvenirApp {
                 
                 case 3 -> {
                     System.out.println("\n--- Add Product ---");
-                    System.out.print("Enter Product ID: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
                     System.out.print("Enter Product Name: ");
                     String name = scanner.nextLine();
                     System.out.print("Enter Category ID: ");
@@ -106,7 +97,7 @@ public class SouvenirApp {
                     int quantity = scanner.nextInt();
                     System.out.print("Enter Supplier ID: ");
                     int supplierId = scanner.nextInt();
-                    Product product = new Product(id, name, categoryId, price, quantity, supplierId);
+                    Product product = new Product(name, categoryId, price, quantity, supplierId);
                     if (productDAO.addProduct(product)) {
                         System.out.println("Product added successfully!");
                     } else {

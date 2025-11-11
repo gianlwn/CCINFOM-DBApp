@@ -3,14 +3,21 @@ import java.util.ArrayList;
 
 public class CategoryDAO {
     public boolean insertCategory(Category category) {
-        String sql = "INSERT INTO categories (category_id, category_name) VALUES (?, ?)";
+        String sql = "INSERT INTO categories (category_name) VALUES (?)";
 
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, category.getCategoryId());
-            stmt.setString(2, category.getCategoryName());
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, category.getCategoryName());
 
-            return stmt.executeUpdate() > 0;
+            int rows = stmt.executeUpdate();
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    category.setCategoryId((rs.getInt(1)));
+                }
+            }
+
+            return rows > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
