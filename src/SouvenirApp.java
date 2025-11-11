@@ -99,21 +99,6 @@ public class SouvenirApp {
                 
                 case 2 -> {
                     // put create order commands
-                    System.out.println("\n--- Add Customer ---");
-                    System.out.print("Enter First Name: ");
-                    String firstName = scanner.nextLine();
-                    System.out.print("Enter Last Name: ");
-                    String lastName = scanner.nextLine();
-                    System.out.print("Enter Contact Number: ");
-                    String contact = scanner.nextLine();
-                    System.out.print("Enter Email: ");
-                    String email = scanner.nextLine();
-                    Customer customer = new Customer(firstName, lastName, contact, email);
-
-                    if (customerDAO.addCustomer(customer))
-                        System.out.println("Customer added successfully!");
-                    else
-                        System.out.println("Failed to add customer.");
                 }
 
                 case 3 -> {
