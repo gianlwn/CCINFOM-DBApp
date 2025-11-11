@@ -36,11 +36,6 @@ public class SouvenirApp {
             System.out.println("15 -> Update Supplier");
             System.out.println("16 -> Update Product");
             System.out.println("17 -> Update Customer");
-            System.out.println("\n[DELETE RECORDS]");
-            System.out.println("18 -> Delete Category");
-            System.out.println("19 -> Delete Supplier");
-            System.out.println("20 -> Delete Product");
-            System.out.println("21 -> Delete Customer");
             System.out.println("\n0 -> Exit");
             System.out.println("========================================");
             System.out.print("Enter choice: ");
@@ -405,78 +400,6 @@ public class SouvenirApp {
                         } else {
                             System.out.println("Failed to update customer.");
                         }
-                    }
-                }
-                
-                case 18 -> {
-                    System.out.println("\n--- Delete Category ---");
-                    System.out.print("Enter Category ID to delete: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Are you sure? (yes/no): ");
-                    String confirm = scanner.nextLine();
-                    if (confirm.equalsIgnoreCase("yes")) {
-                        if (categoryDAO.deleteCategory(id)) {
-                            System.out.println("Category deleted successfully!");
-                        } else {
-                            System.out.println("Failed to delete category.");
-                        }
-                    } else {
-                        System.out.println("Deletion cancelled.");
-                    }
-                }
-                
-                case 19 -> {
-                    System.out.println("\n--- Delete Supplier ---");
-                    System.out.print("Enter Supplier ID to delete: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Are you sure? (yes/no): ");
-                    String confirm = scanner.nextLine();
-                    if (confirm.equalsIgnoreCase("yes")) {
-                        if (supplierDAO.deleteSupplier(id)) {
-                            System.out.println("Supplier deleted successfully!");
-                        } else {
-                            System.out.println("Failed to delete supplier.");
-                        }
-                    } else {
-                        System.out.println("Deletion cancelled.");
-                    }
-                }
-                
-                case 20 -> {
-                    System.out.println("\n--- Delete Product ---");
-                    System.out.print("Enter Product ID to delete: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Are you sure? (yes/no): ");
-                    String confirm = scanner.nextLine();
-                    if (confirm.equalsIgnoreCase("yes")) {
-                        if (productDAO.deleteProduct(id)) {
-                            System.out.println("Product deleted successfully!");
-                        } else {
-                            System.out.println("Failed to delete product.");
-                        }
-                    } else {
-                        System.out.println("Deletion cancelled.");
-                    }
-                }
-                
-                case 21 -> {
-                    System.out.println("\n--- Delete Customer ---");
-                    System.out.print("Enter Customer ID to delete: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Are you sure? (yes/no): ");
-                    String confirm = scanner.nextLine();
-                    if (confirm.equalsIgnoreCase("yes")) {
-                        if (customerDAO.deleteCustomer(id)) {
-                            System.out.println("Customer deleted successfully!");
-                        } else {
-                            System.out.println("Failed to delete customer.");
-                        }
-                    } else {
-                        System.out.println("Deletion cancelled.");
                     }
                 }
                 
