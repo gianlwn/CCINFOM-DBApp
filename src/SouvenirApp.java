@@ -107,6 +107,7 @@ public class SouvenirApp {
                     String contact = scanner.nextLine();
                     System.out.print("Enter Email: ");
                     String email = scanner.nextLine();
+                    // TODO: put try-catch here
                     System.out.print("Enter Product ID: ");
                     int productID = scanner.nextInt();
                     scanner.nextLine();
@@ -117,12 +118,17 @@ public class SouvenirApp {
 
                     if (customerDAO.addCustomer(customer)) {
                         Product productBought = productDAO.getProductById(productID);
-                        OrderDetails orderDetails = new OrderDetails(customer.getCustomerId(), productID, quantity, productBought);
 
-                        if (orderDetailsDAO.createOrder(customer, orderDetails))
-                            System.out.println("Order created successfully!");
-                        else
-                            System.out.println("Failed to create order");
+                        if (productBought != null) {
+                            OrderDetails orderDetails = new OrderDetails(customer.getCustomerId(), productID, quantity, productBought);
+
+                            if (orderDetailsDAO.createOrder(customer, orderDetails))
+                                System.out.println("Order created successfully!");
+                            else
+                                System.out.println("Failed to create order");
+                        } else {
+                            System.out.println("Product does not exist.");
+                        }
 
                     } else {
                         System.out.println("Failed to create order, enter valid fields for the customer.");
@@ -152,7 +158,7 @@ public class SouvenirApp {
                 }
 
                 case 4 -> {
-                    // put edit order commands
+                    // TODO: put edit order commands
                 }   
 
                 case 0 -> {

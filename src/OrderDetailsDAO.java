@@ -2,22 +2,22 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /*
-TODO: change the whole class based on changes
+TODO: change status (the enums)
  */
 
 public class OrderDetailsDAO {
     public boolean createOrder(Customer customer, OrderDetails orderDetails) {
-        if (orderDetails.getProductBought().getProductId() <= 0) {
+        if (orderDetails.getProductBought().getProductId() <= 0 && orderDetails.getProductBought().getProductId() > 3000) {
             System.err.println("Product ID field must be provided.");
             return false;
         }
 
-        if (orderDetails.getProductBought().getQuantityInStock() < 0) {
+        if (orderDetails.getQuantity() < 0 && orderDetails.getProductBought().getQuantityInStock() >= orderDetails.getQuantity()) {
             System.err.println("Quantity in stock cannot be negative.");
             return false;
         }
 
-        String sql = "INSERT INTO order_details (customer_id, product_id, quantity, unit_price, order_date) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO order_details (customer_id, product_id, quantity, total, order_date) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection conn = DBUtil.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
