@@ -21,7 +21,6 @@ public class SouvenirApp {
                         productsMenu();
                         int productsChoice = scanner.nextInt();
                         scanner.nextLine();
-
                     
                         switch (productsChoice) {
                             case 1 -> {
