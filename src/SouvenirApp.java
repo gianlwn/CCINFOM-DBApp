@@ -16,26 +16,15 @@ public class SouvenirApp {
             System.out.println("    SOUVENIR SHOP MANAGEMENT SYSTEM    ");
             System.out.println("========================================");
             System.out.println("[ADD RECORDS]");
-            System.out.println("1 -> Add Category");
-            System.out.println("2 -> Add Supplier");
-            System.out.println("3 -> Add Product");
-            System.out.println("4 -> Add Customer");
+            // for the products, put all in one button
+            System.out.println("1 -> Add Product"); // change
+            System.out.println("2 -> Add Customer"); // change to Create Order
             System.out.println("\n[VIEW RECORDS]");
-            System.out.println("5 -> View All Categories");
-            System.out.println("6 -> View All Suppliers");
-            System.out.println("7 -> View All Products");
-            System.out.println("8 -> View All Customers");
-            System.out.println("9 -> View All Orders");
-            System.out.println("\n[SEARCH RECORDS]");
-            System.out.println("10 -> Search Category by ID");
-            System.out.println("11 -> Search Supplier by ID");
-            System.out.println("12 -> Search Product by ID");
-            System.out.println("13 -> Search Customer by ID");
+            System.out.println("3 -> View All Products"); // change
+            System.out.println("4 -> View All Orders");
             System.out.println("\n[UPDATE RECORDS]");
-            System.out.println("14 -> Update Category");
-            System.out.println("15 -> Update Supplier");
-            System.out.println("16 -> Update Product");
-            System.out.println("17 -> Update Customer");
+            System.out.println("5 -> Update Product"); // change
+            // add Edit Order
             System.out.println("\n0 -> Exit");
             System.out.println("========================================");
             System.out.print("Enter choice: ");
@@ -43,43 +32,8 @@ public class SouvenirApp {
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (choice) {
+            switch (choice) {   
                 case 1 -> {
-                    System.out.println("\n--- Add Category ---");
-                    System.out.print("Enter Category Name: ");
-                    String name = scanner.nextLine();
-                    Category category = new Category(name);
-                    if (categoryDAO.insertCategory(category)) {
-                        System.out.println("Category added successfully!");
-                    } else {
-                        System.out.println("Failed to add category.");
-                    }
-                }
-                
-                case 2 -> {
-                    System.out.println("\n--- Add Supplier ---");
-                    System.out.print("Enter Supplier Name: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Enter Contact Person: ");
-                    String contactPerson = scanner.nextLine();
-                    System.out.print("Enter Contact Number: ");
-                    String contact = scanner.nextLine();
-                    System.out.print("Enter Email: ");
-                    String email = scanner.nextLine();
-                    System.out.print("Enter Address: ");
-                    String address = scanner.nextLine();
-                    System.out.print("Enter Last Delivery Date (YYYY-MM-DD): ");
-                    String dateStr = scanner.nextLine();
-                    Date lastDeliveryDate = Date.valueOf(dateStr);
-                    Supplier supplier = new Supplier(name, contactPerson, contact, email, address, lastDeliveryDate);
-                    if (supplierDAO.insertSupplier(supplier)) {
-                        System.out.println("Supplier added successfully!");
-                    } else {
-                        System.out.println("Failed to add supplier.");
-                    }
-                }
-                
-                case 3 -> {
                     System.out.println("\n--- Add Product ---");
                     System.out.print("Enter Product Name: ");
                     String name = scanner.nextLine();
@@ -100,7 +54,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 4 -> {
+                case 2 -> {
                     System.out.println("\n--- Add Customer ---");
                     System.out.print("Enter First Name: ");
                     String firstName = scanner.nextLine();
@@ -117,46 +71,8 @@ public class SouvenirApp {
                         System.out.println("Failed to add customer.");
                     }
                 }
-                
-                case 5 -> {
-                    System.out.println("\n========================================");
-                    System.out.println("           ALL CATEGORIES              ");
-                    System.out.println("========================================");
-                    ArrayList<Category> categories = categoryDAO.getAllCategories();
-                    if (categories.isEmpty()) {
-                        System.out.println("No categories found.");
-                    } else {
-                        System.out.printf("%-10s %-30s%n", "ID", "Category Name");
-                        System.out.println("----------------------------------------");
-                        for (Category c : categories) {
-                            System.out.printf("%-10d %-30s%n", c.getCategoryId(), c.getCategoryName());
-                        }
-                        System.out.println("========================================");
-                        System.out.println("Total Categories: " + categories.size());
-                    }
-                }
-                
-                case 6 -> {
-                    System.out.println("\n========================================");
-                    System.out.println("             ALL SUPPLIERS              ");
-                    System.out.println("========================================");
-                    ArrayList<Supplier> suppliers = supplierDAO.getAllSuppliers();
-                    if (suppliers.isEmpty()) {
-                        System.out.println("No suppliers found.");
-                    } else {
-                        System.out.printf("%-5s %-20s %-20s %-15s %-25s%n", "ID", "Name", "Contact Person", "Contact #", "Email");
-                        System.out.println("---------------------------------------------------------------------------------------------");
-                        for (Supplier s : suppliers) {
-                            System.out.printf("%-5d %-20s %-20s %-15s %-25s%n",
-                                s.getSupplierId(), s.getSupplierName(), s.getContactPerson(),
-                                s.getContactNumber(), s.getEmail());
-                        }
-                        System.out.println("=============================================================================================");
-                        System.out.println("Total Suppliers: " + suppliers.size());
-                    }
-                }
-                
-                case 7 -> {
+
+                case 3 -> {
                     System.out.println("\n========================================");
                     System.out.println("              ALL PRODUCTS              ");
                     System.out.println("========================================");
@@ -174,28 +90,8 @@ public class SouvenirApp {
                         System.out.println("Total Products: " + products.size());
                     }
                 }
-                
-                case 8 -> {
-                    System.out.println("\n========================================");
-                    System.out.println("            ALL CUSTOMERS               ");
-                    System.out.println("========================================");
-                    ArrayList<Customer> customers = customerDAO.getAllCustomers();
-                    if (customers.isEmpty()) {
-                        System.out.println("No customers found.");
-                    } else {
-                        System.out.printf("%-5s %-15s %-15s %-15s %-25s%n", "ID", "First Name", "Last Name", "Contact", "Email");
-                        System.out.println("--------------------------------------------------------------------------------");
-                        for (Customer c : customers) {
-                            System.out.printf("%-5d %-15s %-15s %-15s %-25s%n",
-                                c.getCustomerId(), c.getFirstName(), c.getLastName(),
-                                c.getContactNumber(), c.getEmail());
-                        }
-                        System.out.println("================================================================================");
-                        System.out.println("Total Customers: " + customers.size());
-                    }
-                }
-                
-                case 9 -> {
+
+                case 4 -> {
                     System.out.println("\n========================================");
                     System.out.println("             ALL ORDERS                 ");
                     System.out.println("========================================");
@@ -214,132 +110,9 @@ public class SouvenirApp {
                         System.out.println("============================================================================");
                         System.out.println("Total Orders: " + orders.size());
                     }
-                }
-                
-                case 10 -> {
-                    System.out.println("\n--- Search Category ---");
-                    System.out.print("Enter Category ID: ");
-                    int id = scanner.nextInt();
-                    Category category = categoryDAO.getCategoryById(id);
-                    if (category != null) {
-                        System.out.println("\n--- Category Found ---");
-                        System.out.println("ID: " + category.getCategoryId());
-                        System.out.println("Name: " + category.getCategoryName());
-                    } else {
-                        System.out.println("Category not found.");
-                    }
-                }
-                
-                case 11 -> {
-                    System.out.println("\n--- Search Supplier ---");
-                    System.out.print("Enter Supplier ID: ");
-                    int id = scanner.nextInt();
-                    Supplier supplier = supplierDAO.getSupplierById(id);
-                    if (supplier != null) {
-                        System.out.println("\n--- Supplier Found ---");
-                        System.out.println("ID: " + supplier.getSupplierId());
-                        System.out.println("Name: " + supplier.getSupplierName());
-                        System.out.println("Contact Person: " + supplier.getContactPerson());
-                        System.out.println("Contact Number: " + supplier.getContactNumber());
-                        System.out.println("Email: " + supplier.getEmail());
-                        System.out.println("Address: " + supplier.getAddress());
-                        System.out.println("Last Delivery Date: " + supplier.getLastDeliveryDate());
-                    } else {
-                        System.out.println("Supplier not found.");
-                    }
-                }
-                
-                case 12 -> {
-                    System.out.println("\n--- Search Product ---");
-                    System.out.print("Enter Product ID: ");
-                    int id = scanner.nextInt();
-                    Product product = productDAO.getProductById(id);
-                    if (product != null) {
-                        System.out.println("\n--- Product Found ---");
-                        System.out.println("ID: " + product.getProductId());
-                        System.out.println("Name: " + product.getProductName());
-                        System.out.println("Price: $" + product.getPrice());
-                        System.out.println("Stock: " + product.getQuantityInStock());
-                    } else {
-                        System.out.println("Product not found.");
-                    }
-                }
-                
-                case 13 -> {
-                    System.out.println("\n--- Search Customer ---");
-                    System.out.print("Enter Customer ID: ");
-                    int id = scanner.nextInt();
-                    Customer customer = customerDAO.getCustomerById(id);
-                    if (customer != null) {
-                        System.out.println("\n--- Customer Found ---");
-                        System.out.println("ID: " + customer.getCustomerId());
-                        System.out.println("Name: " + customer.getFirstName() + " " + customer.getLastName());
-                        System.out.println("Contact: " + customer.getContactNumber());
-                        System.out.println("Email: " + customer.getEmail());
-                    } else {
-                        System.out.println("Customer not found.");
-                    }
-                }
-                
-                case 14 -> {
-                    System.out.println("\n--- Update Category ---");
-                    System.out.print("Enter Category ID to update: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    Category existing = categoryDAO.getCategoryById(id);
-                    if (existing == null) {
-                        System.out.println("Category not found.");
-                    } else {
-                        System.out.println("Current Name: " + existing.getCategoryName());
-                        System.out.print("Enter New Category Name: ");
-                        String newName = scanner.nextLine();
-                        existing.setCategoryName(newName);
-                        if (categoryDAO.updateCategory(existing)) {
-                            System.out.println("Category updated successfully!");
-                        } else {
-                            System.out.println("Failed to update category.");
-                        }
-                    }
-                }
-                
-                case 15 -> {
-                    System.out.println("\n--- Update Supplier ---");
-                    System.out.print("Enter Supplier ID to update: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    Supplier existing = supplierDAO.getSupplierById(id);
-                    if (existing == null) {
-                        System.out.println("Supplier not found.");
-                    } else {
-                        System.out.println("Current Name: " + existing.getSupplierName());
-                        System.out.print("Enter New Supplier Name: ");
-                        String name = scanner.nextLine();
-                        System.out.print("Enter New Contact Person: ");
-                        String contactPerson = scanner.nextLine();
-                        System.out.print("Enter New Contact Number: ");
-                        String contact = scanner.nextLine();
-                        System.out.print("Enter New Email: ");
-                        String email = scanner.nextLine();
-                        System.out.print("Enter New Address: ");
-                        String address = scanner.nextLine();
-                        System.out.print("Enter New Last Delivery Date (YYYY-MM-DD): ");
-                        String dateStr = scanner.nextLine();
-                        Date lastDeliveryDate = Date.valueOf(dateStr);
-                        existing.setSupplierName(name);
-                        existing.setContactPerson(contactPerson);
-                        existing.setContactNumber(contact);
-                        existing.setEmail(email);
-                        existing.setAddress(address);
-                        existing.setLastDeliveryDate(lastDeliveryDate);
-                        if (supplierDAO.updateSupplier(existing)) {
-                            System.out.println("Supplier updated successfully!");
-                        } else {
-                            System.out.println("Failed to update supplier.");
-                        }
-                    }
-                }
-                
-                case 16 -> {
+                }   
+ 
+                case 5 -> {
                     System.out.println("\n--- Update Product ---");
                     System.out.print("Enter Product ID to update: ");
                     int id = scanner.nextInt();
@@ -372,37 +145,7 @@ public class SouvenirApp {
                         }
                     }
                 }
-                
-                case 17 -> {
-                    System.out.println("\n--- Update Customer ---");
-                    System.out.print("Enter Customer ID to update: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    Customer existing = customerDAO.getCustomerById(id);
-                    if (existing == null) {
-                        System.out.println("Customer not found.");
-                    } else {
-                        System.out.println("Current Name: " + existing.getFirstName() + " " + existing.getLastName());
-                        System.out.print("Enter New First Name: ");
-                        String firstName = scanner.nextLine();
-                        System.out.print("Enter New Last Name: ");
-                        String lastName = scanner.nextLine();
-                        System.out.print("Enter New Contact Number: ");
-                        String contact = scanner.nextLine();
-                        System.out.print("Enter New Email: ");
-                        String email = scanner.nextLine();
-                        existing.setFirstName(firstName);
-                        existing.setLastName(lastName);
-                        existing.setContactNumber(contact);
-                        existing.setEmail(email);
-                        if (customerDAO.updateCustomer(existing)) {
-                            System.out.println("Customer updated successfully!");
-                        } else {
-                            System.out.println("Failed to update customer.");
-                        }
-                    }
-                }
-                
+
                 case 0 -> {
                     System.out.println("Exiting...");
                     scanner.close();

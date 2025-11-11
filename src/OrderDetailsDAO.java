@@ -64,7 +64,7 @@ public class OrderDetailsDAO {
                     o.setProductId(rs.getInt("product_id"));
                     o.setQuantity(rs.getInt("quantity"));
                     o.setUnitPrice(rs.getDouble("unit_price"));
-                    o.setOrderDate(rs.getTimestamp("order_date"));
+                    o.setOrderDate(rs.getDate("order_date"));
                     lines.add(o);
                 }
             }
@@ -90,7 +90,7 @@ public class OrderDetailsDAO {
                 od.setProductId(rs.getInt("product_id"));
                 od.setQuantity(rs.getInt("quantity"));
                 od.setUnitPrice(rs.getDouble("unit_price"));
-                od.setOrderDate(rs.getTimestamp("order_date"));
+                od.setOrderDate(rs.getDate("order_date"));
                 orderDetails.add(od);
             }
         } catch (SQLException e) {
