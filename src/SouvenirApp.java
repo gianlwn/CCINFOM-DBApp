@@ -4,8 +4,6 @@ import java.util.Scanner;
 public class SouvenirApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        CategoryDAO categoryDAO = new CategoryDAO();
-        SupplierDAO supplierDAO = new SupplierDAO();
         ProductDAO productDAO = new ProductDAO();
         CustomerDAO customerDAO = new CustomerDAO();
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
