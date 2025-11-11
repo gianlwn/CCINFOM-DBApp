@@ -29,6 +29,9 @@ public class ProductDAO {
         return false;
     }
 
+    /**
+     * Helper method to get the product that needs to be edited.
+     */
     public Product getProductById(int id) {
         String sql = "SELECT product_id, product_name, category_id, price, quantity_in_stock, supplier_id FROM products WHERE product_id = ?";
 
@@ -57,26 +60,6 @@ public class ProductDAO {
         return null;
     }
 
-    public boolean updateProduct(Product product) {
-        String sql = "UPDATE products SET product_name=?, category_id=?, price=?, quantity_in_stock=?, supplier_id=? WHERE product_id=?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, product.getProductName());
-            stmt.setInt(2, product.getCategoryId());
-            stmt.setDouble(3, product.getPrice());
-            stmt.setInt(4, product.getQuantityInStock());
-            stmt.setInt(5, product.getSupplierId());
-            stmt.setInt(6, product.getProductId());
-
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
     public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
         String sql = "SELECT product_id, product_name, category_id, price, quantity_in_stock, supplier_id FROM products ORDER BY product_id";
@@ -102,15 +85,15 @@ public class ProductDAO {
         return products;
     }
 
-    public boolean updateProductStock(int productId, int newQty) {
+    public boolean updateProductStock(Product existingProduct) {
         String sql = "UPDATE products SET quantity_in_stock = ? WHERE product_id = ?";
 
         try (Connection conn = DBUtil.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, newQty);
-            ps.setInt(2, productId);
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, existingProduct.getQuantityInStock());
+            stmt.setInt(2, existingProduct.getProductId());
             
-            return ps.executeUpdate() > 0;
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }

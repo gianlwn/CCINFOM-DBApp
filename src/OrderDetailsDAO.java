@@ -1,6 +1,10 @@
 import java.sql.*;
 import java.util.ArrayList;
 
+/*
+TODO: change the whole class based on changes
+ */
+
 public class OrderDetailsDAO {
     public Integer createOrder(int customerId, int productId, int quantity, double unitPrice, java.sql.Timestamp orderDate) {
         String sql = "INSERT INTO order_details (customer_id, product_id, quantity, unit_price, order_date) VALUES (?, ?, ?, ?, ?)";

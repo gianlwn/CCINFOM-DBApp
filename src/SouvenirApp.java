@@ -8,46 +8,87 @@ public class SouvenirApp {
         CustomerDAO customerDAO = new CustomerDAO();
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
 
-        while (true) {
-            System.out.println("\n========================================");
-            System.out.println("    SOUVENIR SHOP MANAGEMENT SYSTEM    ");
-            System.out.println("========================================");
-            System.out.println("[ADD RECORDS]");
-            // for the products, put all in one button
-            System.out.println("1 -> Add Product"); // change
-            System.out.println("2 -> Add Customer"); // change to Create Order
-            System.out.println("\n[VIEW RECORDS]");
-            System.out.println("3 -> View All Products"); // change
-            System.out.println("4 -> View All Orders");
-            System.out.println("\n[UPDATE RECORDS]");
-            System.out.println("5 -> Update Product"); // change
-            // add Edit Order
-            System.out.println("\n0 -> Exit");
-            System.out.println("========================================");
-            System.out.print("Enter choice: ");
-            
-            int choice = scanner.nextInt();
+        while (true) {     
+            menu();       
+            int menuChoice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (choice) {   
+            switch (menuChoice) {   
                 case 1 -> {
-                    System.out.println("\n--- Add Product ---");
-                    System.out.print("Enter Product Name: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Enter Category ID: ");
-                    int categoryId = scanner.nextInt();
+                    productsMenu();
+                    int productsChoice = scanner.nextInt();
                     scanner.nextLine();
-                    System.out.print("Enter Price: ");
-                    double price = scanner.nextDouble();
-                    System.out.print("Enter Quantity In Stock: ");
-                    int quantity = scanner.nextInt();
-                    System.out.print("Enter Supplier ID: ");
-                    int supplierId = scanner.nextInt();
-                    Product product = new Product(name, categoryId, price, quantity, supplierId);
-                    if (productDAO.addProduct(product)) {
-                        System.out.println("Product added successfully!");
-                    } else {
-                        System.out.println("Failed to add product.");
+
+                    switch (productsChoice) {
+                        case 1 -> {
+                            System.out.println("\n--- Add Product ---");
+                            System.out.print("Enter Product Name: ");
+                            String name = scanner.nextLine();
+                            System.out.print("Enter Category ID: ");
+                            int categoryId = scanner.nextInt();
+                            scanner.nextLine();
+                            System.out.print("Enter Price: ");
+                            double price = scanner.nextDouble();
+                            System.out.print("Enter Quantity In Stock: ");
+                            int quantity = scanner.nextInt();
+                            System.out.print("Enter Supplier ID: ");
+                            int supplierId = scanner.nextInt();
+                            Product product = new Product(name, categoryId, price, quantity, supplierId);
+
+                            if (productDAO.addProduct(product))
+                                System.out.println("Product added successfully!");
+                            else
+                                System.out.println("Failed to add product.");
+                        }
+
+                        case 2 -> {
+                            System.out.println("\n========================================");
+                            System.out.println("              ALL PRODUCTS              ");
+                            System.out.println("========================================");
+                            ArrayList<Product> products = productDAO.getAllProducts();
+
+                            if (products.isEmpty()) {
+                                System.out.println("No products found.");
+                            } else {
+                                System.out.printf("%-5s %-28s %-21s %-10s %n", "ID", "Name", "Price", "Stock");
+                                System.out.println("------------------------------------------------------------------------");
+
+                                for (Product p : products)
+                                    System.out.printf("%-5d %-28s Php %-17.2f %-10d%n", p.getProductId(), p.getProductName(), p.getPrice(), p.getQuantityInStock());
+
+                                System.out.println("========================================================================");
+                                System.out.println("Total Products: " + products.size());
+                            }
+                        }
+
+                        case 3 -> {
+                            System.out.println("\n--- Update Product ---");
+                            System.out.print("Enter Product ID to update: ");
+                            int id = scanner.nextInt();
+                            scanner.nextLine();
+                            Product existing = productDAO.getProductById(id);
+
+                            if (existing == null) {
+                                System.out.println("Product not found.");
+                            } else {
+                                System.out.println("Editing product: " + existing.getProductName());
+                                System.out.print("Enter New Quantity In Stock: ");
+                                int newQty = scanner.nextInt();
+                                existing.setQuantityInStock(newQty);
+
+                                if (productDAO.updateProductStock(existing))
+                                    System.out.println("Product updated successfully!");
+                                else
+                                    System.out.println("Failed to update product.");
+                            }
+                        }
+
+                        case 0 -> {
+                            System.out.println("Exiting...");
+                            break;
+                        }
+                        
+                        default -> System.out.println("Invalid choice!");
                     }
                 }
                 
@@ -71,77 +112,29 @@ public class SouvenirApp {
 
                 case 3 -> {
                     System.out.println("\n========================================");
-                    System.out.println("              ALL PRODUCTS              ");
-                    System.out.println("========================================");
-                    ArrayList<Product> products = productDAO.getAllProducts();
-                    if (products.isEmpty()) {
-                        System.out.println("No products found.");
-                    } else {
-                        System.out.printf("%-5s %-20s %-15s %-10s %-10s%n", "ID", "Name", "Price", "Stock");
-                        System.out.println("------------------------------------------------------------------------");
-                        for (Product p : products) {
-                            System.out.printf("%-5d %-20s $%-9.2f %-10d%n",
-                                p.getProductId(), p.getProductName(), p.getPrice(), p.getQuantityInStock());
-                        }
-                        System.out.println("========================================================================");
-                        System.out.println("Total Products: " + products.size());
-                    }
-                }
-
-                case 4 -> {
-                    System.out.println("\n========================================");
                     System.out.println("             ALL ORDERS                 ");
                     System.out.println("========================================");
                     ArrayList<OrderDetails> orders = orderDetailsDAO.getAllOrders();
+
                     if (orders.isEmpty()) {
                         System.out.println("No orders found.");
                     } else {
                         System.out.printf("%-8s %-12s %-12s %-10s %-12s %-12s%n",
                             "OrderID", "CustomerID", "ProductID", "Quantity", "OrderDate", "Total");
                         System.out.println("----------------------------------------------------------------------------");
-                        for (OrderDetails od : orders) {
-                            System.out.printf("%-8d %-12d %-12d %-10d %-12s $%-11.2f%n",
-                                od.getOrderId(), od.getCustomerId(), od.getProductId(),
-                                od.getQuantity(), od.getOrderDate(), od.getUnitPrice());
-                        }
+
+                        for (OrderDetails od : orders)
+                            System.out.printf("%-8d %-12d %-12d %-10d %-12s $%-11.2f%n", od.getOrderId(), od.getCustomerId(), od.getProductId(),
+                                                                                         od.getQuantity(), od.getOrderDate(), od.getUnitPrice());
+
                         System.out.println("============================================================================");
                         System.out.println("Total Orders: " + orders.size());
                     }
-                }   
- 
-                case 5 -> {
-                    System.out.println("\n--- Update Product ---");
-                    System.out.print("Enter Product ID to update: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine();
-                    Product existing = productDAO.getProductById(id);
-                    if (existing == null) {
-                        System.out.println("Product not found.");
-                    } else {
-                        System.out.println("Current Name: " + existing.getProductName());
-                        System.out.print("Enter New Product Name: ");
-                        String name = scanner.nextLine();
-                        System.out.print("Enter New Category ID: ");
-                        int categoryId = scanner.nextInt();
-                        scanner.nextLine();
-                        System.out.print("Enter New Price: ");
-                        double price = scanner.nextDouble();
-                        System.out.print("Enter New Quantity In Stock: ");
-                        int quantity = scanner.nextInt();
-                        System.out.print("Enter New Supplier ID: ");
-                        int supplierId = scanner.nextInt();
-                        existing.setProductName(name);
-                        existing.setCategoryId(categoryId);
-                        existing.setPrice(price);
-                        existing.setQuantityInStock(quantity);
-                        existing.setSupplierId(supplierId);
-                        if (productDAO.updateProduct(existing)) {
-                            System.out.println("Product updated successfully!");
-                        } else {
-                            System.out.println("Failed to update product.");
-                        }
-                    }
                 }
+
+                case 4 -> {
+                    // put edit order commands
+                }   
 
                 case 0 -> {
                     System.out.println("Exiting...");
@@ -152,5 +145,31 @@ public class SouvenirApp {
                 default -> System.out.println("Invalid choice!");
             }
         }
+    }
+
+    private static void menu() {
+        System.out.println("\n========================================");
+        System.out.println("    SOUVENIR SHOP MANAGEMENT SYSTEM    ");
+        System.out.println("========================================");
+        System.out.println("[ADD RECORDS]");
+        System.out.println("1 -> Products Menu");
+        System.out.println("2 -> Create Order");
+        System.out.println("3 -> View All Orders");
+        System.out.println("4 -> Edit Order");
+        System.out.println("\n0 -> Exit");
+        System.out.println("========================================");
+        System.out.print("Enter choice: ");
+    }
+
+    private static void productsMenu() {
+        System.out.println("\n========================================");
+        System.out.println("    SOUVENIR SHOP MANAGEMENT SYSTEM    ");
+        System.out.println("========================================");
+        System.out.println("1 -> Add Product");
+        System.out.println("2 -> View All Products");
+        System.out.println("3 -> Update Product Stock");
+        System.out.println("\n0 -> Exit");
+        System.out.println("========================================");
+        System.out.print("Enter choice: ");
     }
 }

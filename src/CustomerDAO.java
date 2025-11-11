@@ -35,60 +35,6 @@ public class CustomerDAO {
 
         return false;
     }
-    
-    public Customer getCustomerById(int id) {
-        String sql = "SELECT customer_id, first_name, last_name, contact_number, email FROM customers WHERE customer_id = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                Customer c = new Customer();
-                c.setCustomerId(rs.getInt("customer_id"));
-                c.setFirstName(rs.getString("first_name"));
-                c.setLastName(rs.getString("last_name"));
-                c.setContactNumber(rs.getString("contact_number"));
-                c.setEmail(rs.getString("email"));
-
-                return c;
-                }
-            }   
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public boolean updateCustomer(Customer customer) {
-        String sql = "UPDATE customers SET first_name=?, last_name=?, contact_number=?, email=? WHERE customer_id=?";
-        
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, customer.getFirstName());
-            stmt.setString(2, customer.getLastName());
-            
-            if (customer.getContactNumber() == null || customer.getContactNumber().isBlank()) 
-                stmt.setNull(3, Types.VARCHAR);
-            else
-                stmt.setString(3, customer.getContactNumber());
-        
-            if (customer.getEmail() == null || customer.getEmail().isBlank())
-                stmt.setNull(4, Types.VARCHAR);
-            else
-                stmt.setString(4, customer.getEmail());
-
-            stmt.setInt(5, customer.getCustomerId());
-
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
 
     public ArrayList<Customer> getAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
