@@ -63,21 +63,6 @@ public class CategoryDAO {
         return false;
     }
 
-    public boolean deleteCategory(int id) {
-        String sql = "DELETE FROM categories WHERE category_id = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
-        return false;
-    }
-
     public ArrayList<Category> getAllCategories() {
         ArrayList<Category> categories = new ArrayList<>();
         String sql = "SELECT * FROM categories ORDER BY category_id";

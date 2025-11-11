@@ -77,21 +77,6 @@ public class ProductDAO {
         return false;
     }
 
-    public boolean deleteProduct(int id) {
-        String sql = "DELETE FROM products WHERE product_id = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
-        return false;
-    }
-
     public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
         String sql = "SELECT product_id, product_name, category_id, price, quantity_in_stock, supplier_id FROM products ORDER BY product_id";

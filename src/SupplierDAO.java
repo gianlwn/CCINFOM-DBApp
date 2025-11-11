@@ -78,21 +78,6 @@ public class SupplierDAO {
         return false;
     }
 
-    public boolean deleteSupplier(int id) {
-        String sql = "DELETE FROM suppliers WHERE supplier_id = ?";
-
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
-        return false;
-    }
-
     public ArrayList<Supplier> getAllSuppliers() {
         ArrayList<Supplier> suppliers = new ArrayList<>();
         String sql = "SELECT * FROM suppliers ORDER BY supplier_id";
