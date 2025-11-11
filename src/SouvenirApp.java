@@ -5,7 +5,6 @@ public class SouvenirApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ProductDAO productDAO = new ProductDAO();
-        CustomerDAO customerDAO = new CustomerDAO();
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
 
         while (true) {     
