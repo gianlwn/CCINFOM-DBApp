@@ -3,6 +3,36 @@ import java.util.ArrayList;
 
 public class ProductDAO {
     public boolean addProduct(Product product) {
+        if (product.getProductId() <= 0) {
+            System.err.println("Product ID field must be provided.");
+            return false;
+        }
+
+        if (product.getProductName() == null || product.getProductName().isBlank()) {
+            System.err.println("Product Name cannot be null or empty.");
+            return false;
+        }
+
+        if (product.getCategoryId() <= 0) {
+            System.err.println("Category ID must be a positive integer.");
+            return false;
+        }
+
+        if (product.getSupplierId() <= 0) {
+            System.err.println("Supplier ID must be a positive integer.");
+            return false;
+        }
+        
+        if (product.getQuantityInStock() < 0) {
+            System.err.println("Quantity in stock cannot be negative.");
+            return false;
+        }
+
+        if (product.getPrice() <= 0) {
+            System.err.println("Price field must be provided.");
+            return false;
+        }
+
         String sql = "INSERT INTO products (product_name, category_id, price, quantity_in_stock, supplier_id) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection conn = DBUtil.getConnection();
