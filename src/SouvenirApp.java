@@ -15,84 +15,91 @@ public class SouvenirApp {
 
             switch (menuChoice) {   
                 case 1 -> {
-                    productsMenu();
-                    int productsChoice = scanner.nextInt();
-                    scanner.nextLine();
+                    boolean isExitting = false;
 
-                    switch (productsChoice) {
-                        case 1 -> {
-                            System.out.println("\n--- Add Product ---");
-                            System.out.print("Enter Product Name: ");
-                            String name = scanner.nextLine();
-                            System.out.print("Enter Category ID: ");
-                            int categoryId = scanner.nextInt();
-                            scanner.nextLine();
-                            System.out.print("Enter Price: ");
-                            double price = scanner.nextDouble();
-                            System.out.print("Enter Quantity In Stock: ");
-                            int quantity = scanner.nextInt();
-                            System.out.print("Enter Supplier ID: ");
-                            int supplierId = scanner.nextInt();
-                            Product product = new Product(name, categoryId, price, quantity, supplierId);
+                    while (!isExitting) {
+                        productsMenu();
+                        int productsChoice = scanner.nextInt();
+                        scanner.nextLine();
 
-                            if (productDAO.addProduct(product))
-                                System.out.println("Product added successfully!");
-                            else
-                                System.out.println("Failed to add product.");
-                        }
+                    
+                        switch (productsChoice) {
+                            case 1 -> {
+                                System.out.println("\n--- Add Product ---");
+                                System.out.print("Enter Product Name: ");
+                                String name = scanner.nextLine();
+                                System.out.print("Enter Category ID: ");
+                                int categoryId = scanner.nextInt();
+                                scanner.nextLine();
+                                System.out.print("Enter Price: ");
+                                double price = scanner.nextDouble();
+                                System.out.print("Enter Quantity In Stock: ");
+                                int quantity = scanner.nextInt();
+                                System.out.print("Enter Supplier ID: ");
+                                int supplierId = scanner.nextInt();
+                                Product product = new Product(name, categoryId, price, quantity, supplierId);
 
-                        case 2 -> {
-                            System.out.println("\n========================================");
-                            System.out.println("              ALL PRODUCTS              ");
-                            System.out.println("========================================");
-                            ArrayList<Product> products = productDAO.getAllProducts();
-
-                            if (products.isEmpty()) {
-                                System.out.println("No products found.");
-                            } else {
-                                System.out.printf("%-5s %-28s %-21s %-10s %n", "ID", "Name", "Price", "Stock");
-                                System.out.println("------------------------------------------------------------------------");
-
-                                for (Product p : products)
-                                    System.out.printf("%-5d %-28s Php %-17.2f %-10d%n", p.getProductId(), p.getProductName(), p.getPrice(), p.getQuantityInStock());
-
-                                System.out.println("========================================================================");
-                                System.out.println("Total Products: " + products.size());
-                            }
-                        }
-
-                        case 3 -> {
-                            System.out.println("\n--- Update Product ---");
-                            System.out.print("Enter Product ID to update: ");
-                            int id = scanner.nextInt();
-                            scanner.nextLine();
-                            Product existing = productDAO.getProductById(id);
-
-                            if (existing == null) {
-                                System.out.println("Product not found.");
-                            } else {
-                                System.out.println("Editing product: " + existing.getProductName());
-                                System.out.print("Enter New Quantity In Stock: ");
-                                int newQty = scanner.nextInt();
-                                existing.setQuantityInStock(newQty);
-
-                                if (productDAO.updateProductStock(existing))
-                                    System.out.println("Product updated successfully!");
+                                if (productDAO.addProduct(product))
+                                    System.out.println("Product added successfully!");
                                 else
-                                    System.out.println("Failed to update product.");
+                                    System.out.println("Failed to add product.");
                             }
-                        }
 
-                        case 0 -> {
-                            System.out.println("Exiting...");
-                            break;
+                            case 2 -> {
+                                System.out.println("\n========================================");
+                                System.out.println("              ALL PRODUCTS              ");
+                                System.out.println("========================================");
+                                ArrayList<Product> products = productDAO.getAllProducts();
+
+                                if (products.isEmpty()) {
+                                    System.out.println("No products found.");
+                                } else {
+                                    System.out.printf("%-5s %-28s %-21s %-10s %n", "ID", "Name", "Price", "Stock");
+                                    System.out.println("------------------------------------------------------------------------");
+
+                                    for (Product p : products)
+                                        System.out.printf("%-5d %-28s Php %-17.2f %-10d%n", p.getProductId(), p.getProductName(), p.getPrice(), p.getQuantityInStock());
+
+                                    System.out.println("========================================================================");
+                                    System.out.println("Total Products: " + products.size());
+                                }
+                            }
+
+                            case 3 -> {
+                                System.out.println("\n--- Update Product ---");
+                                System.out.print("Enter Product ID to update: ");
+                                int id = scanner.nextInt();
+                                scanner.nextLine();
+                                Product existing = productDAO.getProductById(id);
+
+                                if (existing == null) {
+                                    System.out.println("Product not found.");
+                                } else {
+                                    System.out.println("Editing product: " + existing.getProductName());
+                                    System.out.print("Enter New Quantity In Stock: ");
+                                    int newQty = scanner.nextInt();
+                                    existing.setQuantityInStock(newQty);
+
+                                    if (productDAO.updateProductStock(existing))
+                                        System.out.println("Product updated successfully!");
+                                    else
+                                        System.out.println("Failed to update product.");
+                                }
+                            }
+
+                            case 0 -> {
+                                System.out.println("Exiting...");
+                                isExitting = true;
+                                break;
+                            }
+                            
+                            default -> System.out.println("Invalid choice!");
                         }
-                        
-                        default -> System.out.println("Invalid choice!");
                     }
                 }
                 
                 case 2 -> {
+                    // put create order commands
                     System.out.println("\n--- Add Customer ---");
                     System.out.print("Enter First Name: ");
                     String firstName = scanner.nextLine();
@@ -103,11 +110,11 @@ public class SouvenirApp {
                     System.out.print("Enter Email: ");
                     String email = scanner.nextLine();
                     Customer customer = new Customer(firstName, lastName, contact, email);
-                    if (customerDAO.addCustomer(customer)) {
+
+                    if (customerDAO.addCustomer(customer))
                         System.out.println("Customer added successfully!");
-                    } else {
+                    else
                         System.out.println("Failed to add customer.");
-                    }
                 }
 
                 case 3 -> {

@@ -3,6 +3,12 @@ import java.util.ArrayList;
 
 public class CustomerDAO {
     public boolean addCustomer(Customer customer) {
+        if (customer.getFirstName() == null || customer.getFirstName().isBlank() ||
+            customer.getLastName() == null || customer.getLastName().isBlank()) {
+            System.err.println("First name and last name cannot be null or empty.");
+            return false;
+        }
+
         String sql = "INSERT INTO customers (first_name, last_name, contact_number, email) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = DBUtil.getConnection();
