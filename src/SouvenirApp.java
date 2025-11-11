@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class SouvenirApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        CustomerDAO customerDAO = new CustomerDAO();
         ProductDAO productDAO = new ProductDAO();
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
 
@@ -97,7 +98,35 @@ public class SouvenirApp {
                 }
                 
                 case 2 -> {
-                    // put create order commands
+                    System.out.println("\n--- Create Order ---");
+                    System.out.print("Enter First Name: ");
+                    String firstName = scanner.nextLine();
+                    System.out.print("Enter Last Name: ");
+                    String lastName = scanner.nextLine();
+                    System.out.print("Enter Contact Number: ");
+                    String contact = scanner.nextLine();
+                    System.out.print("Enter Email: ");
+                    String email = scanner.nextLine();
+                    System.out.print("Enter Product ID: ");
+                    int productID = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Enter Quantity Bought: ");
+                    int quantity = scanner.nextInt();
+                    scanner.nextLine();
+                    Customer customer = new Customer(firstName, lastName, contact, email);
+
+                    if (customerDAO.addCustomer(customer)) {
+                        Product productBought = productDAO.getProductById(productID);
+                        OrderDetails orderDetails = new OrderDetails(customer.getCustomerId(), productID, quantity, productBought);
+
+                        if (orderDetailsDAO.createOrder(customer, orderDetails))
+                            System.out.println("Order created successfully!");
+                        else
+                            System.out.println("Failed to create order");
+
+                    } else {
+                        System.out.println("Failed to create order, enter valid fields for the customer.");
+                    }
                 }
 
                 case 3 -> {
@@ -115,7 +144,7 @@ public class SouvenirApp {
 
                         for (OrderDetails od : orders)
                             System.out.printf("%-8d %-12d %-12d %-10d %-12s $%-11.2f%n", od.getOrderId(), od.getCustomerId(), od.getProductId(),
-                                                                                         od.getQuantity(), od.getOrderDate(), od.getUnitPrice());
+                                                                                         od.getQuantity(), od.getOrderDate(), od.getTotal());
 
                         System.out.println("============================================================================");
                         System.out.println("Total Orders: " + orders.size());

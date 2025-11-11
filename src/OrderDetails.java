@@ -1,21 +1,23 @@
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class OrderDetails {
     private int order_id;
     private int customer_id;
     private int product_id;
     private int quantity;
-    private double unit_price;
-    private Date order_date;
+    private Product productBought;
+    private double total;
+    private LocalDate order_date;
 
     public OrderDetails() {}
 
-    public OrderDetails(int customer_id, int product_id, int quantity, double unit_price, Date order_date) {
+    public OrderDetails(int customer_id, int product_id, int quantity, Product productBought) {
         this.customer_id = customer_id;
         this.product_id = product_id;
         this.quantity = quantity;
-        this.unit_price = unit_price;
-        this.order_date = order_date;
+        this.productBought = productBought;
+        this.total = quantity * productBought.getPrice();
+        this.order_date = LocalDate.now();
     }
 
     // Order ID
@@ -50,19 +52,24 @@ public class OrderDetails {
         this.quantity = quantity;
     }
 
-    // Unit Price
-    public double getUnitPrice() {
-        return unit_price;
+    // Product Bought
+    public Product getProductBought() {
+        return productBought;
     }
-    public void setUnitPrice(double unit_price) {
-        this.unit_price = unit_price;
+
+    // Unit Price
+    public double getTotal() {
+        return total;
+    }
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     // Order Date
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return order_date;
     }
-    public void setOrderDate(Date order_date) {
+    public void setOrderDate(LocalDate order_date) {
         this.order_date = order_date;
     }
 }
