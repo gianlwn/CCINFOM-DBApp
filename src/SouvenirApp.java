@@ -12,7 +12,6 @@ public class SouvenirApp {
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
 
         while (true) {
-            // Display Menu
             System.out.println("\n========================================");
             System.out.println("    SOUVENIR SHOP MANAGEMENT SYSTEM    ");
             System.out.println("========================================");
@@ -47,10 +46,10 @@ public class SouvenirApp {
             System.out.print("Enter choice: ");
             
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
-                case 1 -> { // Add Category
+                case 1 -> {
                     System.out.println("\n--- Add Category ---");
                     System.out.print("Enter Category ID: ");
                     int id = scanner.nextInt();
@@ -65,7 +64,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 2 -> { // Add Supplier
+                case 2 -> {
                     System.out.println("\n--- Add Supplier ---");
                     System.out.print("Enter Supplier ID: ");
                     int id = scanner.nextInt();
@@ -91,7 +90,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 3 -> { // Add Product
+                case 3 -> {
                     System.out.println("\n--- Add Product ---");
                     System.out.print("Enter Product ID: ");
                     int id = scanner.nextInt();
@@ -115,7 +114,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 4 -> { // Add Customer
+                case 4 -> {
                     System.out.println("\n--- Add Customer ---");
                     System.out.print("Enter First Name: ");
                     String firstName = scanner.nextLine();
@@ -133,7 +132,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 5 -> { // View All Categories
+                case 5 -> {
                     System.out.println("\n========================================");
                     System.out.println("           ALL CATEGORIES              ");
                     System.out.println("========================================");
@@ -151,7 +150,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 6 -> { // View All Suppliers
+                case 6 -> {
                     System.out.println("\n========================================");
                     System.out.println("             ALL SUPPLIERS              ");
                     System.out.println("========================================");
@@ -171,7 +170,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 7 -> { // View All Products
+                case 7 -> {
                     System.out.println("\n========================================");
                     System.out.println("              ALL PRODUCTS              ");
                     System.out.println("========================================");
@@ -190,7 +189,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 8 -> { // View All Customers
+                case 8 -> {
                     System.out.println("\n========================================");
                     System.out.println("            ALL CUSTOMERS               ");
                     System.out.println("========================================");
@@ -210,7 +209,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 9 -> { // View All Orders
+                case 9 -> {
                     System.out.println("\n========================================");
                     System.out.println("             ALL ORDERS                 ");
                     System.out.println("========================================");
@@ -231,7 +230,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 10 -> { // Search Category by ID
+                case 10 -> {
                     System.out.println("\n--- Search Category ---");
                     System.out.print("Enter Category ID: ");
                     int id = scanner.nextInt();
@@ -245,7 +244,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 11 -> { // Search Supplier by ID
+                case 11 -> {
                     System.out.println("\n--- Search Supplier ---");
                     System.out.print("Enter Supplier ID: ");
                     int id = scanner.nextInt();
@@ -264,7 +263,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 12 -> { // Search Product by ID
+                case 12 -> {
                     System.out.println("\n--- Search Product ---");
                     System.out.print("Enter Product ID: ");
                     int id = scanner.nextInt();
@@ -280,7 +279,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 13 -> { // Search Customer by ID
+                case 13 -> {
                     System.out.println("\n--- Search Customer ---");
                     System.out.print("Enter Customer ID: ");
                     int id = scanner.nextInt();
@@ -296,7 +295,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 14 -> { // Update Category
+                case 14 -> {
                     System.out.println("\n--- Update Category ---");
                     System.out.print("Enter Category ID to update: ");
                     int id = scanner.nextInt();
@@ -317,7 +316,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 15 -> { // Update Supplier
+                case 15 -> {
                     System.out.println("\n--- Update Supplier ---");
                     System.out.print("Enter Supplier ID to update: ");
                     int id = scanner.nextInt();
@@ -354,7 +353,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 16 -> { // Update Product
+                case 16 -> {
                     System.out.println("\n--- Update Product ---");
                     System.out.print("Enter Product ID to update: ");
                     int id = scanner.nextInt();
@@ -388,7 +387,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 17 -> { // Update Customer
+                case 17 -> {
                     System.out.println("\n--- Update Customer ---");
                     System.out.print("Enter Customer ID to update: ");
                     int id = scanner.nextInt();
@@ -418,7 +417,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 18 -> { // Delete Category
+                case 18 -> {
                     System.out.println("\n--- Delete Category ---");
                     System.out.print("Enter Category ID to delete: ");
                     int id = scanner.nextInt();
@@ -436,7 +435,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 19 -> { // Delete Supplier
+                case 19 -> {
                     System.out.println("\n--- Delete Supplier ---");
                     System.out.print("Enter Supplier ID to delete: ");
                     int id = scanner.nextInt();
@@ -454,7 +453,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 20 -> { // Delete Product
+                case 20 -> {
                     System.out.println("\n--- Delete Product ---");
                     System.out.print("Enter Product ID to delete: ");
                     int id = scanner.nextInt();
@@ -472,7 +471,7 @@ public class SouvenirApp {
                     }
                 }
                 
-                case 21 -> { // Delete Customer
+                case 21 -> {
                     System.out.println("\n--- Delete Customer ---");
                     System.out.print("Enter Customer ID to delete: ");
                     int id = scanner.nextInt();
