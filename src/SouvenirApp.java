@@ -182,12 +182,12 @@ public class SouvenirApp {
                                 if (orders.isEmpty()) {
                                     System.out.println("No orders found.");
                                 } else {
-                                    System.out.printf("%-8s %-12s %-12s %-10s %-12s %-11s %s%n",
+                                    System.out.printf("%-8s %-12s %-12s %-10s %-12s %-15s %s%n",
                                         "OrderID", "CustomerID", "ProductID", "Quantity", "OrderDate", "Total", "Status");
                                     System.out.println("--------------------------------------------------------------------------------------");
 
                                     for (Order order : orders)
-                                        System.out.printf("%-8d %-12d %-12d %-10d %-12s $%-10.2f %s%n", order.getOrderId(), order.getCustomerId(), order.getProductId(),
+                                        System.out.printf("%-8d %-12d %-12d %-10d %-12s Php %-11.2f %s%n", order.getOrderId(), order.getCustomerId(), order.getProductId(),
                                                                                                     order.getQuantity(), order.getOrderDate(), order.getTotal(), order.getStatus());
 
                                     System.out.println("======================================================================================");
@@ -226,6 +226,8 @@ public class SouvenirApp {
                                             if (existing.getStatus() != Order.Status.COMPLETED) {
                                                 existing.setStatus(Order.Status.COMPLETED);
                                                 orderDAO.editOrderStatus(existing);
+                                                Product productToModify = orderDAO.getProductSoldInOrderById(existing.getOrderId());
+                                                productDAO.updateProductStock(productToModify, productToModify.getQuantityInStock() - existing.getQuantity());
                                                 System.out.println("Successfully changed status.");
                                             } else {
                                                 System.out.println("Cannot change status");
@@ -236,6 +238,8 @@ public class SouvenirApp {
                                             if (existing.getStatus() != Order.Status.REFUNDED) {
                                                 existing.setStatus(Order.Status.REFUNDED);
                                                 orderDAO.editOrderStatus(existing);
+                                                Product productToModify = orderDAO.getProductSoldInOrderById(existing.getOrderId());
+                                                productDAO.updateProductStock(productToModify, productToModify.getQuantityInStock() + existing.getQuantity());
                                                 System.out.println("Successfully changed status.");
                                             } else {
                                                 System.out.println("Cannot change status");
