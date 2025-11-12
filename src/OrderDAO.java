@@ -58,7 +58,7 @@ public class OrderDAO {
     }
 
     public Order getOrderById(int id) {
-        String sql = "SELECT * FROM products WHERE order_id = ?";
+        String sql = "SELECT * FROM orders WHERE order_id = ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -69,7 +69,7 @@ public class OrderDAO {
                     Order order = new Order();
                     order.setOrderId(rs.getInt("order_id"));
                     order.setCustomerId(rs.getInt("customer_id"));
-                    order.setProductId(rs.getInt("category_id"));
+                    order.setProductId(rs.getInt("product_id"));
                     order.setQuantity(rs.getInt("quantity"));
                     order.setTotal(rs.getDouble("total"));
                     order.setOrderDate(rs.getDate("order_date").toLocalDate());
@@ -86,9 +86,18 @@ public class OrderDAO {
         return null;
     }
 
-    // TODO: this method
-    public void editOrderStatus(Order orders) {
+    public void editOrderStatus(Order order) {
+        String sql = "UPDATE orders SET status = ? WHERE order_id = ?";
 
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, order.getStatus().name());
+            stmt.setInt(2, order.getOrderId());
+                
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<Order> getAllOrders() {

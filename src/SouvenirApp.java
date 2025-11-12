@@ -7,7 +7,7 @@ public class SouvenirApp {
         Scanner scanner = new Scanner(System.in);
         CustomerDAO customerDAO = new CustomerDAO();
         ProductDAO productDAO = new ProductDAO();
-        OrderDAO orderDetailsDAO = new OrderDAO(productDAO, customerDAO);
+        OrderDAO orderDAO = new OrderDAO(productDAO, customerDAO);
 
         while (true) {     
             menu();       
@@ -75,11 +75,11 @@ public class SouvenirApp {
 
                             case "3" -> {
                                 System.out.println("\n--- Update Product ---");
-                                int id;
+                                int pid;
 
                                 try {
                                     System.out.print("Enter Product ID to update: ");
-                                    id = scanner.nextInt();
+                                    pid = scanner.nextInt();
                                 } catch (InputMismatchException e) {
                                     System.out.println("Invalid input. Try again.");
                                     scanner.nextLine();
@@ -87,7 +87,7 @@ public class SouvenirApp {
                                 }
 
                                 scanner.nextLine();
-                                Product existing = productDAO.getProductById(id);
+                                Product existing = productDAO.getProductById(pid);
 
                                 if (existing == null) {
                                     System.out.println("Product not found.");
@@ -163,7 +163,7 @@ public class SouvenirApp {
                                 if (productBought != null) {                 
                                     Order orders = new Order(customer.getCustomerId(), productID, quantity, productBought, customer);
 
-                                    if (orderDetailsDAO.createOrder(customer, orders))
+                                    if (orderDAO.createOrder(customer, orders))
                                         System.out.println("Order created successfully!");
                                     else
                                         System.out.println("Failed to create order.");
@@ -177,7 +177,7 @@ public class SouvenirApp {
                                 System.out.println("\n========================================");
                                 System.out.println("             ALL ORDERS                 ");
                                 System.out.println("========================================");
-                                ArrayList<Order> orders = orderDetailsDAO.getAllOrders();
+                                ArrayList<Order> orders = orderDAO.getAllOrders();
 
                                 if (orders.isEmpty()) {
                                     System.out.println("No orders found.");
@@ -196,7 +196,60 @@ public class SouvenirApp {
                             }
 
                             case "3" -> {
-                                // TODO: edit order method
+                                System.out.println("\n--- Edit Order Status ---");
+                                int oid;
+
+                                try {
+                                    System.out.print("Enter Order ID to update: ");
+                                    oid = scanner.nextInt();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Invalid input. Try again.");
+                                    scanner.nextLine();
+                                    break;
+                                }
+
+                                scanner.nextLine();
+                                Order existing = orderDAO.getOrderById(oid);
+
+                                if (existing == null) {
+                                    System.out.println("Order not found.");
+                                } else {
+                                    System.out.println("\n--- Edit Order Status of: OID #" + existing.getOrderId() + " ---");
+                                    System.out.println("1 -> Change to \'COMPLETED\'");
+                                    System.out.println("2 -> Change to \'REFUNDED\'");
+                                    System.out.println("0 -> Exit");
+                                    System.out.print("\nEnter choice: ");
+                                    String choice = scanner.nextLine();
+
+                                    switch (choice) {
+                                        case "1" -> {
+                                            if (existing.getStatus() != Order.Status.COMPLETED) {
+                                                existing.setStatus(Order.Status.COMPLETED);
+                                                orderDAO.editOrderStatus(existing);
+                                                System.out.println("Successfully changed status.");
+                                            } else {
+                                                System.out.println("Cannot change status");
+                                            }
+                                        }
+
+                                        case "2" -> {
+                                            if (existing.getStatus() != Order.Status.REFUNDED) {
+                                                existing.setStatus(Order.Status.REFUNDED);
+                                                orderDAO.editOrderStatus(existing);
+                                                System.out.println("Successfully changed status.");
+                                            } else {
+                                                System.out.println("Cannot change status");
+                                            }
+                                        }
+
+                                        case "0" -> {
+                                            System.out.println("Exiting...");
+                                            break;
+                                        }
+
+                                        default -> System.out.println("Invalid choice!");
+                                    }
+                                }
                             }
 
                             case "0" -> {
@@ -235,7 +288,7 @@ public class SouvenirApp {
 
     private static void productsMenu() {
         System.out.println("\n========================================");
-        System.out.println("    SOUVENIR SHOP MANAGEMENT SYSTEM    ");
+        System.out.println("             PRODUCTS MENU    ");
         System.out.println("========================================");
         System.out.println("1 -> Add Product");
         System.out.println("2 -> View All Products");
@@ -247,7 +300,7 @@ public class SouvenirApp {
 
     private static void ordersMenu() {
         System.out.println("\n========================================");
-        System.out.println("    SOUVENIR SHOP MANAGEMENT SYSTEM    ");
+        System.out.println("              ORDERS MENU    ");
         System.out.println("========================================");
         System.out.println("1 -> Create Order");
         System.out.println("2 -> View All Orders");

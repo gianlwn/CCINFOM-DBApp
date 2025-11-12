@@ -12,7 +12,6 @@ public class Order {
 
     public enum Status {
         COMPLETED,
-        RESERVED,
         REFUNDED
     }
     private Status status;
