@@ -12,6 +12,7 @@ public class OrderDetails {
 
     public enum Status {
         COMPLETED,
+        RESERVED,
         REFUNDED
     }
     private Status status;
