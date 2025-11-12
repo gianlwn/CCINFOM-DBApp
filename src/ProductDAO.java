@@ -59,11 +59,8 @@ public class ProductDAO {
         return false;
     }
 
-    /**
-     * Helper method to get the product that needs to be edited.
-     */
     public Product getProductById(int id) {
-        String sql = "SELECT product_id, product_name, category_id, price, quantity_in_stock, supplier_id FROM products WHERE product_id = ?";
+        String sql = "SELECT * FROM products WHERE product_id = ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -71,15 +68,15 @@ public class ProductDAO {
             
             try (ResultSet rs = stmt.executeQuery();) {
                 if (rs.next()) {
-                    Product p = new Product();
-                    p.setProductId(rs.getInt("product_id"));
-                    p.setProductName(rs.getString("product_name"));
-                    p.setCategoryId(rs.getInt("category_id"));
-                    p.setPrice(rs.getDouble("price"));
-                    p.setQuantityInStock(rs.getInt("quantity_in_stock"));
-                    p.setSupplierId(rs.getInt("supplier_id"));
+                    Product product = new Product();
+                    product.setProductId(rs.getInt("product_id"));
+                    product.setProductName(rs.getString("product_name"));
+                    product.setCategoryId(rs.getInt("category_id"));
+                    product.setPrice(rs.getDouble("price"));
+                    product.setQuantityInStock(rs.getInt("quantity_in_stock"));
+                    product.setSupplierId(rs.getInt("supplier_id"));
 
-                    return p;
+                    return product;
                 }
             }
             

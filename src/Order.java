@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class OrderDetails {
+public class Order {
     private int order_id;
     private int customer_id;
     private int product_id;
@@ -17,9 +17,9 @@ public class OrderDetails {
     }
     private Status status;
 
-    public OrderDetails() {}
+    public Order() {}
 
-    public OrderDetails(int customer_id, int product_id, int quantity, Product productBought, Customer customer) {
+    public Order(int customer_id, int product_id, int quantity, Product productBought, Customer customer) {
         this.customer_id = customer_id;
         this.product_id = product_id;
         this.quantity = quantity;

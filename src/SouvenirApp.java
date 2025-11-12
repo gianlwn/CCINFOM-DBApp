@@ -7,7 +7,7 @@ public class SouvenirApp {
         Scanner scanner = new Scanner(System.in);
         CustomerDAO customerDAO = new CustomerDAO();
         ProductDAO productDAO = new ProductDAO();
-        OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO(productDAO, customerDAO);
+        OrderDAO orderDetailsDAO = new OrderDAO(productDAO, customerDAO);
 
         while (true) {     
             menu();       
@@ -161,9 +161,9 @@ public class SouvenirApp {
                                 Product productBought = productDAO.getProductById(productID);
 
                                 if (productBought != null) {                 
-                                    OrderDetails orderDetails = new OrderDetails(customer.getCustomerId(), productID, quantity, productBought, customer);
+                                    Order orders = new Order(customer.getCustomerId(), productID, quantity, productBought, customer);
 
-                                    if (orderDetailsDAO.createOrder(customer, orderDetails))
+                                    if (orderDetailsDAO.createOrder(customer, orders))
                                         System.out.println("Order created successfully!");
                                     else
                                         System.out.println("Failed to create order.");
@@ -177,7 +177,7 @@ public class SouvenirApp {
                                 System.out.println("\n========================================");
                                 System.out.println("             ALL ORDERS                 ");
                                 System.out.println("========================================");
-                                ArrayList<OrderDetails> orders = orderDetailsDAO.getAllOrders();
+                                ArrayList<Order> orders = orderDetailsDAO.getAllOrders();
 
                                 if (orders.isEmpty()) {
                                     System.out.println("No orders found.");
@@ -186,7 +186,7 @@ public class SouvenirApp {
                                         "OrderID", "CustomerID", "ProductID", "Quantity", "OrderDate", "Total");
                                     System.out.println("----------------------------------------------------------------------------");
 
-                                    for (OrderDetails od : orders)
+                                    for (Order od : orders)
                                         System.out.printf("%-8d %-12d %-12d %-10d %-12s $%-11.2f%n", od.getOrderId(), od.getCustomerId(), od.getProductId(),
                                                                                                     od.getQuantity(), od.getOrderDate(), od.getTotal());
 
@@ -196,7 +196,7 @@ public class SouvenirApp {
                             }
 
                             case "3" -> {
-                                // TODO: put edit order commands
+                                // TODO: edit order method
                             }
 
                             case "0" -> {
