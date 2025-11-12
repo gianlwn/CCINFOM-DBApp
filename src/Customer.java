@@ -4,7 +4,7 @@ public class Customer {
     private String first_name;
     private String last_name;
     private String contact_number;
-    private String email;
+    private String email; // erika was here
 
     public Customer() {}
 
