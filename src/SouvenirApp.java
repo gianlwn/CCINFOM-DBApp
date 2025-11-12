@@ -227,7 +227,11 @@ public class SouvenirApp {
                                                 existing.setStatus(Order.Status.COMPLETED);
                                                 orderDAO.editOrderStatus(existing);
                                                 Product productToModify = orderDAO.getProductSoldInOrderById(existing.getOrderId());
+<<<<<<< HEAD
                                                 productDAO.updateProductStock(productToModify, productToModify.getQuantityInStock() - existing.getQuantity());
+=======
+                                                productDAO.updateProductStock(productToModify , productToModify.getQuantityInStock() - existing.getQuantity());
+>>>>>>> 6a8a3754498ca6db377b93237306f64580738c6b
                                                 System.out.println("Successfully changed status.");
                                             } else {
                                                 System.out.println("Cannot change status");
@@ -239,7 +243,11 @@ public class SouvenirApp {
                                                 existing.setStatus(Order.Status.REFUNDED);
                                                 orderDAO.editOrderStatus(existing);
                                                 Product productToModify = orderDAO.getProductSoldInOrderById(existing.getOrderId());
+<<<<<<< HEAD
                                                 productDAO.updateProductStock(productToModify, productToModify.getQuantityInStock() + existing.getQuantity());
+=======
+                                                productDAO.updateProductStock(productToModify , productToModify.getQuantityInStock() + existing.getQuantity());
+>>>>>>> 6a8a3754498ca6db377b93237306f64580738c6b
                                                 System.out.println("Successfully changed status.");
                                             } else {
                                                 System.out.println("Cannot change status");
