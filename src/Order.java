@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.Month;
 
 public class Order {
     private int order_id;
@@ -24,7 +25,24 @@ public class Order {
         this.quantity = quantity;
         this.productBought = productBought;
         this.customer = customer;
-        this.total = quantity * productBought.getPrice();
+
+        if ((LocalDate.now().getMonth() == Month.JANUARY && LocalDate.now().getDayOfMonth() == 1) ||
+            (LocalDate.now().getMonth() == Month.FEBRUARY && LocalDate.now().getDayOfMonth() == 2) ||
+            (LocalDate.now().getMonth() == Month.MARCH && LocalDate.now().getDayOfMonth() == 3) ||
+            (LocalDate.now().getMonth() == Month.APRIL && LocalDate.now().getDayOfMonth() == 4) ||
+            (LocalDate.now().getMonth() == Month.MAY && LocalDate.now().getDayOfMonth() == 5) ||
+            (LocalDate.now().getMonth() == Month.JUNE && LocalDate.now().getDayOfMonth() == 6) ||
+            (LocalDate.now().getMonth() == Month.JULY && LocalDate.now().getDayOfMonth() == 7) ||
+            (LocalDate.now().getMonth() == Month.AUGUST && LocalDate.now().getDayOfMonth() == 8) ||
+            (LocalDate.now().getMonth() == Month.SEPTEMBER && LocalDate.now().getDayOfMonth() == 9) ||
+            (LocalDate.now().getMonth() == Month.OCTOBER && LocalDate.now().getDayOfMonth() == 10) ||
+            (LocalDate.now().getMonth() == Month.NOVEMBER && LocalDate.now().getDayOfMonth() == 11) ||
+            (LocalDate.now().getMonth() == Month.DECEMBER && LocalDate.now().getDayOfMonth() == 12)) {
+                this.total = (quantity * productBought.getPrice()) * 0.90;
+        } else {
+            this.total = quantity * productBought.getPrice();
+        }
+
         this.order_date = LocalDate.now();
         this.status = Status.COMPLETED;
     }
