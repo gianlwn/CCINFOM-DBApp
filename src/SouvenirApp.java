@@ -215,26 +215,13 @@ public class SouvenirApp {
                                     System.out.println("Order not found.");
                                 } else {
                                     System.out.println("\n--- Edit Order Status of: OID #" + existing.getOrderId() + " ---");
-                                    System.out.println("1 -> Change to \'COMPLETED\'");
-                                    System.out.println("2 -> Change to \'REFUNDED\'");
+                                    System.out.println("1 -> Change to \'REFUNDED\'");
                                     System.out.println("0 -> Exit");
                                     System.out.print("\nEnter choice: ");
                                     String choice = scanner.nextLine();
 
                                     switch (choice) {
                                         case "1" -> {
-                                            if (existing.getStatus() != Order.Status.COMPLETED) {
-                                                existing.setStatus(Order.Status.COMPLETED);
-                                                orderDAO.editOrderStatus(existing);
-                                                Product productToModify = orderDAO.getProductSoldInOrderById(existing.getOrderId());
-                                                productDAO.updateProductStock(productToModify, productToModify.getQuantityInStock() - existing.getQuantity());
-                                                System.out.println("Successfully changed status.");
-                                            } else {
-                                                System.out.println("Cannot change status");
-                                            }
-                                        }
-
-                                        case "2" -> {
                                             if (existing.getStatus() != Order.Status.REFUNDED) {
                                                 existing.setStatus(Order.Status.REFUNDED);
                                                 orderDAO.editOrderStatus(existing);
