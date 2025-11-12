@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class ProductDAO {
     public boolean addProduct(Product product) {
-        if (product.getProductId() <= 0) {
-            System.err.println("Product ID field must be provided.");
+        if (product.getProductId() <= 3000 || product.getProductId() >= 4000) {
+            System.err.println("Enter a valid Product ID.");
             return false;
         }
 
@@ -14,22 +14,22 @@ public class ProductDAO {
         }
 
         if (product.getCategoryId() <= 0) {
-            System.err.println("Category ID must be a positive integer.");
+            System.err.println("Enter a valid Category ID.");
             return false;
         }
 
         if (product.getSupplierId() <= 0) {
-            System.err.println("Supplier ID must be a positive integer.");
+            System.err.println("Enter a valid Supplier ID.");
             return false;
         }
         
         if (product.getQuantityInStock() < 0) {
-            System.err.println("Quantity in stock cannot be negative.");
+            System.err.println("Enter a valid quantity.");
             return false;
         }
 
         if (product.getPrice() <= 0) {
-            System.err.println("Price field must be provided.");
+            System.err.println("Enter a valid price.");
             return false;
         }
 
@@ -121,6 +121,21 @@ public class ProductDAO {
         try (Connection conn = DBUtil.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, existingProduct.getQuantityInStock());
+            stmt.setInt(2, existingProduct.getProductId());
+            
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateProductStock(Product existingProduct, int newQty) {
+        String sql = "UPDATE products SET quantity_in_stock = ? WHERE product_id = ?";
+
+        try (Connection conn = DBUtil.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, newQty);
             stmt.setInt(2, existingProduct.getProductId());
             
             return stmt.executeUpdate() > 0;

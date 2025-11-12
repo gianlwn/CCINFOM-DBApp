@@ -6,18 +6,27 @@ public class OrderDetails {
     private int product_id;
     private int quantity;
     private Product productBought;
+    private Customer customer;
     private double total;
     private LocalDate order_date;
 
+    public enum Status {
+        COMPLETED,
+        REFUNDED
+    }
+    private Status status;
+
     public OrderDetails() {}
 
-    public OrderDetails(int customer_id, int product_id, int quantity, Product productBought) {
+    public OrderDetails(int customer_id, int product_id, int quantity, Product productBought, Customer customer) {
         this.customer_id = customer_id;
         this.product_id = product_id;
         this.quantity = quantity;
         this.productBought = productBought;
+        this.customer = customer;
         this.total = quantity * productBought.getPrice();
         this.order_date = LocalDate.now();
+        this.status = Status.COMPLETED;
     }
 
     // Order ID
@@ -57,6 +66,11 @@ public class OrderDetails {
         return productBought;
     }
 
+    // Customer
+    public Customer getCustomer() {
+        return customer;
+    }
+
     // Unit Price
     public double getTotal() {
         return total;
@@ -72,4 +86,13 @@ public class OrderDetails {
     public void setOrderDate(LocalDate order_date) {
         this.order_date = order_date;
     }
+
+    // Status
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+    
 }
