@@ -13,7 +13,149 @@ public class SouvenirApp {
             menu();       
             String menuChoice = scanner.nextLine();
 
-            switch (menuChoice) {   
+            switch (menuChoice) {
+                case "1" -> {
+                    boolean isExiting = false;
+
+                    while (!isExiting) {
+                        ordersMenu();
+                        String ordersChoice = scanner.nextLine();
+                    
+                        switch (ordersChoice) {
+                            case "1" -> {
+                                System.out.println("\n--- Create Order ---");
+                                System.out.print("Enter First Name: ");
+                                String firstName = scanner.nextLine();
+                                System.out.print("Enter Last Name: ");
+                                String lastName = scanner.nextLine();
+                                System.out.print("Enter Contact Number (optional): ");
+                                String contact = scanner.nextLine();
+                                System.out.print("Enter Email (optional): ");
+                                String email = scanner.nextLine();  
+                                int productID, quantity;
+
+                                try {
+                                    System.out.print("Enter Product ID: ");
+                                    productID = scanner.nextInt();
+                                    scanner.nextLine();
+                                    System.out.print("Enter Quantity Bought: ");
+                                    quantity = scanner.nextInt();
+                                    scanner.nextLine();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Invalid input. Try again.");
+                                    scanner.nextLine();
+                                    break;
+                                }
+
+                                Customer customer = new Customer(firstName, lastName, contact, email);
+                                Product productBought = productDAO.getProductById(productID);
+
+                                if (productBought != null) {                 
+                                    Order orders = new Order(customer.getCustomerId(), productID, quantity, productBought, customer);
+
+                                    if (orderDAO.createOrder(customer, orders))
+                                        System.out.println("Order created successfully!");
+                                    else
+                                        System.out.println("Failed to create order.");
+
+                                } else {
+                                    System.out.println("Product does not exist.");
+                                }     
+                            }
+
+                            case "2" -> {
+                                System.out.println("\n========================================");
+                                System.out.println("             ALL ORDERS                 ");
+                                System.out.println("========================================");
+                                ArrayList<Order> orders = orderDAO.getAllOrders();
+
+                                if (orders.isEmpty()) {
+                                    System.out.println("No orders found.");
+                                } else {
+                                    System.out.printf("%-8s %-12s %-12s %-10s %-12s %-15s %s%n",
+                                        "OrderID", "CustomerID", "ProductID", "Quantity", "OrderDate", "Total", "Status");
+                                    System.out.println("--------------------------------------------------------------------------------------");
+
+                                    for (Order order : orders)
+                                        System.out.printf("%-8d %-12d %-12d %-10d %-12s Php %-11.2f %s%n", order.getOrderId(), order.getCustomerId(), order.getProductId(),
+                                                                                                    order.getQuantity(), order.getOrderDate(), order.getTotal(), order.getStatus());
+
+                                    System.out.println("======================================================================================");
+                                    System.out.println("Total Orders: " + orders.size());
+                                }
+                            }
+
+                            case "3" -> {
+                                System.out.println("\n--- Edit Order Status ---");
+                                int oid;
+
+                                try {
+                                    System.out.print("Enter Order ID to update: ");
+                                    oid = scanner.nextInt();
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Invalid input. Try again.");
+                                    scanner.nextLine();
+                                    break;
+                                }
+
+                                scanner.nextLine();
+                                Order existing = orderDAO.getOrderById(oid);
+
+                                if (existing == null) {
+                                    System.out.println("Order not found.");
+                                } else {
+                                    System.out.println("\n--- Edit Order Status of: OID #" + existing.getOrderId() + " ---");
+                                    System.out.println("1 -> Change to \'REFUNDED\'");
+                                    System.out.println("0 -> Cancel");
+                                    System.out.print("\nEnter choice: ");
+                                    String choice = scanner.nextLine();
+
+                                    switch (choice) {
+                                        case "1" -> {
+                                            if (existing.getStatus() != Order.Status.REFUNDED) {
+                                                existing.setStatus(Order.Status.REFUNDED);
+                                                orderDAO.editOrderStatus(existing);
+                                                Product productToModify = orderDAO.getProductSoldInOrderById(existing.getOrderId());
+                                                productDAO.updateProductStock(productToModify, productToModify.getQuantityInStock() + existing.getQuantity());
+                                                System.out.println("Successfully changed status.");
+                                            } else {
+                                                System.out.println("Cannot change status");
+                                            }
+                                        }
+
+                                        case "0" -> {
+                                            System.out.println("Exiting...");
+                                            break;
+                                        }
+
+                                        default -> System.out.println("Invalid choice!");
+                                    }
+                                }
+                            }
+
+                            case "4" -> {
+                                double totalSales = 0;
+
+                                for (Order order : orderDAO.getAllOrders()) {
+                                    if (order.getStatus() == Order.Status.COMPLETED) {
+                                        totalSales += order.getTotal();
+                                    }
+                                }
+
+                                System.out.printf("Total sales: Php %.2f%n", totalSales);
+                            }
+
+                            case "0" -> {
+                                System.out.println("Exiting...");
+                                isExiting = true;
+                                break;
+                            }
+                            
+                            default -> System.out.println("Invalid choice!");
+                        }
+                    }
+                }
+
                 case "2" -> {
                     boolean isExiting = false;
 
@@ -124,136 +266,6 @@ public class SouvenirApp {
                     }
                 }
 
-                case "1" -> {
-                    boolean isExiting = false;
-
-                    while (!isExiting) {
-                        ordersMenu();
-                        String ordersChoice = scanner.nextLine();
-                    
-                        switch (ordersChoice) {
-                            case "1" -> {
-                                System.out.println("\n--- Create Order ---");
-                                System.out.print("Enter First Name: ");
-                                String firstName = scanner.nextLine();
-                                System.out.print("Enter Last Name: ");
-                                String lastName = scanner.nextLine();
-                                System.out.print("Enter Contact Number (optional): ");
-                                String contact = scanner.nextLine();
-                                System.out.print("Enter Email (optional): ");
-                                String email = scanner.nextLine();  
-                                int productID, quantity;
-
-                                try {
-                                    System.out.print("Enter Product ID: ");
-                                    productID = scanner.nextInt();
-                                    scanner.nextLine();
-                                    System.out.print("Enter Quantity Bought: ");
-                                    quantity = scanner.nextInt();
-                                    scanner.nextLine();
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Invalid input. Try again.");
-                                    scanner.nextLine();
-                                    break;
-                                }
-
-                                Customer customer = new Customer(firstName, lastName, contact, email);
-                                Product productBought = productDAO.getProductById(productID);
-
-                                if (productBought != null) {                 
-                                    Order orders = new Order(customer.getCustomerId(), productID, quantity, productBought, customer);
-
-                                    if (orderDAO.createOrder(customer, orders))
-                                        System.out.println("Order created successfully!");
-                                    else
-                                        System.out.println("Failed to create order.");
-
-                                } else {
-                                    System.out.println("Product does not exist.");
-                                }     
-                            }
-
-                            case "2" -> {
-                                System.out.println("\n========================================");
-                                System.out.println("             ALL ORDERS                 ");
-                                System.out.println("========================================");
-                                ArrayList<Order> orders = orderDAO.getAllOrders();
-
-                                if (orders.isEmpty()) {
-                                    System.out.println("No orders found.");
-                                } else {
-                                    System.out.printf("%-8s %-12s %-12s %-10s %-12s %-15s %s%n",
-                                        "OrderID", "CustomerID", "ProductID", "Quantity", "OrderDate", "Total", "Status");
-                                    System.out.println("--------------------------------------------------------------------------------------");
-
-                                    for (Order order : orders)
-                                        System.out.printf("%-8d %-12d %-12d %-10d %-12s Php %-11.2f %s%n", order.getOrderId(), order.getCustomerId(), order.getProductId(),
-                                                                                                    order.getQuantity(), order.getOrderDate(), order.getTotal(), order.getStatus());
-
-                                    System.out.println("======================================================================================");
-                                    System.out.println("Total Orders: " + orders.size());
-                                }
-                            }
-
-                            case "3" -> {
-                                System.out.println("\n--- Edit Order Status ---");
-                                int oid;
-
-                                try {
-                                    System.out.print("Enter Order ID to update: ");
-                                    oid = scanner.nextInt();
-                                } catch (InputMismatchException e) {
-                                    System.out.println("Invalid input. Try again.");
-                                    scanner.nextLine();
-                                    break;
-                                }
-
-                                scanner.nextLine();
-                                Order existing = orderDAO.getOrderById(oid);
-
-                                if (existing == null) {
-                                    System.out.println("Order not found.");
-                                } else {
-                                    System.out.println("\n--- Edit Order Status of: OID #" + existing.getOrderId() + " ---");
-                                    System.out.println("1 -> Change to \'REFUNDED\'");
-                                    System.out.println("0 -> Exit");
-                                    System.out.print("\nEnter choice: ");
-                                    String choice = scanner.nextLine();
-
-                                    switch (choice) {
-                                        case "1" -> {
-                                            if (existing.getStatus() != Order.Status.REFUNDED) {
-                                                existing.setStatus(Order.Status.REFUNDED);
-                                                orderDAO.editOrderStatus(existing);
-                                                Product productToModify = orderDAO.getProductSoldInOrderById(existing.getOrderId());
-                                                productDAO.updateProductStock(productToModify, productToModify.getQuantityInStock() + existing.getQuantity());
-                                                System.out.println("Successfully changed status.");
-                                            } else {
-                                                System.out.println("Cannot change status");
-                                            }
-                                        }
-
-                                        case "0" -> {
-                                            System.out.println("Exiting...");
-                                            break;
-                                        }
-
-                                        default -> System.out.println("Invalid choice!");
-                                    }
-                                }
-                            }
-
-                            case "0" -> {
-                                System.out.println("Exiting...");
-                                isExiting = true;
-                                break;
-                            }
-                            
-                            default -> System.out.println("Invalid choice!");
-                        }
-                    }
-                }
-
                 case "0" -> {
                     System.out.println("Exiting...");
                     scanner.close();
@@ -296,6 +308,7 @@ public class SouvenirApp {
         System.out.println("1 -> Create Order");
         System.out.println("2 -> View All Orders");
         System.out.println("3 -> Edit Order");
+        System.out.println("4 -> View Total Sales");
         System.out.println("\n0 -> Exit");
         System.out.println("========================================");
         System.out.print("Enter choice: ");
