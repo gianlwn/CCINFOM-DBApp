@@ -59,12 +59,12 @@ public class ProductDAO {
         return false;
     }
 
-    public Product getProductById(int id) {
+    public Product getProductById(int pid) {
         String sql = "SELECT * FROM products WHERE product_id = ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setInt(1, pid);
             
             try (ResultSet rs = stmt.executeQuery();) {
                 if (rs.next()) {

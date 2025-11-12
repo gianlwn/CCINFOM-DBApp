@@ -57,12 +57,12 @@ public class OrderDAO {
         return false;
     }
 
-    public Order getOrderById(int id) {
+    public Order getOrderById(int oid) {
         String sql = "SELECT * FROM orders WHERE order_id = ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setInt(1, oid);
             
             try (ResultSet rs = stmt.executeQuery();) {
                 if (rs.next()) {
@@ -76,6 +76,34 @@ public class OrderDAO {
                     order.setStatus(Order.Status.valueOf(rs.getString("status")));
 
                     return order;
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Product getProductSoldInOrderById(int oid) {
+        String sql = "SELECT p.* FROM orders o LEFT JOIN products p ON p.product_id = o.product_id WHERE order_id = ?";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, oid);
+            
+            try (ResultSet rs = stmt.executeQuery();) {
+                if (rs.next()) {
+                    Product product = new Product();
+                    product.setProductId(rs.getInt("product_id"));
+                    product.setProductName(rs.getString("product_name"));
+                    product.setCategoryId(rs.getInt("category_id"));
+                    product.setPrice(rs.getDouble("price"));
+                    product.setQuantityInStock(rs.getInt("quantity_in_stock"));
+                    product.setSupplierId(rs.getInt("supplier_id"));
+
+                    return product;
                 }
             }
             
