@@ -75,7 +75,6 @@ public class SouvenirApp {
 
                             case "3" -> {
                                 System.out.println("\n--- Update Product ---");
-                                System.out.print("Enter Product ID to update: ");
                                 int id;
 
                                 try {
@@ -94,7 +93,6 @@ public class SouvenirApp {
                                     System.out.println("Product not found.");
                                 } else {
                                     System.out.println("Editing product: " + existing.getProductName());
-                                    System.out.print("Enter New Quantity In Stock: ");
                                     int newQty;
 
                                     try {

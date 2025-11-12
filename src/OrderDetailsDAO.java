@@ -16,7 +16,7 @@ public class OrderDetailsDAO {
             return false;
         }
 
-        if (orderDetails.getQuantity() < 0 || orderDetails.getProductBought().getQuantityInStock() <= orderDetails.getQuantity()) {
+        if (orderDetails.getQuantity() <= 0 || orderDetails.getProductBought().getQuantityInStock() <= orderDetails.getQuantity()) {
             System.err.println("Select valid quantity in the stock.");
             return false;
         }
