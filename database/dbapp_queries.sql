@@ -126,3 +126,33 @@ SELECT * FROM customers;
 SELECT * FROM orders;
 SELECT * FROM products;
 SELECT * FROM suppliers;
+
+-- reset commands --
+DELETE FROM orders;
+ALTER TABLE orders MODIFY order_id INT NOT NULL AUTO_INCREMENT;
+ALTER TABLE orders auto_increment = 4001;
+
+DELETE FROM customers;
+ALTER TABLE customers MODIFY customer_id INT NOT NULL AUTO_INCREMENT;
+ALTER TABLE customers auto_increment = 101;
+
+UPDATE products SET quantity_in_stock = 150 WHERE product_id = 3001;
+UPDATE products SET quantity_in_stock = 100 WHERE product_id = 3002;
+UPDATE products SET quantity_in_stock = 80 WHERE product_id = 3003;
+UPDATE products SET quantity_in_stock = 100 WHERE product_id = 3004;
+UPDATE products SET quantity_in_stock = 70 WHERE product_id = 3005;
+UPDATE products SET quantity_in_stock = 50 WHERE product_id = 3006;
+UPDATE products SET quantity_in_stock = 180 WHERE product_id = 3007;
+UPDATE products SET quantity_in_stock = 30 WHERE product_id = 3008;
+UPDATE products SET quantity_in_stock = 50 WHERE product_id = 3009;
+UPDATE products SET quantity_in_stock = 40 WHERE product_id = 3010;
+UPDATE products SET quantity_in_stock = 200 WHERE product_id = 3011;
+UPDATE products SET quantity_in_stock = 180 WHERE product_id = 3012;
+UPDATE products SET quantity_in_stock = 60 WHERE product_id = 3013;
+UPDATE products SET quantity_in_stock = 50 WHERE product_id = 3014;
+UPDATE products SET quantity_in_stock = 100 WHERE product_id = 3015;
+UPDATE products SET quantity_in_stock = 150 WHERE product_id = 3016;
+UPDATE products SET quantity_in_stock = 80 WHERE product_id = 3017;
+UPDATE products SET quantity_in_stock = 50 WHERE product_id = 3018;
+UPDATE products SET quantity_in_stock = 30 WHERE product_id = 3019;
+UPDATE products SET quantity_in_stock = 50 WHERE product_id = 3020;
