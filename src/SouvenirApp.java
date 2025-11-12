@@ -14,7 +14,7 @@ public class SouvenirApp {
             String menuChoice = scanner.nextLine();
 
             switch (menuChoice) {   
-                case "1" -> {
+                case "2" -> {
                     boolean isExiting = false;
 
                     while (!isExiting) {
@@ -124,7 +124,7 @@ public class SouvenirApp {
                     }
                 }
 
-                case "2" -> {
+                case "1" -> {
                     boolean isExiting = false;
 
                     while (!isExiting) {
@@ -182,15 +182,15 @@ public class SouvenirApp {
                                 if (orders.isEmpty()) {
                                     System.out.println("No orders found.");
                                 } else {
-                                    System.out.printf("%-8s %-12s %-12s %-10s %-12s %-12s%n",
-                                        "OrderID", "CustomerID", "ProductID", "Quantity", "OrderDate", "Total");
-                                    System.out.println("----------------------------------------------------------------------------");
+                                    System.out.printf("%-8s %-12s %-12s %-10s %-12s %-11s %s%n",
+                                        "OrderID", "CustomerID", "ProductID", "Quantity", "OrderDate", "Total", "Status");
+                                    System.out.println("--------------------------------------------------------------------------------------");
 
-                                    for (Order od : orders)
-                                        System.out.printf("%-8d %-12d %-12d %-10d %-12s $%-11.2f%n", od.getOrderId(), od.getCustomerId(), od.getProductId(),
-                                                                                                    od.getQuantity(), od.getOrderDate(), od.getTotal());
+                                    for (Order order : orders)
+                                        System.out.printf("%-8d %-12d %-12d %-10d %-12s $%-10.2f %s%n", order.getOrderId(), order.getCustomerId(), order.getProductId(),
+                                                                                                    order.getQuantity(), order.getOrderDate(), order.getTotal(), order.getStatus());
 
-                                    System.out.println("============================================================================");
+                                    System.out.println("======================================================================================");
                                     System.out.println("Total Orders: " + orders.size());
                                 }
                             }
@@ -226,8 +226,8 @@ public class SouvenirApp {
         System.out.println("    SOUVENIR SHOP MANAGEMENT SYSTEM    ");
         System.out.println("========================================");
         System.out.println("[ADD RECORDS]");
-        System.out.println("1 -> Products Menu");
-        System.out.println("2 -> Orders Menu");
+        System.out.println("1 -> Orders Menu");
+        System.out.println("2 -> Products Menu");
         System.out.println("\n0 -> Exit");
         System.out.println("========================================");
         System.out.print("Enter choice: ");

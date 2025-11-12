@@ -22,7 +22,7 @@ public class OrderDAO {
         }
 
         if (customerDAO.addCustomer(customer)) {
-            String sql = "INSERT INTO order_details (customer_id, product_id, quantity, total, order_date, status) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO orders (customer_id, product_id, quantity, total, order_date, status) VALUES (?, ?, ?, ?, ?, ?)";
             
             try (Connection conn = DBUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -93,7 +93,7 @@ public class OrderDAO {
 
     public ArrayList<Order> getAllOrders() {
         ArrayList<Order> orders = new ArrayList<>();
-        String sql = "SELECT * FROM order_details ORDER BY order_id";
+        String sql = "SELECT * FROM orders ORDER BY order_id";
         
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
