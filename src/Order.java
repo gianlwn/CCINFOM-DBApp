@@ -37,7 +37,9 @@ public class Order {
             (LocalDate.now().getMonth() == Month.SEPTEMBER && LocalDate.now().getDayOfMonth() == 9) ||
             (LocalDate.now().getMonth() == Month.OCTOBER && LocalDate.now().getDayOfMonth() == 10) ||
             (LocalDate.now().getMonth() == Month.NOVEMBER && LocalDate.now().getDayOfMonth() == 11) ||
-            (LocalDate.now().getMonth() == Month.DECEMBER && LocalDate.now().getDayOfMonth() == 12)) {
+            (LocalDate.now().getMonth() == Month.DECEMBER && LocalDate.now().getDayOfMonth() == 12) ||
+            (LocalDate.now().getMonth() == Month.DECEMBER && LocalDate.now().getDayOfMonth() == 25) ||
+            (LocalDate.now().getMonth() == Month.JUNE && LocalDate.now().getDayOfMonth() == 12)) {
                 this.total = (quantity * productBought.getPrice()) * 0.90;
         } else {
             this.total = quantity * productBought.getPrice();
