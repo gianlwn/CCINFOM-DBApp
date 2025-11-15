@@ -87,7 +87,7 @@ public class OrderDAO {
     }
 
     public Product getProductSoldInOrderById(int oid) {
-        String sql = "SELECT p.* FROM orders o INNER JOIN products p ON p.product_id = o.product_id WHERE order_id = ?";
+        String sql = "SELECT p.* FROM orders o LEFT JOIN products p ON p.product_id = o.product_id WHERE order_id = ?";
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
