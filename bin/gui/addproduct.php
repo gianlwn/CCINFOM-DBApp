@@ -79,7 +79,7 @@
 
     <?php 
         if (!empty($message)) {
-            echo "<div style='color: red; font-weight: bold; margin-bottom: 10px;'>$message</div>";
+            echo "<div style='padding:10px;border-radius:8px;margin-bottom:10px;background:#eef7ee;color:#1a7f37;'>" . htmlspecialchars($message) . "</div>";
         }
     ?>
     <div class="table-container">
@@ -110,11 +110,11 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        $name      = $_POST["product_name"];
-        $category  = $_POST["category_id"];
-        $price     = $_POST["price"];
-        $stock     = $_POST["quantity_in_stock"];
-        $supplier  = $_POST["supplier_id"];
+        $name      = trim($_POST["product_name"] ?? '');
+        $category  = $_POST["category_id"] ?? '';
+        $price     = $_POST["price"] ?? '';
+        $stock     = $_POST["quantity_in_stock"] ?? '';
+        $supplier  = $_POST["supplier_id"] ?? '';
 
 
         if(empty($name) || empty($category) || empty($price) || empty($stock) || empty($supplier)) {
