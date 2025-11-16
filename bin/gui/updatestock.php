@@ -9,20 +9,26 @@
         // Check if product exists
         $check = mysqli_query($conn, "SELECT * FROM products WHERE product_id = $product_id");
 
-        if (mysqli_num_rows($check) == 0) {
-            $message = "Product ID not found.";
+        if (!is_numeric($new_stock) || $new_stock < 0) {
+            $message = "Stock cannot be negative.";
         } else {
-            // Update stock
-            $update = "
-                UPDATE products 
-                SET quantity_in_stock = $new_stock
-                WHERE product_id = $product_id
-            ";
+            $check = mysqli_query($conn, "SELECT * FROM products WHERE product_id = $product_id");
 
-            if (mysqli_query($conn, $update)) {
-                $message = "Stock updated successfully!";
+            if (mysqli_num_rows($check) == 0) {
+                $message = "Product ID not found.";
             } else {
-                $message = "Error updating stock: " . mysqli_error($conn);
+                // Update stock
+                $update = "
+                    UPDATE products 
+                    SET quantity_in_stock = $new_stock
+                    WHERE product_id = $product_id
+                ";
+
+                if (mysqli_query($conn, $update)) {
+                    $message = "Stock updated successfully!";
+                } else {
+                    $message = "Error updating stock: " . mysqli_error($conn);
+                }
             }
         }
     }
@@ -113,7 +119,7 @@
         <input type="number" name="productId" required><br><br>
 
         <label>New Stock Amount:</label><br>
-        <input type="number" name="newStock" required><br><br>
+        <input type="number" name="newStock" min="0" required><br><br>
 
         <button type="submit">Update Stock</button>
     </form>
