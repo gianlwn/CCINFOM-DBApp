@@ -1,5 +1,13 @@
 <?php include("database.php"); ?>
 
+<?php
+    // Fetch product stock
+    $stock_query = "SELECT quantity_in_stock FROM products WHERE product_id = $product_id";
+    $stock_result = mysqli_query($conn, $stock_query);
+    $stock_row = mysqli_fetch_assoc($stock_result);
+    $current_stock = $stock_row['quantity_in_stock'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,13 +41,23 @@
                 $result = mysqli_query($conn, $query);
 
                 while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<option value='".$row['product_id']."'>".$row['product_name']."</option>";
+                    $selected = (isset($_POST['product_id']) && $_POST['product_id'] == $row['product_id']) ? "selected" : "";
+                    echo "<option value='".$row['product_id']."' $selected>".$row['product_name']."</option>";
                 }
             ?>
         </select><br><br>
 
         <label for="quantity">Quantity:</label><br>
-        <input type="number" id="quantity" name="quantity" min="1" required><br><br>
+        <input 
+            type="number" 
+            id="quantity" 
+            name="quantity" 
+            min="1" 
+            max="<?php echo $current_stock; ?>" 
+            required
+        >
+        <p>Available stock: <?php echo $current_stock; ?></p>
+
 
         <input type="submit" value="Submit Order">
     </form>
@@ -56,14 +74,12 @@
         $last = $_POST["last_name"];
         $product_id = $_POST["product_id"];
         $quantity = $_POST["quantity"];
-        $email = $_POST["email"];
-        $contact = $_POST["contact_number"];
 
+        // Optional fields
+        $email = !empty($_POST["email"]) ? "'".$_POST["email"]."'" : "NULL";
+        $contact = !empty($_POST["contact_number"]) ? "'".$_POST["contact_number"]."'" : "NULL";
 
-        if($quantity > $current_stock){
-            echo "Select valid quantity in the stock.";
-        }
-        elseif($product_id <= 3000 || $product_id >= 4000){
+        if($product_id <= 3000 || $product_id >= 4000){
             echo "Enter a valid Product ID.";
         }
         elseif(empty($first) || empty($last)){
