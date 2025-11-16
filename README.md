@@ -31,8 +31,8 @@ Before running SouvenirApp, make sure you have the following installed on your m
   - Click Start for both Apache and MySQL.
   - Confirm MySQL is running on port 3307 (update your PHP code accordingly).​
 
-2. Deploy Application
-  - Navigate to http://localhost/SouvenirApp in your browser.
+2. **Deploy Application**
+  - Navigate to [http://localhost/SouvenirApp](http://localhost/SouvenirApp) in your browser.
 
 ## Troubleshooting
   - **"Could not connect!" Error:**
