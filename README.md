@@ -45,6 +45,9 @@ Before running SouvenirApp, make sure you have the following installed on your m
     Open the XAMPP Control Panel, then press the 'config' button in MySQL.
     Press 'my.ini' then change the port number to 3307.
 
+ - **"Error: MySQL shutdown unexpectedly"?**
+   Make sure to change the parameters of lines 3 and 4 inside the 'database.php' file.
+
 ## How to Run
 1. Clone or copy project files into htdocs.
 2. Start XAMPP, confirm modules are running.
