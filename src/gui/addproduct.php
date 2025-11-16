@@ -1,4 +1,9 @@
-<?php include("database.php"); ?>
+<?php
+    include("database.php");
+
+    $message = "";
+    $message_type = "error";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,10 +83,14 @@
     <h1>Add Product</h1>
 
     <?php 
-        if (!empty($message)) {
-            echo "<div style='color: red; font-weight: bold; margin-bottom: 10px;'>$message</div>";
+        if ($message !== "") {
+            $bg  = ($message_type === "success") ? "#e9f7ef" : "#fdecea";
+            $col = ($message_type === "success") ? "#1e7e34" : "#b00020";
+            echo "<div style='padding:12px;border-radius:8px;margin-bottom:12px;background:$bg;color:$col;'>"
+            . htmlspecialchars($message)
+            . "</div>";
         }
-    ?>
+?>
     <div class="table-container">
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
     
@@ -110,11 +119,11 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        $name      = $_POST["product_name"];
-        $category  = $_POST["category_id"];
-        $price     = $_POST["price"];
-        $stock     = $_POST["quantity_in_stock"];
-        $supplier  = $_POST["supplier_id"];
+        $name     = trim($_POST["product_name"] ?? "");
+        $category = $_POST["category_id"] ?? "";
+        $price    = $_POST["price"] ?? "";
+        $stock    = $_POST["quantity_in_stock"] ?? "";
+        $supplier = $_POST["supplier_id"] ?? "";
 
 
         if(empty($name) || empty($category) || empty($price) || empty($stock) || empty($supplier)) {
