@@ -128,18 +128,23 @@
 
         if(empty($name) || empty($category) || empty($price) || empty($stock) || empty($supplier)) {
             $message = "All fields are required.";
+            $message_type = "error";
         }
         elseif($category <= 1000 || $category >= 2000){
             $message = "Enter a valid Category ID.";
+            $message_type = "error";
         }
         elseif($price <= 0){
             $message = "Enter a valid price.";
+            $message_type = "error";
         }
         elseif($stock < 0){
             $message = "Enter a valid quantity.";
+            $message_type = "error";
         }
         elseif($supplier <= 2000 || $supplier >= 3000){
             $message = "Enter a valid Supplier ID.";
+            $message_type = "error";
         }
         else {
             // Insert product
@@ -150,6 +155,7 @@
 
             if (mysqli_query($conn, $insert)) {
                 $message = "Product added successfully!";
+                $message_type = "success";
             } else {
                 $error_code = mysqli_errno($conn);
                 $error_msg  = mysqli_error($conn);
@@ -166,6 +172,8 @@
                 } else {
                     $message = "Error adding product: $error_msg";
                 }
+
+                $message_type = "error";
             }
         }   
     }
