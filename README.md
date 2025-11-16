@@ -16,7 +16,7 @@ Before running SouvenirApp, make sure you have the following installed on your m
 2. **Project Files**
   - Create the folder 'SouvenirApp' in the directory of your XAMPP installation (C:\xampp\htdocs\).
   - Download the [PHP files](https://github.com/gianlwn/CCINFOM-DBApp/tree/main/src/gui) in the 'gui' folder inside the 'src' folder.
-  - Place the PHP files in the 'SouvenirApp' folder.
+  - Place the PHP files in the 'SouvenirApp' folder (C:\xampp\htdocs\SouvenirApp).
 
 3. **MySQL Database**
   - Download the [11-DBCREATION.sql](https://github.com/gianlwn/CCINFOM-DBApp/blob/main/database/11-DBCREATION.sql) in the 'database' folder.
