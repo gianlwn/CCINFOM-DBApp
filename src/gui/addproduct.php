@@ -95,19 +95,29 @@
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
     
         <label>Product Name:</label><br>
-        <input type="text" name="product_name" required oninput="this.setCustomValidity('')"oninvalid="this.setCustomValidity('Please enter a product name.')"><br><br>
+        <input type="text" name="product_name" required
+               oninput="this.setCustomValidity('')"
+               oninvalid="this.setCustomValidity('Please enter a product name.')"><br><br>
 
         <label>Category ID:</label><br>
-        <input type="number" name="category_id" min="1001" max="1999" required oninput="this.setCustomValidity('')"oninvalid="this.setCustomValidity('Category ID must be between 1001 and 1999.')"><br><br>
+        <input type="number" name="category_id" min="1001" max="1999" required
+               oninput="this.setCustomValidity('')"
+               oninvalid="this.setCustomValidity('Category ID must be between 1001 and 1999.')"><br><br>
 
         <label>Price:</label><br>
-        <input type="number" name="price" step="0.01" min="0.01" required oninput="this.setCustomValidity('')"oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Please enter a price.' : 'Price must be at least 0.01.')"><br><br>
+        <input type="number" name="price" step="0.01" min="0.01" required
+               oninput="this.setCustomValidity('')"
+               oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Please enter a price.' : 'Price must be at least 0.01.')"><br><br>
 
         <label>Quantity in Stock:</label><br>
-        <input type="number" name="quantity_in_stock" min="0" required oninput="this.setCustomValidity('')"oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Please enter a quantity.' : 'Value must be greater than or equal to 0.')"><br><br>
+        <input type="number" name="quantity_in_stock" min="0" required
+               oninput="this.setCustomValidity('')"
+               oninvalid="this.setCustomValidity(this.validity.valueMissing ? 'Please enter a quantity.' : 'Value must be greater than or equal to 0.')"><br><br>
 
         <label>Supplier ID:</label><br>
-        <input type="number" name="supplier_id" min="2001" max="2999" required oninput="this.setCustomValidity('')"oninvalid="this.setCustomValidity('Supplier ID must be between 2001 and 2999.')"><br><br>
+        <input type="number" name="supplier_id" min="2001" max="2999" required
+               oninput="this.setCustomValidity('')"
+               oninvalid="this.setCustomValidity('Supplier ID must be between 2001 and 2999.')"><br><br>
 
         <button type="submit">Add Product</button>
     </form>
