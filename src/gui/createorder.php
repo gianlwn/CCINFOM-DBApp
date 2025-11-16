@@ -51,32 +51,52 @@
         $product_id = $_POST["product_id"];
         $quantity = $_POST["quantity"];
 
-        // Insert customer into customers table
-        $insert_customer = "INSERT INTO customers (first_name, last_name)
-                            VALUES ('$first', '$last')";
 
-        mysqli_query($conn, $insert_customer);
-
-        // Get the auto-incremented customer_id
-        $customer_id = mysqli_insert_id($conn);
-
-        // Get product price
-        $price_query = "SELECT price FROM products WHERE product_id = $product_id";
-        $price_result = mysqli_query($conn, $price_query);
-        $price_row = mysqli_fetch_assoc($price_result);
-        $price = $price_row['price'];
-
-        $total = $price * $quantity;
-
-        // Insert order using the newly created customer_id
-        $insert_order = "INSERT INTO orders (customer_id, product_id, quantity, total, order_date)
-                        VALUES ('$customer_id', '$product_id', '$quantity', '$total', NOW())";
-
-        if (mysqli_query($conn, $insert_order)) {
-            echo "Order created successfully!";
-        } else {
-            echo "Error: " . mysqli_error($conn);
+        if($quantity > $current_stock){
+            echo "Select valid quantity in the stock.";
         }
+        elseif($product_id <= 3000 || $product_id >= 4000){
+            echo "Enter a valid Product ID.";
+        }
+        elseif(empty($first) || empty($last)){
+            echo "Name cannot be empty.";
+        }
+        else{
+
+            // Insert customer into customers table
+            $insert_customer = "INSERT INTO customers (first_name, last_name)
+                                VALUES ('$first', '$last')";
+
+            mysqli_query($conn, $insert_customer);
+
+            // Get the auto-incremented customer_id
+            $customer_id = mysqli_insert_id($conn);
+
+            // Get product price
+            $price_query = "SELECT price FROM products WHERE product_id = $product_id";
+            $price_result = mysqli_query($conn, $price_query);
+            $price_row = mysqli_fetch_assoc($price_result);
+            $price = $price_row['price'];
+
+            $total = $price * $quantity;
+
+            // Insert order using the newly created customer_id
+            $insert_order = "INSERT INTO orders (customer_id, product_id, quantity, total, order_date)
+                            VALUES ('$customer_id', '$product_id', '$quantity', '$total', NOW())";
+
+            if (mysqli_query($conn, $insert_order)) {
+
+                // update product stock
+                $new_stock = $current_stock - $quantity;
+                $update_stock = "UPDATE products SET quantity_in_stock = $new_stock WHERE product_id = $product_id";
+                mysqli_query($conn, $update_stock);
+
+                echo "Order created successfully!";
+            } else {
+                echo "Error: " . mysqli_error($conn);
+            }
+        }
+        
     }
 
     mysqli_close($conn);

@@ -1,27 +1,4 @@
-<?php
-    include("database.php");
-
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-        $name      = $_POST["product_name"];
-        $category  = $_POST["category_id"];
-        $price     = $_POST["price"];
-        $stock     = $_POST["quantity_in_stock"];
-        $supplier  = $_POST["supplier_id"];
-
-        // Insert product
-        $insert = "
-            INSERT INTO products (product_name, category_id, price, quantity_in_stock, supplier_id)
-            VALUES ('$name', '$category', '$price', '$stock', '$supplier')
-        ";
-
-        if (mysqli_query($conn, $insert)) {
-            $message = "Product added successfully!";
-        } else {
-            $message = "Error adding product: " . mysqli_error($conn);
-        }
-    }
-?>
+<?php include("database.php"); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,5 +39,46 @@
     <br><a href="index.php">Back to Home</a>
 </body>
 </html>
+
+<?php
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+        $name      = $_POST["product_name"];
+        $category  = $_POST["category_id"];
+        $price     = $_POST["price"];
+        $stock     = $_POST["quantity_in_stock"];
+        $supplier  = $_POST["supplier_id"];
+
+
+        if(empty($name) || empty($category) || empty($price) || empty($stock) || empty($supplier)) {
+            $message = "All fields are required.";
+        }
+        elseif($category <= 0){
+            $message = "Enter a valid Category ID.";
+        }
+        elseif($price <= 0){
+            $message = "Enter a valid price.";
+        }
+        elseif($stock < 0){
+            $message = "Enter a valid quantity.";
+        }
+        elseif($supplier <= 0){
+            $message = "Enter a valid Supplier ID.";
+        }
+        else {
+            // Insert product
+            $insert = "
+                INSERT INTO products (product_name, category_id, price, quantity_in_stock, supplier_id)
+                VALUES ('$name', '$category', '$price', '$stock', '$supplier')
+            ";
+
+            if (mysqli_query($conn, $insert)) {
+                $message = "Product added successfully!";
+            } else {
+                $message = "Error adding product: " . mysqli_error($conn);
+            }
+        }   
+    }
+?>
 
 <?php mysqli_close($conn); ?>
