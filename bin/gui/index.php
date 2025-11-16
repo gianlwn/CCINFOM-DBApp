@@ -72,6 +72,7 @@
             <li><a href="createorder.php">Create an Order</a></li>
             <li><a href="vieworders.php">View All Orders</a></li>
             <li><a href="editorder.php">Edit Orders</a></li>
+            <li><a href="totalsales.php">View Total Sales</a></li>
         </ul>
     </div>
 
