@@ -120,7 +120,7 @@
         if(empty($name) || empty($category) || empty($price) || empty($stock) || empty($supplier)) {
             $message = "All fields are required.";
         }
-        elseif($category <= 0){
+        elseif($category <= 1000 || $category >= 2000){
             $message = "Enter a valid Category ID.";
         }
         elseif($price <= 0){
@@ -129,7 +129,7 @@
         elseif($stock < 0){
             $message = "Enter a valid quantity.";
         }
-        elseif($supplier <= 0){
+        elseif($supplier <= 2000 || $supplier >= 3000){
             $message = "Enter a valid Supplier ID.";
         }
         else {
@@ -142,7 +142,21 @@
             if (mysqli_query($conn, $insert)) {
                 $message = "Product added successfully!";
             } else {
-                $message = "Error adding product: " . mysqli_error($conn);
+                $error_code = mysqli_errno($conn);
+                $error_msg  = mysqli_error($conn);
+
+                if ($error_code === 1452) {
+                    if (strpos($error_msg, 'category_id') !== false) {
+                        $message = "Category ID does not exist. Please enter a valid Category ID.";
+                    } elseif (strpos($error_msg, 'supplier_id') !== false) {
+                        $message = "Supplier ID does not exist. Please enter a valid Supplier ID.";
+                    } else {
+                        $message = "Foreign key error: Check category and supplier IDs.";
+                    }
+
+                } else {
+                    $message = "Error adding product: $error_msg";
+                }
             }
         }   
     }
