@@ -19,6 +19,12 @@
         <label for="last_name">Last Name:</label><br>
         <input type="text" name="last_name" id="last_name" required><br><br>
 
+        <label for="email">Email:</label><br>
+        <input type="text" name="email" id="email" required><br><br>
+
+        <label for="contact_number">Contact Number:</label><br>
+        <input type="text" name="contact_number" id="contact_number" required><br><br>
+
         <label for="product_id">Product:</label><br>
         <select name="product_id" id="product_id" required>
             <option value="">Select Product</option>
@@ -50,6 +56,8 @@
         $last = $_POST["last_name"];
         $product_id = $_POST["product_id"];
         $quantity = $_POST["quantity"];
+        $email = $_POST["email"];
+        $contact = $_POST["contact_number"];
 
 
         if($quantity > $current_stock){
@@ -64,8 +72,8 @@
         else{
 
             // Insert customer into customers table
-            $insert_customer = "INSERT INTO customers (first_name, last_name)
-                                VALUES ('$first', '$last')";
+            $insert_customer = "INSERT INTO customers (first_name, last_name, contact_number, email)
+                                VALUES ('$first', '$last', '$contact', '$email')";
 
             mysqli_query($conn, $insert_customer);
 
