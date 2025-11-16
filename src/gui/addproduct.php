@@ -79,7 +79,7 @@
 
     <?php 
         if (!empty($message)) {
-            echo "<p><strong>$message</strong></p>";
+            echo "<div style='color: red; font-weight: bold; margin-bottom: 10px;'>$message</div>";
         }
     ?>
     <div class="table-container">
