@@ -1,11 +1,44 @@
-<?php
-    include("database.php");
+<?php include("database.php"); $message = ""; ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Order</title>
+</head>
+<body>
+    <h1>Edit Order</h1>
+
+    <?php if (!empty($message)) echo "<p><strong>$message</strong></p>"; ?>
+
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+        <label>Order ID:</label><br>
+        <input type="number" name="orderId" required><br><br>
+
+        <label>New Quantity:</label><br>
+        <input type="number" name="newQuantity" min="1" required><br><br>
+
+        <label>Order Status:</label><br>
+        <select name="status" required>
+            <option value="COMPLETED">COMPLETED</option>
+            <option value="REFUNDED">REFUNDED</option>
+        </select><br><br>
+
+        <button type="submit">Update Order</button>
+    </form>
+
+    <br><a href="index.php">Back to Home</a>
+</body>
+</html>
+
+<?php
     // If form submitted, process update
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $order_id = $_POST["orderId"];
         $new_qty  = $_POST["newQuantity"];
+        $new_status = $_POST["status"];
 
         // Check if order exists
         $check = mysqli_query($conn, "SELECT * FROM orders WHERE order_id = $order_id");
@@ -29,7 +62,9 @@
             // Update order
             $update = "
                 UPDATE orders 
-                SET quantity = $new_qty, total = $new_total 
+                SET quantity = $new_qty,
+                    total = $new_total,
+                    status = '$new_status'
                 WHERE order_id = $order_id
             ";
 
@@ -41,31 +76,5 @@
         }
     }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Order</title>
-</head>
-<body>
-    <h1>Edit Order</h1>
-
-    <?php if (!empty($message)) echo "<p><strong>$message</strong></p>"; ?>
-
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-        <label>Order ID:</label><br>
-        <input type="number" name="orderId" required><br><br>
-
-        <label>New Quantity:</label><br>
-        <input type="number" name="newQuantity" min="1" required><br><br>
-
-        <button type="submit">Update Order</button>
-    </form>
-
-    <br><a href="index.php">Back to Home</a>
-</body>
-</html>
 
 <?php mysqli_close($conn); ?>
