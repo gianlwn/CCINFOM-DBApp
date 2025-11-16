@@ -19,9 +19,9 @@
         $total_sales = $row['total_sales'];
 
         if ($total_sales === null) {
-            echo "<h2>Php0.00</h2>";
+            echo "<h2>Php 0.00</h2>";
         } else {
-            echo "<h2>Php" . number_format($total_sales, 2) . "</h2>";
+            echo "<h2>Php " . number_format($total_sales, 2) . "</h2>";
         }
     ?>
 

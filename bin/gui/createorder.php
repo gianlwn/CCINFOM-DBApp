@@ -74,7 +74,10 @@
         $last = $_POST["last_name"];
         $product_id = $_POST["product_id"];
         $quantity = $_POST["quantity"];
+        $email = $_POST["email"];
+        $contact = $_POST["contact_number"];
 
+<<<<<<< HEAD
         // Optional fields
         $email = !empty($_POST["email"]) ? "'".$_POST["email"]."'" : "NULL";
         $contact = !empty($_POST["contact_number"]) ? "'".$_POST["contact_number"]."'" : "NULL";
@@ -82,6 +85,15 @@
         if($product_id <= 3000 || $product_id >= 4000){
             echo "Enter a valid Product ID.";
         }
+=======
+
+        if($quantity > $current_stock){
+            echo "Select valid quantity in the stock.";
+        }
+        elseif($product_id <= 3000 || $product_id >= 4000){
+            echo "Enter a valid Product ID.";
+        }
+>>>>>>> 9f5adc9af35f0c2b12ae97ab9e82d1ab969ed59f
         elseif(empty($first) || empty($last)){
             echo "Name cannot be empty.";
         }
