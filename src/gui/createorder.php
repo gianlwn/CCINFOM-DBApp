@@ -136,7 +136,11 @@
 
         // Optional fields
         $email = !empty($_POST["email"]) ? "'".$_POST["email"]."'" : "NULL";
-        $contact = !empty($_POST["contact_number"]) ? "'".$_POST["contact_number"]."'" : "NULL";
+        if (!empty($_POST["contact_number"]) && ctype_digit($_POST["contact_number"])) {
+            $contact = "'".$_POST["contact_number"]."'";
+        } else {
+            $contact = "NULL";
+        }
 
         // Fetch product stock
         $stock_query = "SELECT quantity_in_stock FROM products WHERE product_id = $product_id";
