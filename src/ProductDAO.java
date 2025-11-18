@@ -163,6 +163,12 @@ public class ProductDAO {
                 p.setPrice(rs.getDouble("price"));
                 p.setQuantityInStock(rs.getInt("quantity_in_stock"));
                 p.setSupplierId(rs.getInt("supplier_id"));
+
+                if (p.getQuantityInStock() <= 20)
+                    p.setStockStatus("Low");
+                else
+                    p.setStockStatus("OK");
+
                 products.add(p); // Add to list
             }
         } catch (SQLException e) {

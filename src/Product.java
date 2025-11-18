@@ -17,6 +17,7 @@ public class Product {
     private double price;           // Price of the product
     private int quantity_in_stock;  // Available quantity in stock
     private int supplier_id;        // ID of the supplier providing this product
+    private String stock_status;
 
     /**
      * Default constructor.
@@ -139,5 +140,21 @@ public class Product {
      */
     public void setSupplierId(int supplier_id) {
         this.supplier_id = supplier_id;
+    }
+
+    /**
+     * Gets the stock status of the product.
+     * @return The stock status
+     */
+    public String getStockStatus() {
+        return stock_status;
+    }
+
+    /**
+     * Sets the stock status
+     * @param stock_status The stock status
+     */
+    public void setStockStatus(String stock_status) {
+        this.stock_status = stock_status;
     }
 }
