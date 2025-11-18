@@ -365,7 +365,7 @@ public class SouvenirApp {
                                     System.out.println("----------------------------------------------------------------");
 
                                     for (Product p : products)
-                                        System.out.printf("%-15d %-28s %-18d%n", p.getProductId(), p.getProductName(), p.getTotalSold());
+                                        System.out.printf("%-15d %-28s %-18d%n", p.getOrderId(), p.getProductName(), p.getTotalRefunded());
 
                                     System.out.println("================================================================");
                                     System.out.println("Total Products: " + products.size());
