@@ -80,9 +80,9 @@
     <div class="table-container">
     <table border="1" cellpadding="6">
         <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
+            <th>Product ID</th>
             <th>Product</th>
+            <th>Quantity</th>
         </tr>
 
         <?php
