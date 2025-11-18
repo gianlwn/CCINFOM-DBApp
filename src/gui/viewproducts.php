@@ -85,13 +85,21 @@
             <th>Price</th>
             <th>Stock</th>
             <th>Supplier ID</th>
+            <th>Stock Status</th>
         </tr>
 
         <?php
             $query = "SELECT * FROM products";   // <-- CHANGE TABLE NAME HERE
             $result = mysqli_query($conn, $query);
 
+            $low_stock_threshold = 20; // Set the low stock threshold
+
             while ($row = mysqli_fetch_assoc($result)) {
+                
+                // Determine stock status
+                $stock_status = ($row['quantity_in_stock'] <= $low_stock_threshold)
+                                ? "<span class='stock-low'>Low</span>"
+                                : "OK";
                 echo "<tr>";
                 echo "<td>".$row['product_id']."</td>";
                 echo "<td>".$row['product_name']."</td>";
@@ -99,6 +107,7 @@
                 echo "<td>".$row['price']."</td>";
                 echo "<td>".$row['quantity_in_stock']."</td>";
                 echo "<td>".$row['supplier_id']."</td>";
+                echo "<td>".$stock_status."</td>"; // Display stock status
                 echo "</tr>";
             }
         ?>
