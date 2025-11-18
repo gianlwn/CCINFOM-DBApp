@@ -19,6 +19,7 @@ public class Product {
     private int supplier_id;        // ID of the supplier providing this product
     private String stock_status;
     private int total_sold;
+    private double total_revenue;
     private int total_refunded;
     private int order_id;
 
@@ -195,7 +196,7 @@ public class Product {
 
     /**
      * Gets the order ID
-     * @return total_sold The order ID
+     * @return order_id The order ID
      */
     public int getOrderId() {
         return order_id;
@@ -203,9 +204,25 @@ public class Product {
 
     /**
      * Sets the order ID
-     * @param total_sold The order ID
+     * @param order_id The order ID
      */
     public void setOrderId(int order_id) {
         this.order_id = order_id;
+    }
+
+    /**
+     * Gets the total revenue
+     * @return total_revenue The total revenue
+     */
+    public double getTotalRevenue() {
+        return total_revenue;
+    }
+
+    /**
+     * Sets the total revenue
+     * @param total_revenue The total revenue
+     */
+    public void setTotalRevenue(double total_revenue) {
+        this.total_revenue = total_revenue;
     }
 }
