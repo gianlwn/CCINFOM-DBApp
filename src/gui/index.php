@@ -88,7 +88,6 @@
         <h2>Reports Menu</h2>
         <ul class="menu-list">
             <li><a href="totalsales.php">View Total Sales</a></li>
-            <li><a href="refundedorders.php">View Refunded Orders</a></li>
             <li><a href="viewperformance.php">View Product Performance</a></li>
             <li><a href="productreturnanalysis.php">Product Return Analysis</a></li>
         </ul>
