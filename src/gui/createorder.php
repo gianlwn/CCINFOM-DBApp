@@ -136,21 +136,21 @@
 
         // Optional fields
         $email = !empty($_POST["email"]) ? "'".$_POST["email"]."'" : "NULL";
-        if (!empty($_POST["contact_number"])) {
-            if (!ctype_digit($_POST["contact_number"])) {
-                echo "<p style='color:red; font-weight:bold;'>Error: Contact number must contain digits only.</p>";
-                exit; // stop the entire process
-            } else {
-                $contact = "'".$_POST["contact_number"]."'";
-            }
-        } else {
-            $contact = "NULL";
+        if ($contact && !ctype_digit($contact)) {
+            echo "<p style='color:red; font-weight:bold;'>Error: Contact number must contain digits only.</p>";
+            exit;
         }
 
         // Fetch product stock
         $stock_query = "SELECT quantity_in_stock FROM products WHERE product_id = $product_id";
         $stock_result = mysqli_query($conn, $stock_query);
         $stock_row = mysqli_fetch_assoc($stock_result);
+
+        if (!$stock_row) {
+            echo "<p style='color:red; font-weight:bold;'>Invalid product selected.</p>";
+            exit;
+        }
+
         $current_stock = $stock_row['quantity_in_stock'];
 
         if($quantity > $current_stock){
@@ -163,7 +163,6 @@
             echo "Name cannot be empty.";
         }
         else{
-
             $customer_query = "SELECT customer_id FROM customers WHERE first_name='$first' AND last_name='$last'";
                 if ($contact) {
                     $customer_query .= " AND contact_number='$contact'";
@@ -174,7 +173,7 @@
                     $customer_row = mysqli_fetch_assoc($customer_result);
                     $customer_id = $customer_row['customer_id'];
                 } else {
-                    // insert new customer if not exists
+                    // =================== Insert new customer if not exists ===================
                     $insert_customer = "INSERT INTO customers (first_name, last_name, contact_number, email)
                                         VALUES ('$first', '$last', ".($contact ? "'$contact'" : "NULL").", ".($email ? "'$email'" : "NULL").")";
                     mysqli_query($conn, $insert_customer);
