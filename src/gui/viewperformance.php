@@ -57,11 +57,16 @@
 
             <?php
                 $query = "
-                SELECT p.product_id, p.product_name, IFNULL(SUM(o.quantity), 0) AS total_sold, IFNULL(SUM(o.quantity * p.price), 0) AS total_revenue
-                FROM products p LEFT JOIN orders o ON p.product_id = o.product_id 
-                GROUP BY p.product_id, p.product_name 
-                ORDER BY total_sold DESC, p.product_id ASC;";
-            
+                SELECT 
+                    p.product_id, 
+                    p.product_name,
+                    IFNULL(SUM(IF(o.status = 'COMPLETED', o.quantity, 0)), 0) AS total_sold,
+                    IFNULL(SUM(IF(o.status = 'COMPLETED', o.quantity * p.price, 0)), 0) AS total_revenue
+                FROM products p
+                LEFT JOIN orders o ON p.product_id = o.product_id
+                GROUP BY p.product_id, p.product_name
+                ORDER BY total_sold DESC, p.product_id ASC;
+
 
                 $result = mysqli_query($conn, $query);
 
