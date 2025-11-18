@@ -127,21 +127,40 @@
 
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
         // Get inputs
-        $first = $_POST["first_name"];
-        $last = $_POST["last_name"];
+        $first = mysqli_real_escape_string($conn, $_POST["first_name"]);
+        $last = mysqli_real_escape_string($conn, $_POST["last_name"]);
         $product_id = $_POST["product_id"];
         $quantity = $_POST["quantity"];
+        $contact = mysqli_real_escape_string($conn, $_POST["contact_number"]);
+        $email = NULL; // optional
 
-        // Optional fields
-        $email = !empty($_POST["email"]) ? "'".$_POST["email"]."'" : "NULL";
-        $contact = !empty($_POST["contact_number"]) ? "'".$_POST["contact_number"]."'" : "NULL";
+        // Validate contact
+        if (empty($contact)) {
+            echo "<p style='color:red; font-weight:bold;'>Error: Contact number is required.</p>";
+            exit;
+        }
+
+        // Validates that digits only are required
+        if (!ctype_digit($contact)) {
+            echo "<p style='color:red; font-weight:bold;'>Error: Contact number must contain digits only.</p>";
+            exit;
+        }
+        
+        if (!empty($_POST["email"])) {
+            $email = mysqli_real_escape_string($conn, $_POST["email"]);
+        }
 
         // Fetch product stock
         $stock_query = "SELECT quantity_in_stock FROM products WHERE product_id = $product_id";
         $stock_result = mysqli_query($conn, $stock_query);
         $stock_row = mysqli_fetch_assoc($stock_result);
+
+        if (!$stock_row) {
+            echo "<p style='color:red; font-weight:bold;'>Invalid product selected.</p>";
+            exit;
+        }
+
         $current_stock = $stock_row['quantity_in_stock'];
 
         if($quantity > $current_stock){
@@ -154,14 +173,22 @@
             echo "Name cannot be empty.";
         }
         else{
+            $customer_query = "SELECT customer_id FROM customers WHERE first_name='$first' AND last_name='$last'";
+                if ($contact) {
+                    $customer_query .= " AND contact_number='$contact'";
+                }
 
-            // Insert customer into customers table
-            $insert_customer = "INSERT INTO customers (first_name, last_name, contact_number, email)
-                                VALUES ('$first', '$last', $contact, $email)";
-            mysqli_query($conn, $insert_customer);
-
-            // Get the auto-incremented customer_id
-            $customer_id = mysqli_insert_id($conn);
+                $customer_result = mysqli_query($conn, $customer_query);
+                if (mysqli_num_rows($customer_result) > 0) {
+                    $customer_row = mysqli_fetch_assoc($customer_result);
+                    $customer_id = $customer_row['customer_id'];
+                } else {
+                    // insert new customer if not exists 
+                    $insert_customer = "INSERT INTO customers (first_name, last_name, contact_number, email)
+                                        VALUES ('$first', '$last', ".($contact ? "'$contact'" : "NULL").", ".($email ? "'$email'" : "NULL").")";
+                    mysqli_query($conn, $insert_customer);
+                    $customer_id = mysqli_insert_id($conn);
+                }
 
             // Get product price
             $price_query = "SELECT price FROM products WHERE product_id = $product_id";
@@ -169,7 +196,17 @@
             $price_row = mysqli_fetch_assoc($price_result);
             $price = $price_row['price'];
 
-            $total = $price * $quantity;
+            // Calculate total with discounts
+            $currentMonth = date('n');  // 1-12
+            $currentDay = date('j');    // 1-31
+
+            if ($currentMonth == $currentDay) {
+                $total = ($quantity * $price) * 0.90; // 10% off
+            } elseif (($currentMonth == 12 && $currentDay == 25) || ($currentMonth == 6 && $currentDay == 12)) {
+                $total = ($quantity * $price) * 0.80; // 20% off
+            } else {
+                $total = $quantity * $price;
+            }
 
             // Insert order using the newly created customer_id
             $insert_order = "INSERT INTO orders (customer_id, product_id, quantity, total, order_date)
