@@ -231,7 +231,7 @@ public class ProductDAO {
         return false;
     }
 
-    public ArrayList<Product> viewProductPerformance() {
+    public ArrayList<Product> getProductPerformance() {
         ArrayList<Product> products = new ArrayList<>();
         String sql = "SELECT p.product_id, p.product_name, IFNULL(SUM(IF(o.status = 'COMPLETED', o.quantity, 0)), 0) AS total_sold, " +
         "IFNULL(SUM(IF(o.status = 'COMPLETED', o.quantity * p.price, 0)), 0) AS total_revenue " +
@@ -259,7 +259,7 @@ public class ProductDAO {
         return products;
     }
 
-    public ArrayList<Product> viewProductReturnAnalysis() {
+    public ArrayList<Product> getProductReturnAnalysis() {
         ArrayList<Product> products = new ArrayList<>();
         String sql = "SELECT o.order_id, p.product_name, SUM(o.quantity) AS total_refunded " +
                      "FROM products p JOIN orders o ON p.product_id = o.product_id " +
@@ -276,7 +276,7 @@ public class ProductDAO {
                 Product p = new Product();
                 p.setOrderId(rs.getInt("order_id"));
                 p.setProductName(rs.getString("product_name"));
-                p.setTotalRefunded(rs.getInt("total_sold"));
+                p.setTotalRefunded(rs.getInt("total_refunded"));
 
                 products.add(p); // Add to list
             }

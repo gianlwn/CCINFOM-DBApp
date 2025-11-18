@@ -336,12 +336,40 @@ public class SouvenirApp {
                                 System.out.println("\n========================================");
                                 System.out.println("          PRODUCT PERFORMANCE              ");
                                 System.out.println("========================================");
-                                // TODO: VIEW PRODUCT PERFORMANCE
-         
+                                ArrayList<Product> products = productDAO.getProductPerformance();
+                                
+                                if (products.isEmpty()) {
+                                    System.out.println("No products found.");
+                                } else {
+                                    System.out.printf("%-15s %-28s %-18s %-10s %n", "Product ID", "Product Name", "Total Sold", "Total Revenue");
+                                    System.out.println("---------------------------------------------------------------------------------------");
+
+                                    for (Product p : products)
+                                        System.out.printf("%-15d %-28s %-18d %-10.2f%n", p.getProductId(), p.getProductName(), p.getTotalSold(), p.getTotalRevenue());
+
+                                    System.out.println("=======================================================================================");
+                                    System.out.println("Total Products: " + products.size());
+                                }
                             }
 
                             case "3" -> { // product return analysis
-                               // TODO: PRODUCT RETURN ANALYSIS
+                                System.out.println("\n========================================");
+                                System.out.println("          PRODUCT RETURN ANALYSIS           ");
+                                System.out.println("========================================");
+                                ArrayList<Product> products = productDAO.getProductReturnAnalysis();
+                                
+                                if (products.isEmpty()) {
+                                    System.out.println("No products found.");
+                                } else {
+                                    System.out.printf("%-15s %-28s %-18s %n", "Order ID", "Product Name", "Total Sold");
+                                    System.out.println("----------------------------------------------------------------");
+
+                                    for (Product p : products)
+                                        System.out.printf("%-15d %-28s %-18d%n", p.getProductId(), p.getProductName(), p.getTotalSold());
+
+                                    System.out.println("================================================================");
+                                    System.out.println("Total Products: " + products.size());
+                                }
                             }
 
                             case "0" -> {
