@@ -21,7 +21,7 @@ Before running SouvenirApp, make sure you have the following installed on your m
 3. **MySQL Database**
   - Download the [11-DBCREATION.sql](https://github.com/gianlwn/CCINFOM-DBApp/blob/main/database/11-DBCREATION.sql) in the 'database' folder.
   - Export the SQL file in MySQL Workbench.
-  - Run lines 1-105, then you should have the database.
+  - Run lines 1-108, then you should have the database.
 
 4. **Connecting to the MySQL Database**
   - Inside the 'database.php' file, change the parameters of lines 3 and 4 to your following credentials.
