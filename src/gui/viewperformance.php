@@ -65,7 +65,7 @@
                 FROM products p
                 LEFT JOIN orders o ON p.product_id = o.product_id
                 GROUP BY p.product_id, p.product_name
-                ORDER BY total_sold DESC, p.product_id ASC";
+                ORDER BY total_sold DESC, total_revenue DESC, p.product_id ASC";
 
 
                 $result = mysqli_query($conn, $query);

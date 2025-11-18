@@ -236,7 +236,7 @@ public class ProductDAO {
         String sql = "SELECT p.product_id, p.product_name, IFNULL(SUM(IF(o.status = 'COMPLETED', o.quantity, 0)), 0) AS total_sold, " +
         "IFNULL(SUM(IF(o.status = 'COMPLETED', o.quantity * p.price, 0)), 0) AS total_revenue " +
         "FROM products p LEFT JOIN orders o ON p.product_id = o.product_id " +
-        "GROUP BY p.product_id, p.product_name ORDER BY total_sold DESC, p.product_id ASC";
+        "GROUP BY p.product_id, p.product_name ORDER BY total_sold DESC, total_revenue DESC, p.product_id ASC";
         
         // Loop through ResultSet to map each row to a Product object
         try (Connection conn = DBUtil.getConnection();
