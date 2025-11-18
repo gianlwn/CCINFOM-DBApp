@@ -83,6 +83,7 @@
             <li><a href="addproduct.php">Add Products</a></li>
             <li><a href="viewproducts.php">View All Products</a></li>
             <li><a href="updatestock.php">Update Stock</a></li>
+            <li><a href="viewperformance.php">View Product Performance</a></li>
         </ul>
     </div>
 
