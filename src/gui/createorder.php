@@ -173,7 +173,7 @@
                     $customer_row = mysqli_fetch_assoc($customer_result);
                     $customer_id = $customer_row['customer_id'];
                 } else {
-                    // =================== Insert new customer if not exists ===================
+                    // insert new customer if not exists 
                     $insert_customer = "INSERT INTO customers (first_name, last_name, contact_number, email)
                                         VALUES ('$first', '$last', ".($contact ? "'$contact'" : "NULL").", ".($email ? "'$email'" : "NULL").")";
                     mysqli_query($conn, $insert_customer);
