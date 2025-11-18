@@ -136,8 +136,13 @@
 
         // Optional fields
         $email = !empty($_POST["email"]) ? "'".$_POST["email"]."'" : "NULL";
-        if (!empty($_POST["contact_number"]) && ctype_digit($_POST["contact_number"])) {
-            $contact = "'".$_POST["contact_number"]."'";
+        if (!empty($_POST["contact_number"])) {
+            if (!ctype_digit($_POST["contact_number"])) {
+                echo "<p style='color:red; font-weight:bold;'>Error: Contact number must contain digits only.</p>";
+                exit; // stop the entire process
+            } else {
+                $contact = "'".$_POST["contact_number"]."'";
+            }
         } else {
             $contact = "NULL";
         }
