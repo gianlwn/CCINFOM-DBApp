@@ -127,15 +127,13 @@
 
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-        
         // Get inputs
         $first = mysqli_real_escape_string($conn, $_POST["first_name"]);
         $last = mysqli_real_escape_string($conn, $_POST["last_name"]);
         $product_id = $_POST["product_id"];
         $quantity = $_POST["quantity"];
         $contact = mysqli_real_escape_string($conn, $_POST["contact_number"]);
-        $email = NULL;   // optional
+        $email = NULL; // optional
 
         // Validate contact
         if (empty($contact)) {
