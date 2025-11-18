@@ -169,7 +169,17 @@
             $price_row = mysqli_fetch_assoc($price_result);
             $price = $price_row['price'];
 
-            $total = $price * $quantity;
+            // Calculate total with discounts
+            $currentMonth = date('n');  // 1-12
+            $currentDay = date('j');    // 1-31
+
+            if ($currentMonth == $currentDay) {
+                $total = ($quantity * $price) * 0.90; // 10% off
+            } elseif (($currentMonth == 12 && $currentDay == 25) || ($currentMonth == 6 && $currentDay == 12)) {
+                $total = ($quantity * $price) * 0.80; // 20% off
+            } else {
+                $total = $quantity * $price;
+            }
 
             // Insert order using the newly created customer_id
             $insert_order = "INSERT INTO orders (customer_id, product_id, quantity, total, order_date)
