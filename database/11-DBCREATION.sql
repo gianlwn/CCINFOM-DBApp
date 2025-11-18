@@ -57,6 +57,9 @@ CREATE TABLE orders (
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 ) AUTO_INCREMENT = 4001;
 
+ALTER TABLE customers
+ADD CONSTRAINT unique_customer UNIQUE (first_name, last_name, contact_number);
+
 -- queries for tables with initialized values --
 INSERT INTO categories (category_name) VALUES
 ('Accessories'),
