@@ -83,10 +83,6 @@
             <th>Order ID</th>
             <th>Customer</th>
             <th>Product</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Date</th>
-            <th>Status</th>
         </tr>
 
         <?php
