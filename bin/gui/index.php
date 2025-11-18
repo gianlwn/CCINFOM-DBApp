@@ -72,8 +72,6 @@
             <li><a href="createorder.php">Create an Order</a></li>
             <li><a href="vieworders.php">View All Orders</a></li>
             <li><a href="editorder.php">Edit Orders</a></li>
-            <li><a href="totalsales.php">View Total Sales</a></li>
-            <li><a href="refundedorders.php">View Refunded Orders</a></li>
         </ul>
     </div>
 
@@ -83,7 +81,15 @@
             <li><a href="addproduct.php">Add Products</a></li>
             <li><a href="viewproducts.php">View All Products</a></li>
             <li><a href="updatestock.php">Update Stock</a></li>
+        </ul>
+    </div>
+
+    <div class="menu-section">
+        <h2>Reports Menu</h2>
+        <ul class="menu-list">
+            <li><a href="totalsales.php">View Total Sales</a></li>
             <li><a href="viewperformance.php">View Product Performance</a></li>
+            <li><a href="productreturnanalysis.php">Product Return Analysis</a></li>
         </ul>
     </div>
 
