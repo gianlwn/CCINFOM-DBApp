@@ -39,7 +39,7 @@ CREATE TABLE customers (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
-    contact_number VARCHAR(30) NULL,
+    contact_number VARCHAR(30) NOT NULL,
     email VARCHAR(100) NULL
 ) AUTO_INCREMENT = 101;
 
