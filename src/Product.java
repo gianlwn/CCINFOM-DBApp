@@ -18,6 +18,9 @@ public class Product {
     private int quantity_in_stock;  // Available quantity in stock
     private int supplier_id;        // ID of the supplier providing this product
     private String stock_status;
+    private int total_sold;
+    private int total_refunded;
+    private int order_id;
 
     /**
      * Default constructor.
@@ -156,5 +159,53 @@ public class Product {
      */
     public void setStockStatus(String stock_status) {
         this.stock_status = stock_status;
+    }
+
+    /**
+     * Gets the total stold
+     * @return total_sold The total sold
+     */
+    public int getTotalSold() {
+        return total_sold;
+    }
+
+    /**
+     * Sets the total stold
+     * @param total_sold The total stold
+     */
+    public void setTotalSold(int total_sold) {
+        this.total_sold = total_sold;
+    }
+
+    /**
+     * Gets the total refunded
+     * @return total_refunded The total refunded
+     */
+    public int getTotalRefunded() {
+        return total_refunded;
+    }
+
+    /**
+     * Sets the total refunded
+     * @param total_refunded The total refunded
+     */
+    public void setTotalRefunded(int total_refunded) {
+        this.total_refunded = total_refunded;
+    }
+
+    /**
+     * Gets the order ID
+     * @return total_sold The order ID
+     */
+    public int getOrderId() {
+        return order_id;
+    }
+
+    /**
+     * Sets the order ID
+     * @param total_sold The order ID
+     */
+    public void setOrderId(int order_id) {
+        this.order_id = order_id;
     }
 }

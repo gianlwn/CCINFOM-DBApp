@@ -230,4 +230,59 @@ public class ProductDAO {
         }
         return false;
     }
+
+    public ArrayList<Product> viewProductPerformance() {
+        ArrayList<Product> products = new ArrayList<>();
+        String sql = "SELECT p.product_id, p.product_name, IFNULL(SUM(IF(o.status = 'COMPLETED', o.quantity, 0)), 0) AS total_sold, " +
+        "IFNULL(SUM(IF(o.status = 'COMPLETED', o.quantity * p.price, 0)), 0) AS total_revenue " +
+        "FROM products p LEFT JOIN orders o ON p.product_id = o.product_id " +
+        "GROUP BY p.product_id, p.product_name ORDER BY total_sold DESC, p.product_id ASC";
+        
+        // Loop through ResultSet to map each row to a Product object
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductId(rs.getInt("product_id"));
+                p.setProductName(rs.getString("product_name"));
+                p.setTotalSold(rs.getInt("total_sold"));
+
+                products.add(p); // Add to list
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Print SQL errors
+        }
+        
+        return products;
+    }
+
+    public ArrayList<Product> viewProductReturnAnalysis() {
+        ArrayList<Product> products = new ArrayList<>();
+        String sql = "SELECT o.order_id, p.product_name, SUM(o.quantity) AS total_refunded " +
+                     "FROM products p JOIN orders o ON p.product_id = o.product_id " +
+                     "WHERE o.status = 'REFUNDED' " +
+                     "GROUP BY o.order_id, p.product_name " +
+                     "ORDER BY total_refunded DESC, p.product_id ASC";
+        
+        // Loop through ResultSet to map each row to a Product object
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            while (rs.next()) {
+                Product p = new Product();
+                p.setOrderId(rs.getInt("order_id"));
+                p.setProductName(rs.getString("product_name"));
+                p.setTotalRefunded(rs.getInt("total_sold"));
+
+                products.add(p); // Add to list
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Print SQL errors
+        }
+        
+        return products;
+    }
 }
