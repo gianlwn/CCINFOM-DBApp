@@ -248,6 +248,7 @@ public class ProductDAO {
                 p.setProductId(rs.getInt("product_id"));
                 p.setProductName(rs.getString("product_name"));
                 p.setTotalSold(rs.getInt("total_sold"));
+                p.setTotalRevenue(rs.getDouble("total_revenue"));
 
                 products.add(p); // Add to list
             }
