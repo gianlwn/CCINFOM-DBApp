@@ -55,7 +55,7 @@ public class SouvenirApp {
 
             // Check the user's main menu choice
             switch (menuChoice) {
-                case "1" -> { // User wants to access the Orders Menu
+                case "1" -> { // ORDERS MENU
                     boolean isExiting = false; // This will control exiting the orders menu
 
                     // Orders menu loop
@@ -190,19 +190,6 @@ public class SouvenirApp {
                                 }
                             }
 
-                            case "4" -> { // View total sales
-                                double totalSales = 0;
-
-                                // Add up all completed orders
-                                for (Order order : orderDAO.getAllOrders()) {
-                                    if (order.getStatus() == Order.Status.COMPLETED) {
-                                        totalSales += order.getTotal();
-                                    }
-                                }
-
-                                System.out.printf("Total sales: Php %.2f%n", totalSales);
-                            }
-
                             case "0" -> { 
                                 System.out.println("Exiting...");
                                 isExiting = true; // Exit orders menu
@@ -214,7 +201,7 @@ public class SouvenirApp {
                     }
                 }
 
-                case "2" -> { // Products menu
+                case "2" -> { // PRODUCTS MENU
                     boolean isExiting = false;
 
                     while (!isExiting) {
@@ -324,6 +311,51 @@ public class SouvenirApp {
                     }
                 }
 
+                case "3" -> { // RECORDS MENU
+                    boolean isExiting = false;
+
+                    while (!isExiting) {
+                        reportsMenu(); // Show report options
+                        String productsChoice = scanner.nextLine();
+                    
+                        switch (productsChoice) {
+                            case "1" -> { // View total sales
+                                double totalSales = 0;
+
+                                // Add up all completed orders
+                                for (Order order : orderDAO.getAllOrders()) {
+                                    if (order.getStatus() == Order.Status.COMPLETED) {
+                                        totalSales += order.getTotal();
+                                    }
+                                }
+
+                                System.out.printf("Total sales: Php %.2f%n", totalSales);
+                            }
+
+                            case "2" -> { // view product performance
+                                System.out.println("\n========================================");
+                                System.out.println("          PRODUCT PERFORMANCE              ");
+                                System.out.println("========================================");
+                                // TODO: VIEW PRODUCT PERFORMANCE
+         
+                            }
+
+                            case "3" -> { // product return analysis
+                               // TODO: PRODUCT RETURN ANALYSIS
+                            }
+
+                            case "0" -> {
+                                System.out.println("Exiting...");
+                                isExiting = true; // exit products menu
+                                break;
+                            }
+                            
+                            default -> System.out.println("Invalid choice!");
+                        }
+                    }
+                }
+
+
                 case "0" -> { // exit entire program
                     System.out.println("Exiting...");
                     scanner.close(); // close scanner
@@ -345,6 +377,22 @@ public class SouvenirApp {
         System.out.println("[ADD RECORDS]");
         System.out.println("1 -> Orders Menu");
         System.out.println("2 -> Products Menu");
+        System.out.println("3 -> Reports Menu");
+        System.out.println("\n0 -> Exit");
+        System.out.println("========================================");
+        System.out.print("Enter choice: ");
+    }
+
+    /**
+     * Displays the order menu for the application.
+     */
+    private static void ordersMenu() {
+        System.out.println("\n========================================");
+        System.out.println("              ORDERS MENU               ");
+        System.out.println("========================================");
+        System.out.println("1 -> Create Order");
+        System.out.println("2 -> View All Orders");
+        System.out.println("3 -> Edit Order");
         System.out.println("\n0 -> Exit");
         System.out.println("========================================");
         System.out.print("Enter choice: ");
@@ -355,7 +403,7 @@ public class SouvenirApp {
      */
     private static void productsMenu() {
         System.out.println("\n========================================");
-        System.out.println("             PRODUCTS MENU    ");
+        System.out.println("             PRODUCTS MENU             ");
         System.out.println("========================================");
         System.out.println("1 -> Add Product");
         System.out.println("2 -> View All Products");
@@ -368,14 +416,13 @@ public class SouvenirApp {
     /**
      * Displays the order menu for the application.
      */
-    private static void ordersMenu() {
+    private static void reportsMenu() {
         System.out.println("\n========================================");
-        System.out.println("              ORDERS MENU    ");
+        System.out.println("              REPORTS MENU              ");
         System.out.println("========================================");
-        System.out.println("1 -> Create Order");
-        System.out.println("2 -> View All Orders");
-        System.out.println("3 -> Edit Order");
-        System.out.println("4 -> View Total Sales");
+        System.out.println("1 -> View Total Sales");
+        System.out.println("2 -> View Product Performance");
+        System.out.println("3 -> Product Return Analysis");
         System.out.println("\n0 -> Exit");
         System.out.println("========================================");
         System.out.print("Enter choice: ");
