@@ -128,17 +128,26 @@
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+        
         // Get inputs
-        $first = $_POST["first_name"];
-        $last = $_POST["last_name"];
+        $first = mysqli_real_escape_string($conn, $_POST["first_name"]);
+        $last = mysqli_real_escape_string($conn, $_POST["last_name"]);
         $product_id = $_POST["product_id"];
         $quantity = $_POST["quantity"];
+        $contact = NULL; // optional
+        $email = NULL;   // optional
 
         // Optional fields
-        $email = !empty($_POST["email"]) ? "'".$_POST["email"]."'" : "NULL";
-        if ($contact && !ctype_digit($contact)) {
-            echo "<p style='color:red; font-weight:bold;'>Error: Contact number must contain digits only.</p>";
-            exit;
+        if (!empty($_POST["contact_number"])) { // ==========
+            if (!ctype_digit($_POST["contact_number"])) { // ==========
+                echo "<p style='color:red; font-weight:bold;'>Error: Contact number must contain digits only.</p>"; // ==========
+                exit; // ==========
+            }
+            $contact = mysqli_real_escape_string($conn, $_POST["contact_number"]); // ==========
+        }
+        
+        if (!empty($_POST["email"])) { // ==========
+            $email = mysqli_real_escape_string($conn, $_POST["email"]); // ==========
         }
 
         // Fetch product stock
