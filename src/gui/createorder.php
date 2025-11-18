@@ -164,13 +164,22 @@
         }
         else{
 
-            // Insert customer into customers table
-            $insert_customer = "INSERT INTO customers (first_name, last_name, contact_number, email)
-                                VALUES ('$first', '$last', $contact, $email)";
-            mysqli_query($conn, $insert_customer);
+            $customer_query = "SELECT customer_id FROM customers WHERE first_name='$first' AND last_name='$last'";
+                if ($contact) {
+                    $customer_query .= " AND contact_number='$contact'";
+                }
 
-            // Get the auto-incremented customer_id
-            $customer_id = mysqli_insert_id($conn);
+                $customer_result = mysqli_query($conn, $customer_query);
+                if (mysqli_num_rows($customer_result) > 0) {
+                    $customer_row = mysqli_fetch_assoc($customer_result);
+                    $customer_id = $customer_row['customer_id'];
+                } else {
+                    // =================== Insert new customer if not exists ===================
+                    $insert_customer = "INSERT INTO customers (first_name, last_name, contact_number, email)
+                                        VALUES ('$first', '$last', ".($contact ? "'$contact'" : "NULL").", ".($email ? "'$email'" : "NULL").")";
+                    mysqli_query($conn, $insert_customer);
+                    $customer_id = mysqli_insert_id($conn);
+                }
 
             // Get product price
             $price_query = "SELECT price FROM products WHERE product_id = $product_id";
