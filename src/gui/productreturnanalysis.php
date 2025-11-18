@@ -90,18 +90,18 @@
         </tr>
 
         <?php
-            $query = "SELECT * FROM orders WHERE status = 'refunded'";  
+            $query = "SELECT p.product_id, p.product_name, IFNULL(SUM(o.quantity), 0) AS total_refunded
+                      FROM products p
+                      LEFT JOIN orders o ON p.product_id = o.product_id
+                      GROUP BY p.product_id, p.product_name
+                      ORDER BY total_refunded DESC, p.product_id ASC";  
             $result = mysqli_query($conn, $query);
 
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<tr>";
-                echo "<td>".$row['order_id']."</td>";
-                echo "<td>".$row['customer_id']."</td>";
                 echo "<td>".$row['product_id']."</td>";
-                echo "<td>".$row['quantity']."</td>";
-                echo "<td>".$row['total']."</td>";
-                echo "<td>".$row['order_date']."</td>";
-                echo "<td>".$row['status']."</td>";
+                echo "<td>".$row['product_name']."</td>";
+                echo "<td>".$row['total_refunded']."</td>";
                 echo "</tr>";
             }
         ?>
